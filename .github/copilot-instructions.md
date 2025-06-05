@@ -3,6 +3,6 @@
 - Unity version: Unity 6000.1.5f1
 - Active game object:
   - Name: Character 1 
-  - Tag: Untagged
+  - Tag: Character
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
