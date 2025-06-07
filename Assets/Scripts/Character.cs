@@ -28,7 +28,6 @@ public class Character : MonoBehaviour
 
     [Header("Character Parameters")]
     [SerializeField] private float _speed = 1;
-    [SerializeField] private float _cost = 1;
     [SerializeField] private float _health = 1;
     [SerializeField] private float _insialAttackDelay = 1;
     [SerializeField] private float _attackPeriod = 0.2f;
