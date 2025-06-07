@@ -1,12 +1,7 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Character : MonoBehaviour

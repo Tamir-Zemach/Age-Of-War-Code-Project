@@ -2,7 +2,7 @@
 - Project name: Age Of War Code Project
 - Unity version: Unity 6000.1.5f1
 - Active game object:
-  - Name: Canvas
+  - Name: In Game Canvas
   - Tag: Untagged
   - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

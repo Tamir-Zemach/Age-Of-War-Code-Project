@@ -3,9 +3,18 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    internal class PlayerCurrency 
+    public class PlayerCurrency
     {
-        private int _money;
+
+        private static PlayerCurrency instance;
+
+        // Public property to access the instance
+        public static PlayerCurrency Instance => instance ??= new PlayerCurrency();
+
+        // Private constructor to prevent external instantiation
+        private PlayerCurrency() { }
+
+        private int _money = 100;
 
         public int Money
         {
@@ -26,6 +35,11 @@ namespace Assets.Scripts
         public int AddMoney(int amount) => Money += ValidateAmount(amount, "adding");
 
         public int SubtractMoney(int amount) => Money -= ValidateAmount(amount, "subtracting");
+
+        public void DisplyMoneyInConsole()
+        {
+            Debug.Log($"current money amount = {_money}");
+        }
 
     }
 }
