@@ -5,6 +5,7 @@ public class CharacterButton : MonoBehaviour
 {
     public GameObject _characterPrefab;
     public int _cost;
+    public float _deployDelayTime;
 
     public void OnButtonPress()
     {
