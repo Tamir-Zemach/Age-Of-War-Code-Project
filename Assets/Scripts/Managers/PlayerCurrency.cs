@@ -5,6 +5,7 @@ namespace Assets.Scripts
 {
     public class PlayerCurrency
     {
+        public static event Action OnMoneyChanged;
 
         private static PlayerCurrency instance;
 
@@ -19,7 +20,11 @@ namespace Assets.Scripts
         public int Money
         {
             get => _money;
-            set => _money = Math.Max(0, value);
+            set
+            {
+                _money = Math.Max(0, value);
+                OnMoneyChanged?.Invoke(); 
+            }
         }
 
         private int ValidateAmount(int amount, string operation)

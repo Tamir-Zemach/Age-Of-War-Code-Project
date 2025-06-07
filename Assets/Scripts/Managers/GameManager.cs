@@ -13,27 +13,6 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
-    private void Update()
-    {
-        Test();
-    }
-
-    public int _moneyToAdd;
-    public int _moneyToSubstract;
-    private void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            PlayerCurrency.Instance.AddMoney(_moneyToAdd);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            PlayerCurrency.Instance.SubtractMoney(_moneyToSubstract);
-        }
-        PlayerCurrency.Instance.DisplyMoneyInConsole();
-
-    }
-
     public void CharacterButtonPressed(CharacterButton button)
     {
         int selectedIndex = System.Array.IndexOf(characterButtons, button);
@@ -56,6 +35,29 @@ public class GameManager : MonoBehaviour
     private void Diploy(GameObject characterPrefab)
     {
         Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
+    }
+
+
+
+    private void Update()
+    {
+        Test();
+    }
+
+    public int _moneyToAdd;
+    public int _moneyToSubstract;
+    private void Test()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            PlayerCurrency.Instance.AddMoney(_moneyToAdd);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlayerCurrency.Instance.SubtractMoney(_moneyToSubstract);
+        }
+        PlayerCurrency.Instance.DisplyMoneyInConsole();
+
     }
 
 }
