@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts
 {
@@ -15,17 +16,23 @@ namespace Assets.Scripts
         // Private constructor to prevent external instantiation
         private PlayerCurrency() { }
 
-        private int _money = 100;
+        private int _money = 0;
+        public int Money => _money; // Read-only property
 
-        public int Money
+        public int AddMoney(int amount)
         {
-            get => _money;
-            set
-            {
-                _money = Math.Max(0, value);
-                OnMoneyChanged?.Invoke(); 
-            }
+            _money += ValidateAmount(Math.Max(0, amount), "adding");
+            OnMoneyChanged?.Invoke();
+            return _money;
         }
+
+        public int SubtractMoney(int amount)
+        {
+            _money -= ValidateAmount(Math.Max(0, amount), "subtracting");
+            OnMoneyChanged?.Invoke();
+            return _money;
+        }
+
 
         private int ValidateAmount(int amount, string operation)
         {
@@ -37,9 +44,7 @@ namespace Assets.Scripts
             return amount;
         }
 
-        public int AddMoney(int amount) => Money += ValidateAmount(amount, "adding");
 
-        public int SubtractMoney(int amount) => Money -= ValidateAmount(amount, "subtracting");
 
         public void DisplyMoneyInConsole()
         {
