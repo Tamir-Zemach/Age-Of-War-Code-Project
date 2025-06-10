@@ -42,8 +42,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //print("update");
-        Debug.Log($"the bool SpawnArea._hasUnitInside is : {SpawnArea._hasUnitInside}");
         if (nextCharacter != null)
         {
             DeployWithDelay(nextCharacter._characterPrefab, nextCharacter._deployDelayTime);
@@ -97,25 +95,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            nextCharacter = null;
             isDeploying = false;
         }
     }
     
-
-    private IEnumerator DeployDelayTime(GameObject characterPrefab, float deployDelayTime)
-    {
-        yield return new WaitForSeconds(deployDelayTime);
-
-        //TODO: implent animation for deployment 
-        //to show index that character is deploing  
-
-            Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
-
-        // Deployment finished, check for the next character in the queue
-        isDeploying = false;
-        DeployNextCharacter();
-    }
-
 
 }
 
