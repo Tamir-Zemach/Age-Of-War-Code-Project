@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Character : MonoBehaviour
 {
+
     public delegate void AttackDelegate();
     public event Action OnAttack; 
     public event Action OnAttackCancel;
@@ -18,8 +19,12 @@ public class Character : MonoBehaviour
     [Tooltip("The character will walk toward the GameObject with this tag:")]
     [SerializeField, TagSelector] private string _baseTag;
 
+    [Tooltip("The character ")]
+    [SerializeField, TagSelector] private string _friendlyCharacterTag;
+
     [Tooltip("The character will stop when it encounters the GameObject with this tag:")]
-    [SerializeField, TagSelector] private string _characterTag;
+    [SerializeField, TagSelector] private string _enemyCharacterTag;
+
 
     [Header("Character Parameters")]
     [SerializeField] private float _speed = 1;
@@ -51,37 +56,52 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        StopingWhenSeeingEnemy();
+        CheckSurroundings();
     }
 
-
-    private void StopingWhenSeeingEnemy()
+    private void CheckSurroundings()
     {
+        _agent.isStopped = false; // Default state
+
         if (Physics.BoxCast(transform.position, boxSize, transform.forward, out var hitInfo, Quaternion.identity, _raylength))
         {
-            if (hitInfo.transform.gameObject.CompareTag(_characterTag))
+            GameObject obj = hitInfo.transform.gameObject;
+
+            if (obj.CompareTag(_enemyCharacterTag))
             {
+                //Debug.Log($"{gameObject.name} is seeing {hitInfo.transform.gameObject.name}");
                 _agent.isStopped = true;
+                //Debug.Log($"{gameObject.name} is stopping? : {_agent.isStopped}");
 
                 if (!_isAttacking)
                 {
                     _isAttacking = true;
                     Attack();
                 }
+                return; // Early exit if enemy detected
+            }
+
+            if (obj.CompareTag(_friendlyCharacterTag))
+            {
+                NavMeshAgent otherAgent = obj.GetComponent<NavMeshAgent>();
+
+                if (otherAgent != null && otherAgent.isStopped)
+                {
+                    _agent.isStopped = true;
+                }
             }
         }
-        else
+
+        if (_currentCoroutine != null && !_agent.isStopped)
         {
-            _agent.isStopped = false;
-            if (_currentCoroutine != null)
-            {
-                StopAllCoroutines();
-                _currentCoroutine = null;
-                OnAttackCancel?.Invoke();
-                _isAttacking = false;
-            }
+            StopAllCoroutines();
+            _currentCoroutine = null;
+            OnAttackCancel?.Invoke();
+            _isAttacking = false;
         }
     }
+
+
     private void Attack()
     {
         _currentCoroutine = StartCoroutine(AttackAction(_insialAttackDelay, _attackPeriod));
@@ -95,6 +115,7 @@ public class Character : MonoBehaviour
         OnAttackCancel?.Invoke();
         _isAttacking = false;
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = boxColor;
@@ -120,59 +141,3 @@ public class Character : MonoBehaviour
 
 
 
-//private void StopingWhenSeeingEnemy()
-//{
-//    if (Physics.BoxCast(transform.position, boxSize, transform.forward, out var hitInfo, Quaternion.identity, _raylength))
-//    {
-//        if (hitInfo.transform.gameObject.CompareTag(_characterTag))
-//        {
-//            _agent.isStopped = true;
-
-//            if (!isAttacking)
-//            {
-//                isAttacking = true;
-//                Attack();
-//            }
-//        }
-//    }
-//    else
-//    {
-//        _agent.isStopped = false;
-//        if (_currentCoroutine != null)
-//        {
-//            StopCoroutine(_currentCoroutine);
-//            _currentCoroutine = null;
-//        }
-//    }
-//}
-
-
-//private void StopingWhenSeeingEnemy()
-//{
-//    if (!Physics.BoxCast(transform.position, boxSize, transform.forward, out var hitInfo, Quaternion.identity, _raylength))
-//    {
-//        _agent.isStopped = false;
-//        StopRunningCoroutine();
-//        return;
-//    }
-
-//    if (!hitInfo.transform.gameObject.CompareTag(_characterTag))
-//        return;
-
-//    _agent.isStopped = true;
-
-//    if (isAttacking)
-//        return;
-
-//    isAttacking = true;
-//    Attack();
-//}
-
-//private void StopRunningCoroutine()
-//{
-//    if (_currentCoroutine == null)
-//        return;
-
-//    StopCoroutine(_currentCoroutine);
-//    _currentCoroutine = null;
-//}

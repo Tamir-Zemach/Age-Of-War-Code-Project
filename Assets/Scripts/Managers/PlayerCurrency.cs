@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts
 {
@@ -44,7 +43,10 @@ namespace Assets.Scripts
             return amount;
         }
 
-
+        public bool HasEnoughMoney(int cost)
+        {
+            return _money >= cost;
+        }
 
         public void DisplyMoneyInConsole()
         {

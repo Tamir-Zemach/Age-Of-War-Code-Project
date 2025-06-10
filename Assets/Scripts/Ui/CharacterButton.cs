@@ -5,19 +5,12 @@ using UnityEngine;
 
 public class CharacterButton : MonoBehaviour
 {
-    [Tooltip("The prefab to instansiate when deplyed")]
-    public GameObject _characterPrefab;
-    [Tooltip("How much money needed to deploy the character")]
-    public int _cost;
-    [Tooltip("How much time passed between the moment the button is pressed and the character is deployed")]
-    public float _deployDelayTime;
     [Tooltip("Text to dipsplay the queue index, needs to be child of this GameObject")]
     [SerializeField] private TextMeshProUGUI _queueCountText;
-    private CharacterButton[] _queueArray;
-    private CharacterButton _assignedCharacter; 
+    private Unit[] _queueArray;
+    [SerializeField] private Unit _assignedUnit; 
     private void Awake()
     {
-        _assignedCharacter = GetComponent<CharacterButton>();
         _queueCountText = GetComponentInChildren<TextMeshProUGUI>();
         GameManager.OnQueueChanged += UpdateQueueIndex;
     }
@@ -32,30 +25,27 @@ public class CharacterButton : MonoBehaviour
 
     public void UpdateQueueIndex()
     {
-        NullChecksForSafety();
+        if (NullChecksForSafety())
+        {
+            return;
+        }
+
         // Filter queue to only include characters matching _assignedCharacter
-        _queueArray = GameManager.Instance.characterQueue.Where(c => c == _assignedCharacter).ToArray();
+        _queueArray = GameManager.Instance._unitQueue.Where(c => c == _assignedUnit).ToArray();
 
         _queueCountText.text = _queueArray.Length > 0 ? $"+ {_queueArray.Length}" : "";
     }
 
-    private void NullChecksForSafety()
+    private bool NullChecksForSafety()
     {
-        if (_assignedCharacter == null || GameManager.Instance == null || GameManager.Instance.characterQueue == null)
+        if (_assignedUnit == null || GameManager.Instance == null || GameManager.Instance._unitQueue == null)
         {
             _queueCountText.text = "Error: Queue not initialized";
-            return;
+            return true;
         }
-    }
-    public void OnButtonPress()
-    {
-        GameManager.Instance.CharacterButtonPressed(this);
+        else { return false; }
     }
 
-    public bool CanDeploy()
-    {
-        return PlayerCurrency.Instance.Money >= _cost;
-    }
 
 }
 

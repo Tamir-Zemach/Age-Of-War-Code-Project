@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7422676948431546757}
   - component: {fileID: 8797696669588225040}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Gfx - sprite
-  m_TagString: Character
+  m_TagString: Friendly Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,9 +101,9 @@ GameObject:
   - component: {fileID: 6896206117875960329}
   - component: {fileID: 5766605150409118122}
   - component: {fileID: 2319318432252380893}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Attacker Trigger Area
-  m_TagString: Untagged
+  m_TagString: Friendly Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,9 +208,9 @@ GameObject:
   - component: {fileID: 965455380987482317}
   - component: {fileID: 3276029889978057752}
   - component: {fileID: 5410877280468866144}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Gfx - plane with material
-  m_TagString: Untagged
+  m_TagString: Friendly Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,9 +296,10 @@ GameObject:
   - component: {fileID: 3858277376565390260}
   - component: {fileID: 5802286653428450699}
   - component: {fileID: 4730300746094977660}
-  m_Layer: 0
+  - component: {fileID: 893934923121443323}
+  m_Layer: 3
   m_Name: test 2
-  m_TagString: Character
+  m_TagString: Friendly Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +340,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -378,7 +379,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseTag: Enemy Base
-  _characterTag: Enemy Character
+  _friendlyCharacterTag: Friendly Character
+  _enemyCharacterTag: Enemy Character
   _speed: 1
   _health: 0
   _insialAttackDelay: 1.5
@@ -399,6 +401,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackTriggerArea: {fileID: 2199896205504424696}
+--- !u!54 &893934923121443323
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578747469787437173}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7649207639439076362
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,9 +440,9 @@ GameObject:
   - component: {fileID: 5792064105189418407}
   - component: {fileID: 2097764044958493789}
   - component: {fileID: 1024332425291502229}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
-  m_TagString: Character
+  m_TagString: Friendly Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

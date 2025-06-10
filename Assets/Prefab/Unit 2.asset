@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
+  m_Name: Unit 2
+  m_EditorClassIdentifier: 
+  _characterPrefab: {fileID: 6578747469787437173, guid: adede659db2cb21408c61aac3114e60f, type: 3}
+  _cost: 20
+  _deployDelayTime: 2

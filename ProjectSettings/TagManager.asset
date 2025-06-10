@@ -6,13 +6,14 @@ TagManager:
   tags:
   - Enemy Base
   - Player Base
-  - Character
   - Enemy Character
+  - Friendly Character
+  - Spawn Area
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Friendly Unit
   - Water
   - UI
   - 

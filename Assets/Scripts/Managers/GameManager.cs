@@ -12,9 +12,19 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int _startingMoney;
     [SerializeField] private Transform _characterSpawnPoint;
-    
-    public Queue<CharacterButton> characterQueue = new Queue<CharacterButton>(); 
+
+    public Queue<Unit> _unitQueue = new Queue<Unit>();
     private bool isDeploying = false;
+
+    [Tooltip("The spawn area where the character will not spawn if another one is already present.")]
+    [SerializeField, TagSelector] private string _spawnArea;
+
+    [Tooltip("The player base Tag:")]
+    [SerializeField, TagSelector] private string _baseTag;
+    private SpawnArea SpawnArea;
+
+    public float timer;
+    public Unit nextCharacter;
 
     private void Awake()
     {
@@ -26,35 +36,64 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         PlayerCurrency.Instance.AddMoney(_startingMoney);
+        SpawnArea = GameObject.FindGameObjectWithTag(_baseTag).GetComponentInChildren<SpawnArea>();
+
     }
 
-    public void CharacterButtonPressed(CharacterButton button)
+    private void Update()
     {
-        if (button.CanDeploy())
+        //print("update");
+        Debug.Log($"the bool SpawnArea._hasUnitInside is : {SpawnArea._hasUnitInside}");
+        if (nextCharacter != null)
         {
-            PlayerCurrency.Instance.SubtractMoney(button._cost);
+            DeployWithDelay(nextCharacter._characterPrefab, nextCharacter._deployDelayTime);
+        }
+    }
+
+    private void DeployWithDelay(GameObject characterPrefab, float deployDelayTime)
+    {
+        timer += Time.deltaTime;
+        if (timer >= nextCharacter._deployDelayTime)
+        {
+            //Debug.Log($"the bool SpawnArea._hasUnitInside is : {SpawnArea._hasUnitInside}");
+            if (!SpawnArea._hasUnitInside)
+            {
+                Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
+                timer = 0;
+                isDeploying = false;
+                DeployNextCharacter();
+            }
+        }
+    }
+
+    public void CharacterButtonPressed(Unit unit)
+    {
+        if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
+        {
+            PlayerCurrency.Instance.SubtractMoney(unit._cost);
+
             // Add the character to the queue
-            characterQueue.Enqueue(button);
+            _unitQueue.Enqueue(unit);
             OnQueueChanged?.Invoke();
 
             // If no deployment is currently happening, start the queue process
             if (!isDeploying)
             {
-              DeployNextCharacter();
+                DeployNextCharacter();
             }
         }
     }
 
     private void DeployNextCharacter()
     {
-        if (characterQueue.Count > 0)
+        if (_unitQueue.Count > 0)
         {
             //remove button from queue
-            CharacterButton nextCharacter = characterQueue.Dequeue();
+            nextCharacter = _unitQueue.Dequeue();
             OnQueueChanged?.Invoke();
             //deploy logic
             isDeploying = true;
-            StartCoroutine(DeployDelayTime(nextCharacter._characterPrefab, nextCharacter._deployDelayTime));
+            
         }
         else
         {
@@ -62,6 +101,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
+
     private IEnumerator DeployDelayTime(GameObject characterPrefab, float deployDelayTime)
     {
         yield return new WaitForSeconds(deployDelayTime);
@@ -69,33 +109,17 @@ public class GameManager : MonoBehaviour
         //TODO: implent animation for deployment 
         //to show index that character is deploing  
 
-        Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
+            Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
 
         // Deployment finished, check for the next character in the queue
         isDeploying = false;
         DeployNextCharacter();
     }
-    private void Update()
-    {
-        Test();
-    }
 
-    public int _moneyToAdd;
-    public int _moneyToSubstract;
-    private void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            PlayerCurrency.Instance.AddMoney(_moneyToAdd);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            PlayerCurrency.Instance.SubtractMoney(_moneyToSubstract);
-        }
-        //PlayerCurrency.Instance.DisplyMoneyInConsole();
 
-    }
 }
+
+
 
 
 
