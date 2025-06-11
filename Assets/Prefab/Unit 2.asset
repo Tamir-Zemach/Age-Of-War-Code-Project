@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
   m_Name: Unit 2
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 6578747469787437173, guid: adede659db2cb21408c61aac3114e60f, type: 3}
+  _characterPrefab: {fileID: 2906663908437237772, guid: 60f55190c838fbf478d03148d24220f9, type: 3}
   _cost: 20
   _deployDelayTime: 2
+  _baseTag: Enemy Base
+  _friendlyCharacterTag: Friendly Character
+  _enemyCharacterTag: Enemy Character
+  _raylength: 6
+  _speed: 1
+  _health: 1
+  _strength: 10
+  _insialAttackDelay: 1
+  _attackPeriod: 0.2

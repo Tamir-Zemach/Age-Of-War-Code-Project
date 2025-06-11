@@ -1,7 +1,6 @@
 ﻿namespace Assets.Scripts
 {
     using UnityEngine;
-    using System.Collections;
 
     [RequireComponent(typeof(UnitBaseBehaviour))]
 
