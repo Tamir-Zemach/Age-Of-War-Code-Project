@@ -182,6 +182,7 @@ MonoBehaviour:
   Unit: {fileID: 11400000, guid: 081300da1de91f5428872d26f9f5bed1, type: 2}
   boxSize: {x: 0.5, y: 0.5, z: 0.5}
   boxColor: {r: 1, g: 0, b: 0, a: 1}
+  _rayLengthForFriendlyUnit: 2
 --- !u!114 &8781597469959657215
 MonoBehaviour:
   m_ObjectHideFlags: 0

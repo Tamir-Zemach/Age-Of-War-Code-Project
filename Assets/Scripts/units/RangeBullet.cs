@@ -8,12 +8,15 @@ public class RangeBullet : MonoBehaviour
     [SerializeField] private float arcHeight = 2f;
     private Rigidbody rb;
     private Transform target;
-
-    public void Initialize(Transform target)
+    private int _strength;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    public void Initialize(Transform target, int strength)
     {
         this.target = target;
-        rb = GetComponent<Rigidbody>();
-
+        _strength = strength;
         if (rb != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
@@ -24,10 +27,10 @@ public class RangeBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(target.tag))
+        if (target != null && collision.gameObject.CompareTag(target.tag))
         {
             GiveDamage(collision.gameObject);
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -37,7 +40,7 @@ public class RangeBullet : MonoBehaviour
         UnitHealthManager targetHealth = target.GetComponent<UnitHealthManager>();
         if (targetHealth != null)
         {
-            targetHealth.GetHurt(10);
+            targetHealth.GetHurt(_strength);
         }
     }
 

@@ -18,9 +18,11 @@ MonoBehaviour:
   _baseTag: Enemy Base
   _friendlyCharacterTag: Friendly Character
   _enemyCharacterTag: Enemy Character
-  _raylength: 2
+  _enemyCharacterMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _range: 2
   _speed: 2
   _health: 1
   _strength: 10
   _insialAttackDelay: 1
-  _attackPeriod: 0.2

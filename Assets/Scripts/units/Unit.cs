@@ -14,21 +14,26 @@ public class Unit : ScriptableObject
     [Tooltip("The character will walk toward the GameObject with this tag:")]
     [SerializeField, TagSelector] public string _baseTag;
 
-    [Tooltip("The character ")]
+    [Tooltip("The Unit will stop  when it sees the GameObject with this tag: ")]
     [SerializeField, TagSelector] public string _friendlyCharacterTag;
 
-    [Tooltip("The character will stop when it encounters the GameObject with this tag:")]
+    [Tooltip("The Unit will stop and attack when it encounters the GameObject with this tag:")]
     [SerializeField, TagSelector] public string _enemyCharacterTag;
 
+    [Tooltip("The Unit will stop and attack when it encounters the GameObject with this Layer:")]
+    [SerializeField, TagSelector] public LayerMask _enemyCharacterMask;
 
     [Header("BoxCast Parameters")]
     [Tooltip("How far the character detects other characters")]
-    public float _raylength;
+    public float _range;
 
     [Header("Character Parameters")]
+    [Tooltip("The speed Of the Unit")]
     public float _speed = 1;
+    [Tooltip("The Health Of the Unit")]
     public int _health = 1;
+    [Tooltip("How much every Hit will give damage")]
     public int _strength = 1;
+    [Tooltip("The amount of time before a Unit Attacks (when lower its faster)")]
     public float _insialAttackDelay = 1;
-    public float _attackPeriod = 0.2f;
 }
