@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 147935010}
   m_Layer: 6
   m_Name: Lane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2672,8 +2672,6 @@ MonoBehaviour:
   _characterSpawnPoint: {fileID: 1483718184}
   _spawnArea: Spawn Area
   _baseTag: Player Base
-  timer: 0
-  nextCharacter: {fileID: 0}
 --- !u!114 &2017559589
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField, TagSelector] private string _baseTag;
     private SpawnArea SpawnArea;
 
-    public float timer;
-    public Unit nextCharacter;
+    private float timer;
+    private Unit nextCharacter;
 
     private void Awake()
     {
@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= nextCharacter._deployDelayTime)
         {
-            //Debug.Log($"the bool SpawnArea._hasUnitInside is : {SpawnArea._hasUnitInside}");
             if (!SpawnArea._hasUnitInside)
             {
                 Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);

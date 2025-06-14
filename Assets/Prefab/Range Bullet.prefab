@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5927095391638539467}
   - component: {fileID: 3252812258085967106}
   - component: {fileID: 7239519685767849629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Range Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -73,8 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779015247a8c5946b9d58b7cab9e7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  arcHeight: 4
+  _speed: 2
+  _arcHeight: 1.5
+  _destroyTime: 1
+  _groundTag: Ground
 --- !u!1 &2410811860092720564
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +89,7 @@ GameObject:
   - component: {fileID: 8159111243314678356}
   - component: {fileID: 8759466754058708275}
   - component: {fileID: 5763724743865685724}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}

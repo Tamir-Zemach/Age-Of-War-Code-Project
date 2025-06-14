@@ -9,6 +9,7 @@ TagManager:
   - Enemy Character
   - Friendly Character
   - Spawn Area
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Enemy Unit
-  - 
+  - bullet
   - 
   - 
   - 
