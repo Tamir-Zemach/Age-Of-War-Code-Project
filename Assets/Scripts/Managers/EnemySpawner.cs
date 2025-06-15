@@ -70,4 +70,11 @@ public class EnemySpawner : MonoBehaviour
         Debug.LogError("Enemy base not found! Check the tag assignment.");
         return null; 
     }
+
+    public void EasyMode(float minSpawnTime, float maxSpawnTime)
+    {
+        _minSpawnTime = minSpawnTime;
+        _maxSpawnTime = maxSpawnTime;
+    }
+
 }

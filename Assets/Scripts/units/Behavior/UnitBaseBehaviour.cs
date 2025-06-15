@@ -8,6 +8,7 @@ public class UnitBaseBehaviour : MonoBehaviour
 {
     public delegate void AttackDelegate(GameObject target);
     public event AttackDelegate OnAttack;
+    public event AttackDelegate OnBaseAttack;
 
     private NavMeshAgent _agent;
     private GameObject _enemyBase;
@@ -43,19 +44,26 @@ public class UnitBaseBehaviour : MonoBehaviour
 
             if (obj.CompareTag(Unit._oppositeUnitTag))
             {
-                HandleEnemyDetection(obj); 
+                HandleEnemyDetection(obj, false);
+            }
+            if (obj.CompareTag(Unit._oppositeBaseTag))
+            {
+                HandleEnemyDetection(obj, true);
             }
         }
 
         ResetAttackStateIfNeeded();
     }
-    private void HandleEnemyDetection(GameObject target)
+    private void HandleEnemyDetection(GameObject target, bool isBase)
     {
         _agent.isStopped = true;
         if (!_isAttacking)
         {
             _isAttacking = true;
-            Attack(target); // Pass the detected enemy
+            if (isBase)
+                BaseAttack(target);
+            else
+                Attack(target);
         }
     }
 
@@ -83,13 +91,23 @@ public class UnitBaseBehaviour : MonoBehaviour
     }
     private void Attack(GameObject target)
     {
-        _currentCoroutine = StartCoroutine(AttackAction(Unit._insialAttackDelay, target));
+        _currentCoroutine = StartCoroutine(AttackAction(Unit._initialAttackDelay, target));
+    }
+    private void BaseAttack(GameObject target)
+    {
+        _currentCoroutine = StartCoroutine(BaseAttackAction(Unit._initialAttackDelay, target));
     }
 
     IEnumerator AttackAction(float insialAttackDelay, GameObject target)
     {
         yield return new WaitForSeconds(insialAttackDelay);
         OnAttack?.Invoke(target);
+        _isAttacking = false;
+    }
+    IEnumerator BaseAttackAction(float initialAttackDelay, GameObject target)
+    {
+        yield return new WaitForSeconds(initialAttackDelay);
+        OnBaseAttack?.Invoke(target);
         _isAttacking = false;
     }
 

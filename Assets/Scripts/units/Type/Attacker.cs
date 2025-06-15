@@ -16,13 +16,18 @@
             if (UnitBaseBehaviour != null)
             {
                UnitBaseBehaviour.OnAttack += Attack;
+               UnitBaseBehaviour.OnBaseAttack += BaseAttack;
             }
 
         }
 
         private void Attack(GameObject target)
         {
-            GiveDamage(target);  // Pass the received target directly
+            GiveDamage(target); 
+        }
+        private void BaseAttack(GameObject target)
+        {
+            GiveDamageToBase(target);  
         }
         private void GiveDamage(GameObject target)
         {
@@ -32,6 +37,21 @@
                 targetHealth.GetHurt(unit._strength); 
             }
         }
+        private void GiveDamageToBase(GameObject target)
+        {
+            EnemyBaseHealthManger enemyBaseHealth = target.GetComponent<EnemyBaseHealthManger>();
+            PlayerBaseHealthManager playerBaseHealth = target.GetComponent<PlayerBaseHealthManager>();
+
+            if (enemyBaseHealth != null)
+            {
+                enemyBaseHealth.GetHurt(unit._strength);
+            }
+            else if (playerBaseHealth != null)
+            {
+                playerBaseHealth.GetHurt(unit._strength);
+            }
+        }
+
 
     }
 }

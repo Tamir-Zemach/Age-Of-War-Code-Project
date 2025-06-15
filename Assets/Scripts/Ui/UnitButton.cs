@@ -3,7 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class CharacterButton : MonoBehaviour
+public class UnitButton : MonoBehaviour
 {
     [Tooltip("Text to dipsplay the queue index, needs to be child of this GameObject")]
     [SerializeField] private TextMeshProUGUI _queueCountText;
@@ -12,7 +12,7 @@ public class CharacterButton : MonoBehaviour
     private void Awake()
     {
         _queueCountText = GetComponentInChildren<TextMeshProUGUI>();
-        GameManager.OnQueueChanged += UpdateQueueIndex;
+        DeployManager.OnQueueChanged += UpdateQueueIndex;
     }
     private void Start()
     {
@@ -20,7 +20,7 @@ public class CharacterButton : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.OnQueueChanged -= UpdateQueueIndex;
+        DeployManager.OnQueueChanged -= UpdateQueueIndex;
     }
 
     public void UpdateQueueIndex()
@@ -31,14 +31,14 @@ public class CharacterButton : MonoBehaviour
         }
 
         // Filter queue to only include characters matching _assignedCharacter
-        _queueArray = GameManager.Instance._unitQueue.Where(c => c == _assignedUnit).ToArray();
+        _queueArray = DeployManager.Instance._unitQueue.Where(c => c == _assignedUnit).ToArray();
 
         _queueCountText.text = _queueArray.Length > 0 ? $"+ {_queueArray.Length}" : "";
     }
 
     private bool NullChecksForSafety()
     {
-        if (_assignedUnit == null || GameManager.Instance == null || GameManager.Instance._unitQueue == null)
+        if (_assignedUnit == null || DeployManager.Instance == null || DeployManager.Instance._unitQueue == null)
         {
             _queueCountText.text = "Error: Queue not initialized";
             return true;

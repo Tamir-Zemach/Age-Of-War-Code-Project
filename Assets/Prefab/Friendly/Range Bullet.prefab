@@ -73,10 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779015247a8c5946b9d58b7cab9e7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
-  _arcHeight: 1.5
   _destroyTime: 1
   _groundTag: Ground
+  _oppositeBase: Enemy Base
 --- !u!1 &2410811860092720564
 GameObject:
   m_ObjectHideFlags: 0

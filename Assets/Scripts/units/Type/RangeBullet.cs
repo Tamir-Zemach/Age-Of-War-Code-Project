@@ -9,6 +9,8 @@ public class RangeBullet : MonoBehaviour
     [SerializeField] private float _destroyTime;
     [Tooltip("The Bullet will get stuck on the GameObject with the tag:")]
     [SerializeField, TagSelector] private string _groundTag;
+    [Tooltip("The Base which can be attacked by the bullet:")]
+    [SerializeField, TagSelector] private string _oppositeBase;
     private Rigidbody rb;
     private Transform target;
     private int _strength;
@@ -81,6 +83,10 @@ public class RangeBullet : MonoBehaviour
             rb.isKinematic = true;
             _stuckOnGround = true;
         }
+        if (collision.gameObject.CompareTag(_oppositeBase))
+        {
+            GiveDamageToBase(collision.gameObject);
+        }
     }
 
 
@@ -90,6 +96,20 @@ public class RangeBullet : MonoBehaviour
         if (targetHealth != null)
         {
             targetHealth.GetHurt(_strength);
+        }
+    }
+    private void GiveDamageToBase(GameObject target)
+    {
+        EnemyBaseHealthManger enemyBaseHealth = target.GetComponent<EnemyBaseHealthManger>();
+        PlayerBaseHealthManager playerBaseHealth = target.GetComponent<PlayerBaseHealthManager>();
+
+        if (enemyBaseHealth != null)
+        {
+            enemyBaseHealth.GetHurt(_strength);
+        }
+        else if (playerBaseHealth != null)
+        {
+            playerBaseHealth.GetHurt(_strength);
         }
     }
 

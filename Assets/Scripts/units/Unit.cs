@@ -39,7 +39,7 @@ public class Unit : ScriptableObject
     [Tooltip("How much every Hit will give damage")]
     public int _strength = 1;
     [Tooltip("The amount of time before a Unit Attacks (when lower its faster)")]
-    public float _insialAttackDelay = 1;
+    public float _initialAttackDelay = 1;
 
 
 

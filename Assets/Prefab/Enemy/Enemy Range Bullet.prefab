@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyTime: 1
   _groundTag: Ground
+  _oppositeBase: Player Base
 --- !u!1 &2410811860092720564
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,18 +17,29 @@ public class Range : MonoBehaviour
         if (UnitBaseBehaviour != null)
         {
             UnitBaseBehaviour.OnAttack += Attack;
+            UnitBaseBehaviour.OnBaseAttack += BaseAttack;
         }
     }
 
     private void Attack(GameObject target)
     {
-        //CheckForTarget();
         _bulletInctance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         bulletScript = _bulletInctance.GetComponent<RangeBullet>();
 
         if (bulletScript != null)
         {
             bulletScript.Initialize(target.transform, unit._strength); 
+            bulletScript = null;
+        }
+    }
+    private void BaseAttack(GameObject target)
+    {
+        _bulletInctance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        bulletScript = _bulletInctance.GetComponent<RangeBullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.Initialize(target.transform, unit._strength);
             bulletScript = null;
         }
     }
