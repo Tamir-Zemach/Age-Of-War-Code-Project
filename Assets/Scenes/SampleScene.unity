@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _queueCountText: {fileID: 2130692275}
-  _assignedUnit: {fileID: 11400000, guid: 623f55ac9b5e61c4bacc3c1e921e85fc, type: 2}
+  _assignedUnit: {fileID: 11400000, guid: abeffcf5f1974a54faae254aa2480ddd, type: 2}
 --- !u!114 &288923434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
         m_MethodName: CharacterButtonPressed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 623f55ac9b5e61c4bacc3c1e921e85fc, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: abeffcf5f1974a54faae254aa2480ddd, type: 2}
           m_ObjectArgumentAssemblyTypeName: Unit, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -661,14 +661,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.73716456, g: 0.2991723, b: 0.7830189, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bbc97b0bb77fe2f4c88b5ab29d30cc68, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b5896f8fa3f06c43814aef1b3927100, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2858,6 +2858,7 @@ MonoBehaviour:
   _enemyPrefabsList:
   - {fileID: 7476198131129608348, guid: 24c6171552fef6c4ca2e6b752b3e7dee, type: 3}
   - {fileID: 7476198131129608348, guid: 401aa4e1fa2368146b7f64d28bc29846, type: 3}
+  - {fileID: 7476198131129608348, guid: 99516be2335f6b1478910acda10230c8, type: 3}
   _enemyBaseTag: Enemy Base
   _enemySpawnPoint: {fileID: 707129541}
   _minSpawnTime: 3

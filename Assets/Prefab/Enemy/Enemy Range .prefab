@@ -212,10 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ed07c8908a0d141a56d7bca8680aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unit: {fileID: 11400000, guid: 55dab93152946e243be0c6e8c3f37633, type: 2}
-  boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 1, g: 0, b: 0, a: 1}
-  _rayLengthForFriendlyUnit: 2
+  Unit: {fileID: 11400000, guid: 6ced9c7e0ee912247b25224ed18ef72e, type: 2}
 --- !u!114 &8781597469959657215
 MonoBehaviour:
   m_ObjectHideFlags: 0
