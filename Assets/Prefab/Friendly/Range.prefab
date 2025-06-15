@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5108236913548797374}
   - component: {fileID: 4367546647558013662}
   - component: {fileID: 5005095233045190237}
+  - component: {fileID: -2366087102893500513}
   m_Layer: 3
   m_Name: Range
   m_TagString: Friendly Character
@@ -97,9 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Unit: {fileID: 11400000, guid: 4d267ca1cd7cebd45815559c69cb9b4e, type: 2}
-  boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 0, g: 0.9193516, b: 1, a: 1}
-  _rayLengthForFriendlyUnit: 2
 --- !u!114 &5108236913548797374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +151,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2366087102893500513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906663908437237772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa8f00f13794ee4287cb30378b1daec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashTime: 0.2
 --- !u!1 &3298602149037429255
 GameObject:
   m_ObjectHideFlags: 0

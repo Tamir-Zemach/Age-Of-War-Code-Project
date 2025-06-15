@@ -1,9 +1,11 @@
+using System;
 using Assets.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitBaseBehaviour))]
 public class UnitHealthManager : MonoBehaviour
 {
+    public event Action OnHealthChanged;
     private Unit Unit;
     private UnitBaseBehaviour UnitBaseBehaviour;
     private int _currentHealth;
@@ -17,6 +19,7 @@ public class UnitHealthManager : MonoBehaviour
         public void GetHurt(int damage)
         {
             _currentHealth -= damage;
+            OnHealthChanged?.Invoke();
             if (_currentHealth <= 0)
             {
                 Die();
