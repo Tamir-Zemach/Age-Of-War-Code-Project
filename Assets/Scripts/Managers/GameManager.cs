@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] int _startingMoney;
-    [SerializeField] private Transform _characterSpawnPoint;
+    [SerializeField] private Transform _unitSpawnPoint;
 
     public Queue<Unit> _unitQueue = new Queue<Unit>();
     private bool isDeploying = false;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         {
             if (!SpawnArea._hasUnitInside)
             {
-                Instantiate(characterPrefab, _characterSpawnPoint.position, _characterSpawnPoint.rotation);
+                Instantiate(characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
                 timer = 0;
                 isDeploying = false;
                 DeployNextCharacter();

@@ -99,8 +99,9 @@ GameObject:
   - component: {fileID: 2934123799215340018}
   - component: {fileID: 7414829426990288914}
   - component: {fileID: 8781597469959657215}
+  - component: {fileID: 3795117851945770961}
   m_Layer: 6
-  m_Name: bad Character 1 (bad)
+  m_Name: Enemy Attacker
   m_TagString: Enemy Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,6 +194,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 635bca300d7bf7948aa7f39066c51e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3795117851945770961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7476198131129608348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df54dffb798c8ab4dbdc4ffbb478a896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7889377606003847327

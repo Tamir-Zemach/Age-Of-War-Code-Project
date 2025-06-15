@@ -8,8 +8,9 @@ TagManager:
   - Player Base
   - Enemy Character
   - Friendly Character
-  - Spawn Area
   - Ground
+  - Player Spawn Area
+  - Enemy Spawn Area
   layers:
   - Default
   - TransparentFX

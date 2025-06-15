@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitBaseBehaviour))]
@@ -16,8 +17,6 @@ public class UnitHealthManager : MonoBehaviour
         public void GetHurt(int damage)
         {
             _currentHealth -= damage;
-            Debug.Log($"Took {damage} damage! Current health: {_currentHealth}");
-
             if (_currentHealth <= 0)
             {
                 Die();
@@ -26,8 +25,9 @@ public class UnitHealthManager : MonoBehaviour
 
         private void Die()
         {
-            Debug.Log("Character has died!");
-            gameObject.SetActive(false); // Or trigger death animation
+        PlayerCurrency.Instance.AddMoney(Unit._moneyWhenKilled);
+        //TODO: Death Animation
+        Destroy(gameObject); 
         }
     }
 
