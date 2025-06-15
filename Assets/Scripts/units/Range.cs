@@ -28,7 +28,7 @@ public class Range : MonoBehaviour
 
         if (bulletScript != null)
         {
-            bulletScript.Initialize(target.transform, unit._strength); // Pass the target
+            bulletScript.Initialize(target.transform, unit._strength); 
             bulletScript = null;
         }
     }

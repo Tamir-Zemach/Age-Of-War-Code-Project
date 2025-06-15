@@ -2863,6 +2863,7 @@ MonoBehaviour:
   _enemySpawnPoint: {fileID: 707129541}
   _minSpawnTime: 3
   _maxSpawnTime: 12
+  _maxEnemies: 5
 --- !u!1 &2094208680
 GameObject:
   m_ObjectHideFlags: 0

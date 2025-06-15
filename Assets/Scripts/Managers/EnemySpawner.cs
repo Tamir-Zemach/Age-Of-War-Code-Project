@@ -2,11 +2,24 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Tooltip("List of enemy prefabs available for spawning.")]
     [SerializeField] private GameObject[] _enemyPrefabsList;
+
+    [Tooltip("Tag used to identify the enemy base in the scene.")]
     [SerializeField, TagSelector] private string _enemyBaseTag;
+
+    [Tooltip("The spawn point where enemies will appear.")]
     [SerializeField] private Transform _enemySpawnPoint;
+
+    [Tooltip("Minimum time interval before an enemy can spawn (can be a decimal value).")]
     [SerializeField] private float _minSpawnTime;
+
+    [Tooltip("Maximum time interval before an enemy can spawn (can be a decimal value).")]
     [SerializeField] private float _maxSpawnTime;
+
+    [Tooltip("Maximum number of enemies allowed to spawn.")]
+    [SerializeField] private int _maxEnemies;
+
     private SpawnArea _enemySpawnArea;
     private float _timer;
     private float _randomSpawnTimer;
@@ -43,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
 
     private bool CanDeploy()
     {
-        return _timer >= _randomSpawnTimer && _enemySpawnArea != null && !_enemySpawnArea._hasUnitInside;
+        return _timer >= _randomSpawnTimer && _enemySpawnArea != null && !_enemySpawnArea._hasUnitInside && EnemyCounter.EnemyCount < _maxEnemies;
     }
     private SpawnArea GetEnemyBase()
     {

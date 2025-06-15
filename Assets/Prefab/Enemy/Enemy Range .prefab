@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 8781597469959657215}
   - component: {fileID: -4629253259474190858}
   - component: {fileID: 6315753124182470090}
+  - component: {fileID: 1861016075694576909}
   m_Layer: 6
   m_Name: 'Enemy Range '
   m_TagString: Enemy Character
@@ -253,6 +254,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _flashTime: 0.2
+--- !u!114 &1861016075694576909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7476198131129608348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e14d13c2efe8da4ca9c6f21d59c6720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7889377606003847327
 GameObject:
   m_ObjectHideFlags: 0
