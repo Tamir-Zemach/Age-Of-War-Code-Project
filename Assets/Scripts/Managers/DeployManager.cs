@@ -75,7 +75,6 @@ public class DeployManager : MonoBehaviour
         UnitButtonPressed(unit);
     }
 
-
     private void UnitButtonPressed(Unit unit)
     {
         if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))

@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Scriptable Objects")]
     [SerializeField] private Unit[] _baseUnitAsset;
     public static Dictionary<UnitType, Unit> ModifiedUnitData { get; private set; }
     public static GameManager Instance;

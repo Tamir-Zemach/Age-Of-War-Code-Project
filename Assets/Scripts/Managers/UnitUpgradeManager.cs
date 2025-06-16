@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class UnitUpgradeManager : MonoBehaviour
 {
+    public static UnitUpgradeManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     [Header("Strength Upgrade Settings")]
     [Tooltip("Strength bonus added per upgrade")]
     [SerializeField] private int _strengthBonus;
@@ -35,33 +42,59 @@ public class UnitUpgradeManager : MonoBehaviour
     [SerializeField] private int _attackSpeedCostInc;
 
 
-    public void UpgradeStrength(Unit unit)
+    private void UpgradeStat(ref int stat, int bonus, ref int cost, int costInc)
     {
-        if (PlayerCurrency.Instance.HasEnoughMoney(_strengthCost))
+        if (PlayerCurrency.Instance.HasEnoughMoney(cost))
         {
-            PlayerCurrency.Instance.SubtractMoney(_strengthCost);
-            unit._strength += _strengthBonus;
-            _strengthCost += _strengthCostInc;
+            PlayerCurrency.Instance.SubtractMoney(cost);
+            stat += bonus;
+            cost += costInc;
         }
     }
+    private void UpgradeStatFloat(ref float stat, float bonus, ref int cost, int costInc)
+    {
+        if (PlayerCurrency.Instance.HasEnoughMoney(cost))
+        {
+            PlayerCurrency.Instance.SubtractMoney(cost);
+            stat += bonus;
+            cost += costInc;
+        }
+    }
+    public void UpgradeStrength(Unit unit) =>
+    UpgradeStat(ref unit._strength, _strengthBonus, ref _strengthCost, _strengthCostInc);
+    public void UpgradeRange(Unit unit) =>
+    UpgradeStat(ref unit._range, _rangeBonus, ref _rangeCost, _rangeCostInc);
+    public void UpgradeAttackSpeed(Unit unit) =>
+    UpgradeStatFloat(ref unit._initialAttackDelay, _attackSpeedBonus, ref _attackSpeedCost, _attackSpeedCostInc);
 
-    public void UpgradeRange(Unit unit)
-    {
-        if (PlayerCurrency.Instance.HasEnoughMoney(_rangeCost))
-        {
-            PlayerCurrency.Instance.SubtractMoney(_rangeCost);
-            unit._range += _rangeBonus;
-            _rangeCost += _rangeCostInc;
-        }
-    }
-
-    public void UpgradeAttackSpeed(Unit unit)
-    {
-        if (PlayerCurrency.Instance.HasEnoughMoney(_attackSpeedCost))
-        {
-            PlayerCurrency.Instance.SubtractMoney(_attackSpeedCost);
-            unit._initialAttackDelay += _attackSpeedBonus;
-            _attackSpeedCost += _attackSpeedCostInc;
-        }
-    }
 }
+
+    //public void UpgradeStrength(Unit unit)
+    //{
+    //    if (PlayerCurrency.Instance.HasEnoughMoney(_strengthCost))
+    //    {
+    //        PlayerCurrency.Instance.SubtractMoney(_strengthCost);
+    //        unit._strength += _strengthBonus;
+    //        _strengthCost += _strengthCostInc;
+    //    }
+    //}
+
+    //public void UpgradeRange(Unit unit)
+    //{
+    //    if (PlayerCurrency.Instance.HasEnoughMoney(_rangeCost))
+    //    {
+    //        PlayerCurrency.Instance.SubtractMoney(_rangeCost);
+    //        unit._range += _rangeBonus;
+    //        _rangeCost += _rangeCostInc;
+    //    }
+    //}
+
+    //public void UpgradeAttackSpeed(Unit unit)
+    //{
+    //    if (PlayerCurrency.Instance.HasEnoughMoney(_attackSpeedCost))
+    //    {
+    //        PlayerCurrency.Instance.SubtractMoney(_attackSpeedCost);
+    //        unit._initialAttackDelay += _attackSpeedBonus;
+    //        _attackSpeedCost += _attackSpeedCostInc;
+    //    }
+    //}

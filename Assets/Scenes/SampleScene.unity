@@ -1092,6 +1092,7 @@ GameObject:
   - component: {fileID: 440821823}
   - component: {fileID: 440821822}
   - component: {fileID: 440821821}
+  - component: {fileID: 440821824}
   m_Layer: 5
   m_Name: Strength Attacker Upgrade (2)
   m_TagString: Untagged
@@ -1213,6 +1214,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440821819}
   m_CullTransparentMesh: 1
+--- !u!114 &440821824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440821819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d05231245598814e994806dd63418b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 0
 --- !u!1 &672566934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1816,7 @@ GameObject:
   - component: {fileID: 876232771}
   - component: {fileID: 876232770}
   - component: {fileID: 876232769}
+  - component: {fileID: 876232772}
   m_Layer: 5
   m_Name: Strength Attacker Upgrade
   m_TagString: Untagged
@@ -1873,13 +1888,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2017559592}
-        m_TargetAssemblyTypeName: UnitUpgradeManager, Assembly-CSharp
-        m_MethodName: SetUnit
-        m_Mode: 2
+      - m_Target: {fileID: 876232772}
+        m_TargetAssemblyTypeName: UnitUpgradeButton, Assembly-CSharp
+        m_MethodName: UpgradeRange
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: f971429433c8a7143a03dfd101c9c187, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Unit, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1923,6 +1938,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876232766}
   m_CullTransparentMesh: 1
+--- !u!114 &876232772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876232766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d05231245598814e994806dd63418b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 0
 --- !u!1 &883557213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,6 +1963,7 @@ GameObject:
   - component: {fileID: 883557217}
   - component: {fileID: 883557216}
   - component: {fileID: 883557215}
+  - component: {fileID: 883557218}
   m_Layer: 5
   m_Name: Strength Attacker Upgrade (1)
   m_TagString: Untagged
@@ -2056,6 +2085,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883557213}
   m_CullTransparentMesh: 1
+--- !u!114 &883557218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883557213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d05231245598814e994806dd63418b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 0
 --- !u!1 &958624889
 GameObject:
   m_ObjectHideFlags: 0

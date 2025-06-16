@@ -37,7 +37,7 @@ public class Unit : ScriptableObject
 
     [Header("Unit Parameters")]
     [Tooltip("How far the unit detects opposite unit")]
-    public float _range;
+    public int _range;
     [Tooltip("The speed Of the Unit")]
     public float _speed = 1;
     [Tooltip("The Health Of the Unit")]
