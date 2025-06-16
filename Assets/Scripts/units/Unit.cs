@@ -1,8 +1,12 @@
+using Assets.Scripts.Enems;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Unit", order = 1)]
 public class Unit : ScriptableObject
 {
+    [Tooltip("The Unit Type:")]
+    public UnitType unitType;
+
     [Header("Friendly Unit Properties")]
     [Tooltip("The prefab to instansiate when deplyed")]
     public GameObject _characterPrefab;
@@ -29,6 +33,8 @@ public class Unit : ScriptableObject
     [Tooltip("The Unit will stop and attack when it encounters the GameObject with this Layer:")]
     [SerializeField, TagSelector] public LayerMask _enemyCharacterMask;
 
+
+
     [Header("Unit Parameters")]
     [Tooltip("How far the unit detects opposite unit")]
     public float _range;
@@ -53,4 +59,5 @@ public class Unit : ScriptableObject
 
     [Tooltip("How far the Unit detects other Friendly Units")]
     public float _rayLengthForFriendlyUnit = 2;
+
 }

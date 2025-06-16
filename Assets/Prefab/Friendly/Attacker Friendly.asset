@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
-  m_Name: Unit 3 Friendly
+  m_Name: Attacker Friendly
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 6578747469787437173, guid: 807f2b6c2ed9f8146be47706d839b5e1, type: 3}
-  _cost: 30
-  _deployDelayTime: 2
+  _characterPrefab: {fileID: 6578747469787437173, guid: 2d350e19883cdcb4f8d9461609a59c22, type: 3}
+  _cost: 10
+  _deployDelayTime: 1
   _moneyWhenKilled: 0
   _oppositeBaseTag: Enemy Base
   _friendlyUnitTag: Friendly Character
@@ -24,9 +24,9 @@ MonoBehaviour:
     m_Bits: 576
   _range: 2
   _speed: 2
-  _health: 150
-  _strength: 6
+  _health: 100
+  _strength: 10
   _initialAttackDelay: 1
   boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 0.8988769, g: 1, b: 0, a: 1}
+  boxColor: {r: 0, g: 1, b: 0.12270379, a: 1}
   _rayLengthForFriendlyUnit: 2

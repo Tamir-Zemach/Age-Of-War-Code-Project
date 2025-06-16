@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.Enems;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,14 +59,29 @@ public class DeployManager : MonoBehaviour
             }
         }
     }
+    public void DeployAttackerUnit()
+    {
+        Unit unit = GameManager.ModifiedUnitData[UnitType.Attacker];
+        UnitButtonPressed(unit);
+    }
+    public void DeployRangerUnit()
+    {
+        Unit unit = GameManager.ModifiedUnitData[UnitType.Ranger];
+        UnitButtonPressed(unit);
+    }
+    public void DeployTankUnit()
+    {
+        Unit unit = GameManager.ModifiedUnitData[UnitType.Tank];
+        UnitButtonPressed(unit);
+    }
 
-    public void UnitButtonPressed(Unit unit)
+
+    private void UnitButtonPressed(Unit unit)
     {
         if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
         {
             PlayerCurrency.Instance.SubtractMoney(unit._cost);
 
-            // Add the character to the queue
             _unitQueue.Enqueue(unit);
             OnQueueChanged?.Invoke();
 

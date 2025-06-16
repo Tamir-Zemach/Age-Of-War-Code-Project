@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
-  m_Name: Unit 1 Friendly
+  m_Name: Ranger Friendly
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 6578747469787437173, guid: 2d350e19883cdcb4f8d9461609a59c22, type: 3}
-  _cost: 10
-  _deployDelayTime: 1
+  _characterPrefab: {fileID: 2906663908437237772, guid: 60f55190c838fbf478d03148d24220f9, type: 3}
+  _cost: 20
+  _deployDelayTime: 1.5
   _moneyWhenKilled: 0
   _oppositeBaseTag: Enemy Base
   _friendlyUnitTag: Friendly Character
@@ -22,11 +22,12 @@ MonoBehaviour:
   _enemyCharacterMask:
     serializedVersion: 2
     m_Bits: 576
-  _range: 2
+  unitType: 1
+  _range: 6
   _speed: 2
-  _health: 100
-  _strength: 10
+  _health: 60
+  _strength: 8
   _initialAttackDelay: 1
   boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 0, g: 1, b: 0.12270379, a: 1}
+  boxColor: {r: 0, g: 0.1660657, b: 1, a: 1}
   _rayLengthForFriendlyUnit: 2

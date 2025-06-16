@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
-  m_Name: Unit 2 Friendly
+  m_Name: Tank Friendly
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 2906663908437237772, guid: 60f55190c838fbf478d03148d24220f9, type: 3}
-  _cost: 20
-  _deployDelayTime: 1.5
+  _characterPrefab: {fileID: 6578747469787437173, guid: 807f2b6c2ed9f8146be47706d839b5e1, type: 3}
+  _cost: 30
+  _deployDelayTime: 2
   _moneyWhenKilled: 0
   _oppositeBaseTag: Enemy Base
   _friendlyUnitTag: Friendly Character
@@ -22,11 +22,12 @@ MonoBehaviour:
   _enemyCharacterMask:
     serializedVersion: 2
     m_Bits: 576
-  _range: 6
+  unitType: 2
+  _range: 2
   _speed: 2
-  _health: 60
-  _strength: 8
+  _health: 150
+  _strength: 6
   _initialAttackDelay: 1
   boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 0, g: 0.1660657, b: 1, a: 1}
+  boxColor: {r: 0.8988769, g: 1, b: 0, a: 1}
   _rayLengthForFriendlyUnit: 2
