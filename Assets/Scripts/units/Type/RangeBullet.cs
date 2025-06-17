@@ -7,15 +7,20 @@ public class RangeBullet : MonoBehaviour
     
     [Tooltip("The Bullet will get destroy after this amount of time:")]
     [SerializeField] private float _destroyTime;
+
     [Tooltip("The Bullet will get stuck on the GameObject with the tag:")]
     [SerializeField, TagSelector] private string _groundTag;
+
     [Tooltip("The Base which can be attacked by the bullet:")]
     [SerializeField, TagSelector] private string _oppositeBase;
+
+    [Tooltip("The opposite unit that the bullet can hurt")]
+    [SerializeField, TagSelector] private string _oppositeUnit;
+
     private Rigidbody rb;
     private Transform target;
     private int _strength;
     private float _timer;
-    private bool _stuckOnGround = false;
     private float _arcHeight = 1.5f;
     private void Awake()
     {
@@ -28,6 +33,8 @@ public class RangeBullet : MonoBehaviour
 
         if (rb != null && target != null)
         {
+            //physics logic - i need deaper explantion
+
             Vector3 startPos = transform.position;
             Vector3 targetPos = target.position;
 
@@ -56,10 +63,7 @@ public class RangeBullet : MonoBehaviour
 
     private void Update()
     {
-        if (_stuckOnGround)
-        {
-            DestroyAfterCertainTime();
-        }
+        DestroyAfterCertainTime();
     }
     private void DestroyAfterCertainTime()
     {
@@ -73,7 +77,7 @@ public class RangeBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (target != null && collision.gameObject.CompareTag(target.tag))
+        if (collision.gameObject.CompareTag(_oppositeUnit))
         {
             GiveDamage(collision.gameObject);
             Destroy(gameObject);
@@ -81,7 +85,6 @@ public class RangeBullet : MonoBehaviour
         if (collision.gameObject.CompareTag(_groundTag))
         {
             rb.isKinematic = true;
-            _stuckOnGround = true;
         }
         if (collision.gameObject.CompareTag(_oppositeBase))
         {
@@ -117,16 +120,3 @@ public class RangeBullet : MonoBehaviour
 
 
 
-
-    //public void Initialize(Transform target, int strength)
-    //{
-    //    this.target = target;
-    //    _strength = strength;
-    //    if (rb != null)
-    //    {
-    //        Vector3 direction = (target.position - transform.position).normalized;
-    //        rb.AddForce(direction * speed, ForceMode.Impulse);
-    //        rb.AddForce(Vector3.up * arcHeight, ForceMode.Impulse);
-    //        //rb.linearVelocity = new Vector3(direction.x * speed, arcHeight, direction.z * speed);
-    //    
-    //}

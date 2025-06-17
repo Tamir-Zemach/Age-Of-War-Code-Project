@@ -39,51 +39,25 @@ public class DeployManager : MonoBehaviour
 
     private void Update()
     {
-        if (nextCharacter != null)
-        {
-            DeployWithDelay(nextCharacter._characterPrefab, nextCharacter._deployDelayTime);
-        }
+      if (nextCharacter != null)
+          DeployWithDelay();
     }
 
-    // Handles delayed deployment of a unit prefab
-    private void DeployWithDelay(GameObject characterPrefab, float deployDelayTime)
-    {
-        timer += Time.deltaTime;
-        if (timer >= nextCharacter._deployDelayTime)
-        {
-            if (!SpawnArea._hasUnitInside)
-            {
-                unitReference = Instantiate(characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
-
-                // Attempt to retrieve the UnitBaseBehaviour component from the spawned prefab
-                UnitBaseBehaviour behaviour = unitReference.GetComponent<UnitBaseBehaviour>();
-                if (behaviour != null)
-                {
-                    // Inject the runtime Unit instance data into the unit’s behavior
-                    behaviour.Initialize(nextCharacter);
-                }
-                timer = 0;
-                isDeploying = false;
-                DeployNextCharacter();
-            }
-        }
-    }
     public void DeployAttackerUnit()
     {
-        Unit unit = GameManager.ModifiedUnitData[UnitType.Attacker];
+        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Attacker);
         UnitButtonPressed(unit);
     }
     public void DeployRangerUnit()
     {
-        Unit unit = GameManager.ModifiedUnitData[UnitType.Ranger];
+        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Ranger);
         UnitButtonPressed(unit);
     }
     public void DeployTankUnit()
     {
-        Unit unit = GameManager.ModifiedUnitData[UnitType.Tank];
+        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Tank);
         UnitButtonPressed(unit);
     }
-
     private void UnitButtonPressed(Unit unit)
     {
         if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
@@ -118,6 +92,22 @@ public class DeployManager : MonoBehaviour
             isDeploying = false;
         }
     }
+    private void DeployWithDelay()
+    {
+        timer += Time.deltaTime;
+        if (timer >= nextCharacter._deployDelayTime && !SpawnArea._hasUnitInside)
+        {
+            unitReference = Instantiate(nextCharacter._characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
 
+            if (unitReference.TryGetComponent(out UnitBaseBehaviour behaviour))
+            {
+                behaviour.Initialize(nextCharacter);
+            }
+
+            timer = 0;
+            isDeploying = false;
+            DeployNextCharacter();
+        }
+    }
 
 }

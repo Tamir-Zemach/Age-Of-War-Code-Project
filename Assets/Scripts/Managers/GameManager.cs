@@ -54,6 +54,19 @@ public class GameManager : MonoBehaviour
             ModifiedUnitData[unit.unitType] = Instantiate(unit);
         }
     }
+
+    public Unit GetInstantiatedUnit(UnitType type)
+    {
+        if (ModifiedUnitData != null && ModifiedUnitData.TryGetValue(type, out var unit))
+        {
+            return unit;
+        }
+        else
+        {
+            Debug.LogWarning($"Unit of type {type} not found in ModifiedUnitData.");
+            return null;
+        }
+    }
 }
 
 

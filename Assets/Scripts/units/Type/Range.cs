@@ -29,7 +29,7 @@ public class Range : MonoBehaviour
         _bulletInctance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         bulletScript = _bulletInctance.GetComponent<RangeBullet>();
 
-        if (bulletScript != null)
+        if (bulletScript != null && target != null)
         {
             bulletScript.Initialize(target.transform, unit._strength); 
             bulletScript = null;

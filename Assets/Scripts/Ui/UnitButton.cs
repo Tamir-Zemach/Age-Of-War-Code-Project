@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.Enems;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,10 @@ public class UnitButton : MonoBehaviour
     [Tooltip("Text to dipsplay the queue index, needs to be child of this GameObject")]
     [SerializeField] private TextMeshProUGUI _queueCountText;
     private Unit[] _queueArray;
-    [SerializeField] private Unit _assignedUnit; 
+    private Unit _assignedUnit; 
+    [SerializeField] private UnitType _unitType; 
+
+
     private void Awake()
     {
         _queueCountText = GetComponentInChildren<TextMeshProUGUI>();
@@ -16,11 +20,16 @@ public class UnitButton : MonoBehaviour
     }
     private void Start()
     {
-        UpdateQueueIndex();
+        SetAssignedUnit(GameManager.Instance.GetInstantiatedUnit(_unitType));
     }
     private void OnDestroy()
     {
         DeployManager.OnQueueChanged -= UpdateQueueIndex;
+    }
+    public void SetAssignedUnit(Unit unit)
+    {
+        _assignedUnit = unit;
+        UpdateQueueIndex(); 
     }
 
     public void UpdateQueueIndex()

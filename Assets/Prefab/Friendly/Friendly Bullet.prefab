@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3252812258085967106}
   - component: {fileID: 7239519685767849629}
   m_Layer: 7
-  m_Name: Range Bullet
+  m_Name: Friendly Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,9 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779015247a8c5946b9d58b7cab9e7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destroyTime: 1
+  _destroyTime: 2
   _groundTag: Ground
   _oppositeBase: Enemy Base
+  _oppositeUnit: Enemy Character
 --- !u!1 &2410811860092720564
 GameObject:
   m_ObjectHideFlags: 0
