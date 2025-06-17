@@ -13,12 +13,15 @@ public class Range : MonoBehaviour
     private void Awake()
     {
         UnitBaseBehaviour = GetComponent<UnitBaseBehaviour>();
-        unit = UnitBaseBehaviour.Unit;
         if (UnitBaseBehaviour != null)
         {
             UnitBaseBehaviour.OnAttack += Attack;
             UnitBaseBehaviour.OnBaseAttack += BaseAttack;
         }
+    }
+    private void Start()
+    {
+        unit = UnitBaseBehaviour.Unit;
     }
 
     private void Attack(GameObject target)

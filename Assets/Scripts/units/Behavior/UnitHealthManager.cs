@@ -9,14 +9,14 @@ public class UnitHealthManager : MonoBehaviour
     private Unit Unit;
     private UnitBaseBehaviour UnitBaseBehaviour;
     private int _currentHealth;
-    private void Awake()
+    private void Start()
     {
         UnitBaseBehaviour = GetComponent<UnitBaseBehaviour>();
         Unit = UnitBaseBehaviour.Unit;
         _currentHealth = Unit._health;
     }
 
-        public void GetHurt(int damage)
+    public void GetHurt(int damage)
         {
             _currentHealth -= damage;
             OnHealthChanged?.Invoke();

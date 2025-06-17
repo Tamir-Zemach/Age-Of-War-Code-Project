@@ -23,7 +23,7 @@ public class DeployManager : MonoBehaviour
 
     private float timer;
     private Unit nextCharacter;
-
+    GameObject unitReference;
     private void Awake()
     {
         if (Instance == null)
@@ -45,6 +45,7 @@ public class DeployManager : MonoBehaviour
         }
     }
 
+    // Handles delayed deployment of a unit prefab
     private void DeployWithDelay(GameObject characterPrefab, float deployDelayTime)
     {
         timer += Time.deltaTime;
@@ -52,7 +53,15 @@ public class DeployManager : MonoBehaviour
         {
             if (!SpawnArea._hasUnitInside)
             {
-                Instantiate(characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
+                unitReference = Instantiate(characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
+
+                // Attempt to retrieve the UnitBaseBehaviour component from the spawned prefab
+                UnitBaseBehaviour behaviour = unitReference.GetComponent<UnitBaseBehaviour>();
+                if (behaviour != null)
+                {
+                    // Inject the runtime Unit instance data into the unit’s behavior
+                    behaviour.Initialize(nextCharacter);
+                }
                 timer = 0;
                 isDeploying = false;
                 DeployNextCharacter();

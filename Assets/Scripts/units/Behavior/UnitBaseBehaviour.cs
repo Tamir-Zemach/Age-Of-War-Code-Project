@@ -13,14 +13,14 @@ public class UnitBaseBehaviour : MonoBehaviour
     private NavMeshAgent _agent;
     private GameObject _enemyBase;
 
-    [Tooltip("The scriptable object that have all of the unit parameters")]
-    public Unit Unit;
-
     private bool _isAttacking = false;
     private Coroutine _currentCoroutine;
 
-    private void Awake()
+    public Unit Unit { get; private set; }
+
+    public void Initialize(Unit unitData)
     {
+        Unit = unitData;
         _agent = GetComponent<NavMeshAgent>();
         _enemyBase = GameObject.FindGameObjectWithTag(Unit._oppositeBaseTag);
         _agent.destination = _enemyBase.transform.position;

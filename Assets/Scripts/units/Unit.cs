@@ -7,7 +7,6 @@ public class Unit : ScriptableObject
     [Tooltip("The Unit Type:")]
     public UnitType unitType;
 
-    [Header("Friendly Unit Properties")]
     [Tooltip("The prefab to instansiate when deplyed")]
     public GameObject _characterPrefab;
     [Tooltip("How much money needed to deploy the Unit")]

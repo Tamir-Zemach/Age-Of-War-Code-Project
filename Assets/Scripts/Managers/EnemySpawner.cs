@@ -1,9 +1,14 @@
+using System.Collections.Generic;
+using Assets.Scripts.Enems;
 using UnityEngine;
+
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Tooltip("List of enemy prefabs available for spawning.")]
-    [SerializeField] private GameObject[] _enemyPrefabsList;
+    private Dictionary<UnitType, Unit> _enemyUnitData = new Dictionary<UnitType, Unit>();
+
+    [Tooltip("Enemy Unit ScriptableObjects")]
+    [SerializeField] private Unit[] _enemyUnitAssets;
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
     [SerializeField, TagSelector] private string _enemyBaseTag;
@@ -28,8 +33,15 @@ public class EnemySpawner : MonoBehaviour
     {
         GetEnemyBase();
         _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
+        InitializeEnemyUnitData();
     }
-
+    private void InitializeEnemyUnitData()
+    {
+        foreach (var unit in _enemyUnitAssets)
+        {
+            _enemyUnitData[unit.unitType] = Instantiate(unit);
+        }
+    }
     private void Update()
     {
         SpawnPrefabsWithRandomTime();
@@ -48,10 +60,27 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnRandomEnemyPrefab()
     {
-        if (_enemyPrefabsList.Length == 0) return;
+        // Don't proceed if there are no enemy unit assets assigned
+        if (_enemyUnitAssets.Length == 0) return;
 
-        int randomIndex = Random.Range(0, _enemyPrefabsList.Length);
-        Instantiate(_enemyPrefabsList[randomIndex], _enemySpawnPoint.position, _enemySpawnPoint.rotation);
+        int randomIndex = Random.Range(0, _enemyUnitAssets.Length);
+        Unit unitData = _enemyUnitAssets[randomIndex];
+
+        GameObject enemyReference = Instantiate(
+            unitData._characterPrefab,
+            _enemySpawnPoint.position,
+            _enemySpawnPoint.rotation
+        );
+
+        // Retrieve the UnitBaseBehaviour component attached to the prefab
+        UnitBaseBehaviour behaviour = enemyReference.GetComponent<UnitBaseBehaviour>();
+
+        // If the component exists, inject the initialized Unit instance into its logic
+        if (behaviour != null)
+        {
+            // Look up the pre-instantiated enemy unit data from the dictionary and assign it
+            behaviour.Initialize(_enemyUnitData[unitData.unitType]);
+        }
     }
 
     private bool CanDeploy()

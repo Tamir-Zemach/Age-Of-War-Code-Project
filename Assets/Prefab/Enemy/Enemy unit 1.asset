@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
   m_Name: Enemy unit 1
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 0}
+  unitType: 0
+  _characterPrefab: {fileID: 7476198131129608348, guid: 24c6171552fef6c4ca2e6b752b3e7dee, type: 3}
   _cost: 0
   _deployDelayTime: 0
   _moneyWhenKilled: 10

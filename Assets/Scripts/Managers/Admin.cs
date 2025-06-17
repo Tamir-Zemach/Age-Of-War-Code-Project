@@ -18,7 +18,7 @@ public class Admin : MonoBehaviour
     public bool _easyMode;
     [SerializeField] private float _easyModeMinSpawnTime;
     [SerializeField] private float _easyModeMaxSpawnTime;
-    private void Test()
+    private void AdminFunctions()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -38,7 +38,7 @@ public class Admin : MonoBehaviour
         }
         if (_displayUnitParameters)
         {
-            DisplayUnitParameters(unitToDisplayParameters);
+            DisplayUnitParametersFromGameManager();
         }
     }
 
@@ -52,21 +52,21 @@ public class Admin : MonoBehaviour
         EnemySpawner.EasyMode(_easyModeMinSpawnTime, _easyModeMaxSpawnTime);
     }
 
-    public void DisplayUnitParameters(Unit[] unit)
+    public void DisplayUnitParametersFromGameManager()
     {
-        foreach(var un in unitToDisplayParameters)
+        foreach (var kvp in GameManager.ModifiedUnitData)
         {
-            Debug.Log($"{un.name} speed :{un._speed}, " +
-                        $"Strength: {un._strength}, " +
-                        $"attack Speed: {un._initialAttackDelay}, " +
-                        $"range: {un._range}");
+            Unit un = kvp.Value;
+            Debug.Log($"{un.name} speed: {un._speed}, " +
+                      $"Strength: {un._strength}, " +
+                      $"Attack Speed: {un._initialAttackDelay}, " +
+                      $"Range: {un._range}");
         }
-
     }
 
     private void Update()
     {
-        Test();
+        AdminFunctions();
     }
 
 }
