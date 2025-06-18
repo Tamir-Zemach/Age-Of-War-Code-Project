@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        PlayerHealth.Instance.DisplyHealthInConsole();
         if (PlayerHealth.Instance.PlayerDied())
         {
             GameOver();

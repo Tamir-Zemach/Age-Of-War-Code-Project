@@ -15,8 +15,9 @@ public class Admin : MonoBehaviour
 
 
     public Unit[] unitToDisplayParameters;
-    public bool _displayFrienlyUnitParameters;
-    public bool _displayEnemyUnitParameters;
+    public bool _displayFrienlyUnitParametersInConsole;
+    public bool _displayEnemyUnitParametersInConsole;
+    public bool _displayHealthInConsole;
 
     public bool _easyMode;
     [SerializeField] private float _easyModeMinSpawnTime;
@@ -44,13 +45,17 @@ public class Admin : MonoBehaviour
         {
             EasyMode();
         }
-        if (_displayFrienlyUnitParameters)
+        if (_displayFrienlyUnitParametersInConsole)
         {
             DisplayFriendlyUnitParametersFromGameManager();
         }
-        if (_displayEnemyUnitParameters)
+        if (_displayEnemyUnitParametersInConsole)
         {
             DisplayEnemyUnitParametersFromGameManager();
+        }
+        if (_displayHealthInConsole)
+        {
+            PlayerHealth.Instance.DisplyHealthInConsole();
         }
     }
 
@@ -70,8 +75,9 @@ public class Admin : MonoBehaviour
         {
             Unit un = kvp.Value;
             Debug.Log($"{un.name} " +
-                      $"Unit Cost: {un._cost}" +
-                      $"speed: {un._speed}, " +
+                      $"Unit Cost: {un._cost}," +
+                      $"Health: {un._health} " +
+                      $"Speed: {un._speed}, " +
                       $"Strength: {un._strength}, " +
                       $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
                       $"Range: {un._range}");
@@ -84,6 +90,7 @@ public class Admin : MonoBehaviour
             Unit un = kvp.Value;
             Debug.Log($"{un.name} " +
                       $"Unit Money Gain: {un._moneyWhenKilled}" +
+                      $"Health: {un._health} " +
                       $"speed: {un._speed}, " +
                       $"Strength: {un._strength}, " +
                       $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
