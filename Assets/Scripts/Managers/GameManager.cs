@@ -42,7 +42,8 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         PlayerCurrency.Instance.AddMoney(_startingMoney);
-        PlayerHealth.Instance.AddHealth(_startingHealth);
+        PlayerHealth.Instance.SetMaxHealth(_startingHealth);
+        PlayerHealth.Instance.FullHealth();
         Level1EnemyBaseHealth = _level1EnemyBaseHealth;
     }
     private void CreateScriptableObjInstance()
@@ -66,6 +67,31 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Unit of type {type} not found in ModifiedUnitData.");
             return null;
         }
+    }
+    public List<Unit> GetAllInstantiatedUnits()
+    {
+        var allUnits = new List<Unit>();
+
+        if (ModifiedUnitData != null)
+        {
+            foreach (var kvp in ModifiedUnitData)
+            {
+                if (kvp.Value != null)
+                {
+                    allUnits.Add(kvp.Value);
+                }
+                else
+                {
+                    Debug.LogWarning($"Unit of type {kvp.Key} is null in ModifiedUnitData.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("ModifiedUnitData is null.");
+        }
+
+        return allUnits;
     }
 }
 

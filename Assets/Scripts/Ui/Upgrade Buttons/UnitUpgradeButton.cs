@@ -2,7 +2,7 @@ using Assets.Scripts.Enems;
 using Assets.Scripts;
 using UnityEngine;
 
-public class UpgradeButton : MonoBehaviour
+public class UnitUpgradeButton : MonoBehaviour
 {
     [Tooltip("Which unit should be upgraded")]
     [SerializeField] private UnitType unitType;

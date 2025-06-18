@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 public class Admin : MonoBehaviour
@@ -8,12 +9,14 @@ public class Admin : MonoBehaviour
 
     public int _moneyToAdd;
     public int _moneyToSubstract;
+    public int _healthToAdd;
 
     public int _gameSpeed = 1 ;
 
 
     public Unit[] unitToDisplayParameters;
-    public bool _displayUnitParameters;
+    public bool _displayFrienlyUnitParameters;
+    public bool _displayEnemyUnitParameters;
 
     public bool _easyMode;
     [SerializeField] private float _easyModeMinSpawnTime;
@@ -28,6 +31,11 @@ public class Admin : MonoBehaviour
         {
             PlayerCurrency.Instance.SubtractMoney(_moneyToSubstract);
         }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            PlayerHealth.Instance.AddHealth(_healthToAdd);
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GameSpeedControl();
@@ -36,9 +44,13 @@ public class Admin : MonoBehaviour
         {
             EasyMode();
         }
-        if (_displayUnitParameters)
+        if (_displayFrienlyUnitParameters)
         {
-            DisplayUnitParametersFromGameManager();
+            DisplayFriendlyUnitParametersFromGameManager();
+        }
+        if (_displayEnemyUnitParameters)
+        {
+            DisplayEnemyUnitParametersFromGameManager();
         }
     }
 
@@ -52,14 +64,29 @@ public class Admin : MonoBehaviour
         EnemySpawner.EasyMode(_easyModeMinSpawnTime, _easyModeMaxSpawnTime);
     }
 
-    public void DisplayUnitParametersFromGameManager()
+    public void DisplayFriendlyUnitParametersFromGameManager()
     {
         foreach (var kvp in GameManager.ModifiedUnitData)
         {
             Unit un = kvp.Value;
-            Debug.Log($"{un.name} speed: {un._speed}, " +
+            Debug.Log($"{un.name} " +
+                      $"Unit Cost: {un._cost}" +
+                      $"speed: {un._speed}, " +
                       $"Strength: {un._strength}, " +
-                      $"Attack Speed: {un._initialAttackDelay}, " +
+                      $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
+                      $"Range: {un._range}");
+        }
+    }
+    public void DisplayEnemyUnitParametersFromGameManager()
+    {
+        foreach (var kvp in EnemySpawner._enemyUnitData)
+        {
+            Unit un = kvp.Value;
+            Debug.Log($"{un.name} " +
+                      $"Unit Money Gain: {un._moneyWhenKilled}" +
+                      $"speed: {un._speed}, " +
+                      $"Strength: {un._strength}, " +
+                      $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
                       $"Range: {un._range}");
         }
     }

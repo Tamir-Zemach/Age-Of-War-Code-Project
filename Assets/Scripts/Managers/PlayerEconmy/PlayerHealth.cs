@@ -16,23 +16,43 @@ namespace Assets.Scripts.Managers
         // Private constructor to prevent external instantiation
         private PlayerHealth() { }
 
-        private int _health = 0;
-        public int Health => _health; // Read-only property
+        private int _currentHealth = 1;
+        private int _maxHealth = 2;
 
         public int AddHealth(int amount)
         {
-            _health += ValidateAmount(Math.Max(0, amount), "adding");
+            _currentHealth += ValidateAmount(Math.Max(0, amount), "adding");
+            if (_currentHealth > _maxHealth)
+            {
+                _currentHealth = _maxHealth;
+                return _currentHealth;
+            }
             OnHealthChanged?.Invoke();
-            return _health;
+            return _currentHealth;
         }
 
         public int SubtractHealth(int amount)
         {
-            _health -= ValidateAmount(Math.Max(0, amount), "subtracting");
+            _currentHealth -= ValidateAmount(Math.Max(0, amount), "subtracting");
             OnHealthChanged?.Invoke();
-            return _health;
+            return _currentHealth;
+        }
+        public int IncreaseMaxHealth(int amount)
+        {
+            _maxHealth += ValidateAmount(Math.Max(0, amount), "adding");
+            return _maxHealth;
         }
 
+        public int SetMaxHealth(int amount)
+        {
+            return _maxHealth = amount;
+        }
+
+        public void FullHealth()
+        {
+            _currentHealth = _maxHealth;
+            OnHealthChanged?.Invoke();
+        }
 
         private int ValidateAmount(int amount, string operation)
         {
@@ -46,11 +66,11 @@ namespace Assets.Scripts.Managers
 
         public bool PlayerDied()
         {
-            return _health <= 0; 
+            return _currentHealth <= 0; 
         }
         public void DisplyHealthInConsole()
         {
-            Debug.Log($"current health amount = {_health}");
+            Debug.Log($"Current health amount = {_currentHealth}, Max health amount = {_maxHealth}");
         }
 
     }

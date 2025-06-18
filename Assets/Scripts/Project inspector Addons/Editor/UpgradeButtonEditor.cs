@@ -2,7 +2,7 @@
 using Assets.Scripts.Enems;
 using UnityEditor;
 
-[CustomEditor(typeof(UpgradeButton))]
+[CustomEditor(typeof(UnitUpgradeButton))]
 public class UpgradeButtonEditor : Editor
 {
     public override void OnInspectorGUI()

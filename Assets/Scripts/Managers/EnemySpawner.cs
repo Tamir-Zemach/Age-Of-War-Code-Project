@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private Dictionary<UnitType, Unit> _enemyUnitData = new Dictionary<UnitType, Unit>();
+    public static EnemySpawner Instance;
+    public static Dictionary<UnitType, Unit> _enemyUnitData = new Dictionary<UnitType, Unit>();
 
     [Tooltip("Enemy Unit ScriptableObjects")]
     [SerializeField] private Unit[] _enemyUnitAssets;
@@ -31,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         GetEnemyBase();
         _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
         InitializeEnemyUnitData();
@@ -105,5 +107,32 @@ public class EnemySpawner : MonoBehaviour
         _minSpawnTime = minSpawnTime;
         _maxSpawnTime = maxSpawnTime;
     }
+
+    public List<Unit> GetAllInstantiatedUnits()
+    {
+        var allUnits = new List<Unit>();
+
+        if (_enemyUnitData != null)
+        {
+            foreach (var kvp in _enemyUnitData)
+            {
+                if (kvp.Value != null)
+                {
+                    allUnits.Add(kvp.Value);
+                }
+                else
+                {
+                    Debug.LogWarning($"Unit of type {kvp.Key} is null in _enemyUnitData.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("_enemyUnitData is null.");
+        }
+
+        return allUnits;
+    }
+
 
 }
