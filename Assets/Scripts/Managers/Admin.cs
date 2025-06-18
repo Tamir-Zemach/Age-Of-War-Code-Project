@@ -23,15 +23,15 @@ public class Admin : MonoBehaviour
     [SerializeField] private float _easyModeMaxSpawnTime;
     private void AdminFunctions()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             PlayerCurrency.Instance.AddMoney(_moneyToAdd);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             PlayerCurrency.Instance.SubtractMoney(_moneyToSubstract);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             PlayerHealth.Instance.AddHealth(_healthToAdd);
         }
