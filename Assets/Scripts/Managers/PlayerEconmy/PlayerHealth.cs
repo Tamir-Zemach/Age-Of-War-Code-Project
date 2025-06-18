@@ -18,6 +18,8 @@ namespace Assets.Scripts.Managers
 
         private int _currentHealth = 1;
         private int _maxHealth = 2;
+        public int CurrentHealth => _currentHealth; // Read-only property
+        public int MaxHealth => _maxHealth; // Read-only property
 
         public int AddHealth(int amount)
         {
@@ -45,7 +47,9 @@ namespace Assets.Scripts.Managers
 
         public int SetMaxHealth(int amount)
         {
-            return _maxHealth = amount;
+            _maxHealth = amount;
+            OnHealthChanged?.Invoke();
+            return _maxHealth;
         }
 
         public void FullHealth()

@@ -89,6 +89,7 @@ public class RangeBullet : MonoBehaviour
         if (collision.gameObject.CompareTag(_oppositeBase))
         {
             GiveDamageToBase(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 
