@@ -3,7 +3,7 @@ using Assets.Scripts.Managers;
 using TMPro;
 using UnityEngine;
 
-public class TestUiDisplay : MonoBehaviour
+public class TextUiDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _moneyText;
     [SerializeField] private TextMeshProUGUI _healthText;
