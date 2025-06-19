@@ -1,75 +1,68 @@
 using System.Collections;
+using Assets.Scripts.turrets;
 using UnityEngine;
 
 public class TurretBaseBehavior : MonoBehaviour
 {
-    [Header("Detection Settings")]
-    [Tooltip("Layer that contains units considered enemies.")]
-    [SerializeField] private LayerMask _oppositeUnitLayer;
 
-    [Tooltip("Tag assigned to the friendly base GameObject.")]
-    [SerializeField, TagSelector] private string _friendlyBase;
-
-    [Tooltip("Origin point from which the BoxCast is performed.")]
-    [SerializeField] private Transform _boxCastOrigin;
-
-    [Tooltip("How far the turret detect oppsite Unit")]
-    [SerializeField] private float _range;
-
-    [Tooltip("Size of the BoxCast.")]
-    [SerializeField] private Vector3 _boxSize = Vector3.one;
-
-    [Header("Attack Settings")]
-    [Tooltip("Delay before the turret fires its first shot after spotting an enemy.")]
-    [SerializeField] private float _insialAttackDelay;
-
-    [Tooltip("How much damage each bullet inflicts.")]
-    [SerializeField] private int _bulletStrength;
-
-    [Tooltip("How much force will be added to the bullet at the start.")]
-    [SerializeField] private int _bulletSpeed;
-
-    [Tooltip("Projectile prefab to spawn when attacking.")]
-    [SerializeField] private GameObject _bulletPrefab;
+    //"Origin point from which the BoxCast is performed
+    private Transform _DetectionOrigin;
 
     [Tooltip("Transform from where bullets will be instantiated.")]
     [SerializeField] private Transform _bulletSpawnPos;
 
     private Vector3 _origin;
     private Vector3 _direction;
+    private Quaternion _rotation;
     private bool _isAttacking;
     private Coroutine _currentCoroutine;
+    private TurretData _turretData;
 
-    public Vector3 BoxSize => _boxSize;
     public Vector3 Origin => _origin;
     public Vector3 Direction => _direction;
-    public Transform BoxCastOrigin => _boxCastOrigin;
-    public float Range => _range;
-    public LayerMask OppositeUnitLayer => _oppositeUnitLayer;
 
+    public Quaternion Rotation => _rotation;
     private void OnValidate()
     {
-        _boxCastOrigin = GameObject.FindGameObjectWithTag(_friendlyBase).GetComponent<Transform>();
-        _origin = _boxCastOrigin.position;
-        _direction = _boxCastOrigin.forward;
+        if (Application.isPlaying) return;
+        if (GameManager.Instance != null)
+        {
+            GetData();
+        }
     }
 
     private void Awake()
     {
-        _boxCastOrigin = GameObject.FindGameObjectWithTag(_friendlyBase).GetComponent<Transform>();
-        _origin = _boxCastOrigin.position;
-        _direction = _boxCastOrigin.forward;
+        GetData();
     }
+    private void GetData()
+    {
+        _turretData = GameManager.Instance.GetTurretData();
+
+        GameObject baseObject = GameObject.FindGameObjectWithTag(_turretData.FriendlyBase);
+        if (baseObject != null)
+        {
+            _DetectionOrigin = baseObject.transform;
+            _origin = _DetectionOrigin.position;
+            _direction = _DetectionOrigin.forward;
+            _rotation = _DetectionOrigin.rotation;
+        }
+        else
+        {
+            Debug.LogWarning("TurretBaseBehavior: Could not find object with tag " + _turretData.FriendlyBase);
+        }
+    }
+
 
     private void Update()
     {
-        CheckForEnemys();
+        CheckForEnemies();
     }
 
-    private void CheckForEnemys()
+    private void CheckForEnemies()
     {
-        if (Physics.BoxCast(_origin, _boxSize, _direction, out var hitInfo,
-            _boxCastOrigin.rotation, _range, _oppositeUnitLayer))
+        if (Physics.BoxCast(_origin, _turretData.BoxSize, _direction, out var hitInfo,
+            _DetectionOrigin.rotation, _turretData.Range, _turretData.OppositeUnitLayer))
         {
             gameObject.transform.LookAt(hitInfo.transform);
             if (!_isAttacking)
@@ -86,26 +79,16 @@ public class TurretBaseBehavior : MonoBehaviour
     private void Attack()
     {
         _isAttacking = true;
-        _currentCoroutine = StartCoroutine(AttackLoop(_insialAttackDelay));
+        _currentCoroutine = StartCoroutine(AttackLoop(_turretData.InitialAttackDelay));
     }
 
     IEnumerator AttackLoop(float insialAttackDelay)
     {
         yield return new WaitForSeconds(insialAttackDelay);
-        InstantiateBulletAndSetStrength();
+        Instantiate(_turretData.BulletPrefab, _bulletSpawnPos.position, _bulletSpawnPos.rotation);
         _isAttacking = false;
     }
 
-    private void InstantiateBulletAndSetStrength()
-    {
-        GameObject bulletReference = Instantiate(_bulletPrefab, _bulletSpawnPos.position, _bulletSpawnPos.rotation);
-
-        TurretBullet bulletScript = bulletReference.GetComponent<TurretBullet>();
-        if (bulletScript != null)
-        {
-            bulletScript.SetBulletParameters(_bulletStrength, _bulletSpeed);
-        }
-    }
 
     private void ResetAttackStateIfNeeded()
     {

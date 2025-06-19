@@ -1,39 +1,43 @@
+using Assets.Scripts.turrets;
 using UnityEngine;
 
 [RequireComponent(typeof(TurretBaseBehavior))]
 
 public class TurretDebugger : MonoBehaviour
 {
+    private TurretData _turretData;
     private TurretBaseBehavior TurretBaseBehavior;
 
     [SerializeField] private Color _boxColor = Color.red;
 
     private void OnDrawGizmos()
     {
+        if (_turretData == null)
+            _turretData = GameManager.Instance.GetTurretData();
         if (TurretBaseBehavior == null)
-            TurretBaseBehavior = GetComponent<TurretBaseBehavior>();
+            TurretBaseBehavior = gameObject.GetComponent<TurretBaseBehavior>();
 
         Gizmos.color = _boxColor;
 
         // Perform the BoxCast
         if (Physics.BoxCast(TurretBaseBehavior.Origin,
-            TurretBaseBehavior.BoxSize, 
+            _turretData.BoxSize,
             TurretBaseBehavior.Direction, 
-            out RaycastHit hitInfo, 
-            TurretBaseBehavior.BoxCastOrigin.rotation, 
-            TurretBaseBehavior.Range,
-            TurretBaseBehavior.OppositeUnitLayer))
+            out RaycastHit hitInfo,
+            TurretBaseBehavior.Rotation, 
+            _turretData.Range,
+            _turretData.OppositeUnitLayer))
         {
             // Draw the hit box
-            Gizmos.DrawWireCube(hitInfo.point, TurretBaseBehavior.BoxSize);
+            Gizmos.DrawWireCube(hitInfo.point, _turretData.BoxSize);
         }
 
         // Draw the initial box
-        Gizmos.DrawWireCube(TurretBaseBehavior.Origin, TurretBaseBehavior.BoxSize);
+        Gizmos.DrawWireCube(TurretBaseBehavior.Origin, _turretData.BoxSize);
 
         // Draw the movement path
-        Gizmos.DrawLine(TurretBaseBehavior.Origin, 
-            TurretBaseBehavior.Origin + TurretBaseBehavior.Direction * TurretBaseBehavior.Range);
+        Gizmos.DrawLine(TurretBaseBehavior.Origin,
+            TurretBaseBehavior.Origin + TurretBaseBehavior.Direction * _turretData.Range);
 
     }
 

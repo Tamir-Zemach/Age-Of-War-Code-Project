@@ -1,30 +1,28 @@
-
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using Assets.Scripts;
 using Assets.Scripts.Enems;
 using Assets.Scripts.Managers;
+using Assets.Scripts.turrets;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Tooltip("Scriptable Objects")]
-    [SerializeField] private Unit[] _baseUnitAsset;
+    private TurretData _turretData;
     public static Dictionary<UnitType, Unit> ModifiedUnitData { get; private set; }
     public static GameManager Instance;
 
     [SerializeField] private int _startingMoney;
     [SerializeField] private int _startingHealth;
-    [SerializeField] private int _level1EnemyBaseHealth; 
-    public int Level1EnemyBaseHealth { get; private set; } 
+    [SerializeField] private int _level1EnemyBaseHealth;
+    public int Level1EnemyBaseHealth { get; private set; }
 
     private void Awake()
     {
         Instance = this;
         StartGame();
         CreateScriptableObjInstance();
-
     }
+
     private void Update()
     {
         if (PlayerHealth.Instance.PlayerDied())
@@ -32,6 +30,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
     }
+
     private void GameOver()
     {
         Debug.Log("Game Over");
@@ -45,15 +44,20 @@ public class GameManager : MonoBehaviour
         PlayerHealth.Instance.FullHealth();
         Level1EnemyBaseHealth = _level1EnemyBaseHealth;
     }
+
     private void CreateScriptableObjInstance()
     {
         ModifiedUnitData = new Dictionary<UnitType, Unit>();
 
-        foreach (var unit in _baseUnitAsset)
+        Unit[] friendlyUnits = Resources.LoadAll<Unit>("Friendly Units");
+        foreach (var unit in friendlyUnits)
         {
             ModifiedUnitData[unit.unitType] = Instantiate(unit);
         }
+
+        _turretData = Instantiate(Resources.Load<TurretData>("FriendlyTurret"));
     }
+
 
     public Unit GetInstantiatedUnit(UnitType type)
     {
@@ -91,6 +95,18 @@ public class GameManager : MonoBehaviour
         }
 
         return allUnits;
+    }
+    public TurretData GetTurretData()
+    {
+        if (_turretData != null)
+        {
+            return _turretData;
+        }
+        else
+        {
+            Debug.LogWarning($"TurretData not found");
+            return null;
+        }
     }
 }
 

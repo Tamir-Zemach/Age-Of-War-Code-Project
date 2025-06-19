@@ -1,3 +1,4 @@
+using Assets.Scripts.turrets;
 using UnityEngine;
 
 
@@ -7,17 +8,14 @@ public class TurretBullet : MonoBehaviour
 {
     private Rigidbody _rb;
     
-    [Tooltip("Tag assigned to the opposite Unit")]
-    [SerializeField, TagSelector] private string _oppositeUnitTag;
     [SerializeField] private float _destroyTime;
-    private int _strength;
-    private int _speed;
     private bool _hasHit;
     private float _timer;
-
+    private TurretData _turretData;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _turretData = GameManager.Instance.GetTurretData();
         
     }
     private void Start()
@@ -26,7 +24,7 @@ public class TurretBullet : MonoBehaviour
     }
     private void ApplyForceAtStart()
     {
-        _rb.AddForce(transform.forward * _speed, ForceMode.Impulse);
+        _rb.AddForce(transform.forward * _turretData.BulletSpeed, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,7 +32,7 @@ public class TurretBullet : MonoBehaviour
         //check for hit one time
         if (_hasHit) return;
 
-        if (other.gameObject.CompareTag(_oppositeUnitTag))
+        if (other.gameObject.CompareTag(_turretData.OppositeUnitTag))
         {
             _hasHit = true;
             GiveDamage(other.gameObject);
@@ -46,7 +44,7 @@ public class TurretBullet : MonoBehaviour
         UnitHealthManager targetHealth = target.GetComponent<UnitHealthManager>();
         if (targetHealth != null)
         {
-            targetHealth.GetHurt(_strength);
+            targetHealth.GetHurt(_turretData.BulletStrength);
         }
     }
     private void Update()
@@ -61,9 +59,5 @@ public class TurretBullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void SetBulletParameters(int strength,int speed)
-    {
-        _strength = strength;
-        _speed = speed;
-    }
+
 }
