@@ -25,7 +25,7 @@ public class TurretButton : MonoBehaviour
     {
         foreach (TurretSpawnPoint spawnPoint in turretSpawnPoints)
         {
-            if (!spawnPoint.hasTurret)
+            if (!spawnPoint.HasTurret && spawnPoint.IsUnlocked)
             {
                 return true; 
             }
@@ -36,7 +36,7 @@ public class TurretButton : MonoBehaviour
     {
         foreach (TurretSpawnPoint spawnPoint in turretSpawnPoints)
         {
-            if (!spawnPoint.hasTurret)
+            if (!spawnPoint.HasTurret)
             {
                 return spawnPoint;
             }
@@ -52,7 +52,7 @@ public class TurretButton : MonoBehaviour
             PlayerCurrency.Instance.SubtractMoney(_turretCost);
 
             Instantiate(_turretPrefab, availablePoint.transform.position, availablePoint.transform.rotation);
-            availablePoint.hasTurret = true;
+            availablePoint.HasTurret = true;
         }
     }
 }

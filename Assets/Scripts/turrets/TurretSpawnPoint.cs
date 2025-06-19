@@ -1,10 +1,15 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.turrets
+public class TurretSpawnPoint : MonoBehaviour
 {
-    public class TurretSpawnPoint : MonoBehaviour
+    [SerializeField] private GameObject highlightGfx;
+
+    public bool HasTurret;
+    public bool IsUnlocked { get; set; }
+
+    public void ShowHighlight(bool show)
     {
-        public bool hasTurret = false;
+        if (highlightGfx != null)
+            highlightGfx.SetActive(show);
     }
 }
