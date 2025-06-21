@@ -7,7 +7,8 @@ using UnityEngine;
 public class TurretBullet : MonoBehaviour
 {
     private Rigidbody _rb;
-    
+
+    [SerializeField, TagSelector] private string _groundTag;
     [SerializeField] private float _destroyTime;
     private bool _hasHit;
     private float _timer;
@@ -25,6 +26,7 @@ public class TurretBullet : MonoBehaviour
     private void ApplyForceAtStart()
     {
         _rb.AddForce(transform.forward * _turretData.BulletSpeed, ForceMode.Impulse);
+        _rb.AddForce(transform.up * 2, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,6 +38,10 @@ public class TurretBullet : MonoBehaviour
         {
             _hasHit = true;
             GiveDamage(other.gameObject);
+            Destroy(gameObject);
+        }
+        if (other.gameObject.CompareTag(_groundTag))
+        {
             Destroy(gameObject);
         }
     }

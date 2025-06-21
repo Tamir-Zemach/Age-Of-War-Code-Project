@@ -6,6 +6,9 @@ namespace Assets.Scripts.turrets
     [CreateAssetMenu(fileName = "Data", menuName = "TurretData", order = 2)]
     public class TurretData : ScriptableObject
     {
+        [Tooltip("Is The Turret Friendly or an Enemy")]
+        public bool isFriendly;
+
         [Header("Detection Settings")]
         [Tooltip("Layer that contains opposite units.")]
         public LayerMask OppositeUnitLayer;

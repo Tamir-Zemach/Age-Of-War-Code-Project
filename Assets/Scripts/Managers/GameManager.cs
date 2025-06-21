@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts;
 using Assets.Scripts.Enems;
 using Assets.Scripts.Managers;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private TurretData _turretData;
+    private TurretData _friendlyturretData;
     public static Dictionary<UnitType, Unit> ModifiedUnitData { get; private set; }
     public static GameManager Instance;
 
@@ -48,16 +49,28 @@ public class GameManager : MonoBehaviour
     private void CreateScriptableObjInstance()
     {
         ModifiedUnitData = new Dictionary<UnitType, Unit>();
-
-        Unit[] friendlyUnits = Resources.LoadAll<Unit>("Friendly Units");
-        foreach (var unit in friendlyUnits)
-        {
-            ModifiedUnitData[unit.unitType] = Instantiate(unit);
-        }
-
-        _turretData = Instantiate(Resources.Load<TurretData>("FriendlyTurret"));
+        InstantiateFriendlyUnits();
+        InstantiateFriendlyTurretData();
     }
+    private void InstantiateFriendlyUnits()
+    {
+        Unit[] allUnits = Resources.LoadAll<Unit>("");
+        foreach (var unit in allUnits)
+        {
+            if (unit.isFriendly)
+                ModifiedUnitData[unit.unitType] = Instantiate(unit);
+        }
+    }
+    private void InstantiateFriendlyTurretData()
+    {
+        TurretData[] allTurrets = Resources.LoadAll<TurretData>("");
+        var match = allTurrets.FirstOrDefault(t => t.isFriendly);
 
+        if (match != null)
+            _friendlyturretData = Instantiate(match);
+        else
+            Debug.LogWarning("No friendly turret data found in Resources.");
+    }
 
     public Unit GetInstantiatedUnit(UnitType type)
     {
@@ -98,9 +111,9 @@ public class GameManager : MonoBehaviour
     }
     public TurretData GetTurretData()
     {
-        if (_turretData != null)
+        if (_friendlyturretData != null)
         {
-            return _turretData;
+            return _friendlyturretData;
         }
         else
         {

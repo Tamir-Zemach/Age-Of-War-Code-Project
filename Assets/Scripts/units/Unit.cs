@@ -4,6 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "Unit", order = 1)]
 public class Unit : ScriptableObject
 {
+    [Tooltip("Is The Unit Friendly or an Enemy")]
+    public bool isFriendly;
+
     [Tooltip("The Unit Type:")]
     public UnitType unitType;
 

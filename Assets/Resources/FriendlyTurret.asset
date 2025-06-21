@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50dbcd44b1267a418cd2c2abf028558, type: 3}
   m_Name: FriendlyTurret
   m_EditorClassIdentifier: 
+  isFriendly: 1
   OppositeUnitLayer:
     serializedVersion: 2
     m_Bits: 64
   OppositeUnitTag: Enemy Character
   FriendlyBase: Player Base
-  Range: 4
+  Range: 10
   BoxSize: {x: 3, y: 3, z: 1}
   BulletPrefab: {fileID: 7135358595398076254, guid: 99ecb1bcd40648c4f9a532f6dce20869, type: 3}
   InitialAttackDelay: 1

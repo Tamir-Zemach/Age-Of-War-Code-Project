@@ -906,6 +906,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2677734748241302775, guid: a42b266bc8cca1d479944e797834dcd6, type: 3}
   m_PrefabInstance: {fileID: 1348232294229831547}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &587239146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9083685163857091238, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+  m_PrefabInstance: {fileID: 3263242233781190834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &593616338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,12 +1913,13 @@ RectTransform:
   m_Children:
   - {fileID: 1714162606}
   - {fileID: 1509484537259971470}
+  - {fileID: 1322881846}
   m_Father: {fileID: 2094208684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 80, y: 28}
-  m_SizeDelta: {x: 600, y: 128}
+  m_SizeDelta: {x: 290, y: 128}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &941018583
 MonoBehaviour:
@@ -2482,6 +2488,158 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3688782197363902063, guid: 91d9d2698333030469e116f713ac7675, type: 3}
   m_PrefabInstance: {fileID: 8152132865559634831}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1322881845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1322881846}
+  - component: {fileID: 1322881850}
+  - component: {fileID: 1322881849}
+  - component: {fileID: 1322881848}
+  - component: {fileID: 1322881847}
+  m_Layer: 5
+  m_Name: Sell Turret
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1322881846
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322881845}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 941018582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1322881847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322881845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a626a64061d4249821bad3f84e5b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TurretbuttonType: 2
+  _turretPrefab: {fileID: 0}
+  _cost: 100
+  _moneyToGiveBack: 80
+  _turretSpawnPoints:
+  - {fileID: 92683480}
+  - {fileID: 2137257450}
+--- !u!114 &1322881848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322881845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.3960484, g: 0.57713956, b: 0.9433962, a: 1}
+    m_PressedColor: {r: 0.8867924, g: 0.2300641, b: 0.2300641, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1322881849}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1322881847}
+        m_TargetAssemblyTypeName: TestTurretButton, Assembly-CSharp
+        m_MethodName: SellTurret
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1322881849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322881845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f1318938350f6e242871ffd7e1aa5ef3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1322881850
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322881845}
+  m_CullTransparentMesh: 1
 --- !u!224 &1366464462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3239145171099365699, guid: 077abb52ab9b94f479f6c9b34d48416e, type: 3}
@@ -3079,6 +3237,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1509484535567828748, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
   m_PrefabInstance: {fileID: 3263242233781190834}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1714162611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587239146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a626a64061d4249821bad3f84e5b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TurretbuttonType: 1
+  _turretPrefab: {fileID: 6152897977360850917, guid: 9ac2bbfb1ab831243a67e596589a75ed, type: 3}
+  _cost: 100
+  _moneyToGiveBack: 80
+  _turretSpawnPoints:
+  - {fileID: 92683480}
+  - {fileID: 2137257450}
 --- !u!1 &1716385960
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,7 +3292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 95, y: -98.52075}
+  m_AnchoredPosition: {x: 80, y: -100}
   m_SizeDelta: {x: 128, y: 450}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1716385962
@@ -4682,12 +4859,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8277705848920553451, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: de49f8785686d2348b52c05ed293b342, type: 3}
+    - target: {fileID: 8300440638839150200, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1714162611}
     - target: {fileID: 8300440638839150200, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DeployTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 8300440638839150200, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TestTurretButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: _cost
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
       propertyPath: turretSpawnPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: _turretSpawnPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
@@ -4698,14 +4895,34 @@ PrefabInstance:
       propertyPath: 'turretSpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 2137257450}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: '_turretSpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 92683480}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: '_turretSpawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2137257450}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: onTurretPlaced.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      propertyPath: onTurretPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9083685163857091238, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
       propertyPath: m_Name
       value: Turret 1 Deploy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9017784195684909266, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9083685163857091238, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1714162611}
   m_SourcePrefab: {fileID: 100100000, guid: 022d2268d32d0c143ad526b105e619ae, type: 3}
 --- !u!224 &4825156609791974036
 RectTransform:
@@ -5482,7 +5699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 13c512b768abacd4eb16ba6bdc3e71df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c6dc78b421e213d42b72557f27d613e1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5537,7 +5754,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9083685162294971941}
-        m_TargetAssemblyTypeName: TurretSlotButton, Assembly-CSharp
+        m_TargetAssemblyTypeName: TestTurretButton, Assembly-CSharp
         m_MethodName: AddTurretSlot
         m_Mode: 1
         m_Arguments:
@@ -5631,11 +5848,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9083685162294971940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ba652c509a4f642a829ecc463a5248, type: 3}
+  m_Script: {fileID: 11500000, guid: d6a626a64061d4249821bad3f84e5b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotCost: 100
-  _spawnPoints:
+  TurretbuttonType: 1
+  _turretPrefab: {fileID: 0}
+  _cost: 100
+  _moneyToGiveBack: 80
+  _turretSpawnPoints:
   - {fileID: 92683480}
   - {fileID: 2137257450}
 --- !u!1660057539 &9223372036854775807

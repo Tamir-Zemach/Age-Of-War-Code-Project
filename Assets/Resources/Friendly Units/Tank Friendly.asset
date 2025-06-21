@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
   m_Name: Tank Friendly
   m_EditorClassIdentifier: 
+  isFriendly: 1
+  unitType: 2
   _characterPrefab: {fileID: 6578747469787437173, guid: 807f2b6c2ed9f8146be47706d839b5e1, type: 3}
   _cost: 30
   _deployDelayTime: 2
@@ -22,7 +24,6 @@ MonoBehaviour:
   _enemyCharacterMask:
     serializedVersion: 2
     m_Bits: 576
-  unitType: 2
   _range: 2
   _speed: 2
   _health: 150

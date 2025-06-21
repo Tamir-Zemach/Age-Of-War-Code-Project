@@ -181,5 +181,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c8efe35eab24a4ebc44b127eea3a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oppositeUnitTag: Enemy Character
+  _groundTag: Ground
   _destroyTime: 3

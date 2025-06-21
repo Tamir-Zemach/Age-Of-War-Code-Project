@@ -37,11 +37,6 @@ public class MouseRayCaster : MonoBehaviour
         if (hitObject != currentHover)
         {
             currentHover = hitObject;
-
-            if (currentHover != null)
-            {
-                Debug.Log($"Mouse entered: {currentHover.name}");
-            }
         }
     }
 
