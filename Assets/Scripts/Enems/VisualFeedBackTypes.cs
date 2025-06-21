@@ -5,6 +5,7 @@ namespace Assets.Scripts.Enems
     {
         Off,
         Highlight,
-        Flash
+        Flash,
+        StopFlash
     }
 }
