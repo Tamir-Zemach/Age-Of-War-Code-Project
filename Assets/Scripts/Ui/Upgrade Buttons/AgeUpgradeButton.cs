@@ -9,8 +9,8 @@ public class AgeUpgradeButton : MonoBehaviour
 {
     private List<UnitData> _unitData;
     private List<LevelUpData> _levelUpData;
-    [SerializeField] private UnitDeployButton[] _unitDeployButtons;
-    [SerializeField] private Image[] _deployButtonSprites;
+    private UnitDeployButton[] _unitDeployButtons;
+    private Image[] _deployButtonSprites;
     [SerializeField] private int _ageUpgradeCost;
 
     private void Start()

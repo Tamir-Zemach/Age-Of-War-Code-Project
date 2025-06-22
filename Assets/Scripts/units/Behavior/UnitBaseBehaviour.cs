@@ -1,20 +1,31 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class UnitBaseBehaviour : MonoBehaviour
 {
     public delegate void AttackDelegate(GameObject target);
     public event AttackDelegate OnAttack;
-    public event AttackDelegate OnBaseAttack;
+    public event Action OnInitialized;
 
     private NavMeshAgent _agent;
+    private UnitHealthManager HealthManager;
     private GameObject _enemyBase;
+    private Coroutine _currentCoroutine;
+    private Collider _col;
 
     private bool _isAttacking = false;
-    private Coroutine _currentCoroutine;
+    public bool IsAttacking => _isAttacking;
+
+    private bool _isDying;
+
+    private GameObject _currentTarget;
+
+    private Animator Animator;
 
     public UnitData Unit { get; private set; }
 
@@ -22,15 +33,23 @@ public class UnitBaseBehaviour : MonoBehaviour
     {
         Unit = unitData;
         _agent = GetComponent<NavMeshAgent>();
+        HealthManager = GetComponent<UnitHealthManager>();
+        HealthManager.OnDying += Dying;
         _enemyBase = GameObject.FindGameObjectWithTag(Unit._oppositeBaseTag);
         _agent.destination = _enemyBase.transform.position;
         _agent.speed = Unit._speed;
+        _col = GetComponent<Collider>();
+        Animator = GetComponentInChildren<Animator>();
+        OnInitialized?.Invoke();
     }
 
     private void Update()
     {
-        CheckForEnemyUnit();
-        CheckForFriendlyUnit();
+        if (!_isDying)
+        {
+            CheckForEnemyUnit();
+            CheckForFriendlyUnit();
+        }
     }
 
 
@@ -60,9 +79,6 @@ public class UnitBaseBehaviour : MonoBehaviour
         if (!_isAttacking)
         {
             _isAttacking = true;
-            if (isBase)
-                BaseAttack(target);
-            else
                 Attack(target);
         }
     }
@@ -91,24 +107,29 @@ public class UnitBaseBehaviour : MonoBehaviour
     }
     private void Attack(GameObject target)
     {
+        _currentTarget = target;
         _currentCoroutine = StartCoroutine(AttackAction(Unit._initialAttackDelay, target));
     }
-    private void BaseAttack(GameObject target)
-    {
-        _currentCoroutine = StartCoroutine(BaseAttackAction(Unit._initialAttackDelay, target));
-    }
 
-    IEnumerator AttackAction(float insialAttackDelay, GameObject target)
-    {
-        yield return new WaitForSeconds(insialAttackDelay);
-        OnAttack?.Invoke(target);
-        _isAttacking = false;
-    }
-    IEnumerator BaseAttackAction(float initialAttackDelay, GameObject target)
+    public GameObject GetAttackTarget() => _currentTarget;
+
+    IEnumerator AttackAction(float initialAttackDelay, GameObject target)
     {
         yield return new WaitForSeconds(initialAttackDelay);
-        OnBaseAttack?.Invoke(target);
+        if (Animator == null)
+        {
+            OnAttack?.Invoke(target);
+        }
+        // No longer calling OnAttack here
         _isAttacking = false;
+    }
+
+    private void Dying()
+    {
+        _isDying = true;
+        _agent.isStopped = true;
+        _col.enabled = false;
+
     }
 
     private void OnDrawGizmos()

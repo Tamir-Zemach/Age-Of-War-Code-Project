@@ -1,10 +1,10 @@
 using UnityEngine;
-
+using Assets.Scripts.units.Behavior;
 [RequireComponent(typeof(Rigidbody))]
 
 public class RangeBullet : MonoBehaviour
 {
-    
+
     [Tooltip("The Bullet will get destroy after this amount of time:")]
     [SerializeField] private float _destroyTime;
 
@@ -77,7 +77,8 @@ public class RangeBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(_oppositeUnit))
+        if (collision.gameObject.CompareTag(_oppositeUnit)
+            || collision.gameObject.CompareTag(_oppositeBase))
         {
             GiveDamage(collision.gameObject);
             Destroy(gameObject);
@@ -86,36 +87,17 @@ public class RangeBullet : MonoBehaviour
         {
             rb.isKinematic = true;
         }
-        if (collision.gameObject.CompareTag(_oppositeBase))
-        {
-            GiveDamageToBase(collision.gameObject);
-            Destroy(gameObject);
-        }
     }
 
 
     private void GiveDamage(GameObject target)
     {
-        UnitHealthManager targetHealth = target.GetComponent<UnitHealthManager>();
-        if (targetHealth != null)
-        {
-            targetHealth.GetHurt(_strength);
-        }
+        (target.GetComponent<UnitHealthManager>() as IDamageable
+         ?? target.GetComponent<EnemyBaseHealthManger>() as IDamageable
+         ?? target.GetComponent<PlayerBaseHealthManager>() as IDamageable)
+        ?.GetHurt(_strength);
     }
-    private void GiveDamageToBase(GameObject target)
-    {
-        EnemyBaseHealthManger enemyBaseHealth = target.GetComponent<EnemyBaseHealthManger>();
-        PlayerBaseHealthManager playerBaseHealth = target.GetComponent<PlayerBaseHealthManager>();
 
-        if (enemyBaseHealth != null)
-        {
-            enemyBaseHealth.GetHurt(_strength);
-        }
-        else if (playerBaseHealth != null)
-        {
-            playerBaseHealth.GetHurt(_strength);
-        }
-    }
 
 }
 

@@ -16,7 +16,6 @@ public class Range : MonoBehaviour
         if (UnitBaseBehaviour != null)
         {
             UnitBaseBehaviour.OnAttack += Attack;
-            UnitBaseBehaviour.OnBaseAttack += BaseAttack;
         }
     }
     private void Start()
@@ -24,26 +23,32 @@ public class Range : MonoBehaviour
         unit = UnitBaseBehaviour.Unit;
     }
 
-    private void Attack(GameObject target)
-    {
-        _bulletInctance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
-        bulletScript = _bulletInctance.GetComponent<RangeBullet>();
 
-        if (bulletScript != null && target != null)
-        {
-            bulletScript.Initialize(target.transform, unit._strength); 
-            bulletScript = null;
-        }
-    }
-    private void BaseAttack(GameObject target)
+    public void FireProjectile(GameObject target)
     {
-        _bulletInctance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
-        bulletScript = _bulletInctance.GetComponent<RangeBullet>();
+        print($"{gameObject.name} is shooting");
+        if (target == null) return;
+
+        var instance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        var bulletScript = instance.GetComponent<RangeBullet>();
 
         if (bulletScript != null)
         {
             bulletScript.Initialize(target.transform, unit._strength);
-            bulletScript = null;
+        }
+
+        target = null; // clear after shot
+    }
+
+    private void Attack(GameObject target)
+    {
+        print($"{gameObject.name} is shooting without animator");
+        var instance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
+        var bulletScript = instance.GetComponent<RangeBullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.Initialize(target.transform, unit._strength);
         }
     }
 

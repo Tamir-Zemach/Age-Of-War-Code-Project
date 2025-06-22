@@ -1,7 +1,7 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
-
-public class PlayerBaseHealthManager : MonoBehaviour
+using Assets.Scripts.units.Behavior;
+public class PlayerBaseHealthManager : MonoBehaviour, IDamageable
 {
 
     public void GetHurt(int damage)

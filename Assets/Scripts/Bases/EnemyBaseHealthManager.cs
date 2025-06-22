@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-
-public class EnemyBaseHealthManger : MonoBehaviour
+using Assets.Scripts.units.Behavior;
+public class EnemyBaseHealthManger : MonoBehaviour, IDamageable
 {
     public event Action OnEnemyHealthChanged;
     private int _currentHealth;

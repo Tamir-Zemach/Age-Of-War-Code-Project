@@ -1,5 +1,6 @@
 ﻿namespace Assets.Scripts
 {
+    using Assets.Scripts.units.Behavior;
     using UnityEngine;
 
     [RequireComponent(typeof(UnitBaseBehaviour))]
@@ -14,47 +15,34 @@
             UnitBaseBehaviour = GetComponent<UnitBaseBehaviour>();
             if (UnitBaseBehaviour != null)
             {
-               UnitBaseBehaviour.OnAttack += Attack;
-               UnitBaseBehaviour.OnBaseAttack += BaseAttack;
+                UnitBaseBehaviour.OnAttack += Attack;
             }
 
+        }
+        private void OnDestroy()
+        {
+            if (UnitBaseBehaviour != null)
+            {
+                UnitBaseBehaviour.OnAttack -= Attack;
+            }
         }
         private void Start()
         {
             unit = UnitBaseBehaviour.Unit;
         }
 
-        private void Attack(GameObject target)
+        public void Attack(GameObject target)
         {
             GiveDamage(target); 
         }
-        private void BaseAttack(GameObject target)
-        {
-            GiveDamageToBase(target);  
-        }
         private void GiveDamage(GameObject target)
         {
-            UnitHealthManager targetHealth = target.GetComponent<UnitHealthManager>();
-            if (targetHealth != null)
-            {
-                targetHealth.GetHurt(unit._strength); 
-            }
+            (target.GetComponent<UnitHealthManager>() as IDamageable
+             ?? target.GetComponent<EnemyBaseHealthManger>() as IDamageable
+             ?? target.GetComponent<PlayerBaseHealthManager>() as IDamageable)
+            ?.GetHurt(unit._strength);
         }
-        private void GiveDamageToBase(GameObject target)
-        {
-            EnemyBaseHealthManger enemyBaseHealth = target.GetComponent<EnemyBaseHealthManger>();
-            PlayerBaseHealthManager playerBaseHealth = target.GetComponent<PlayerBaseHealthManager>();
-
-            if (enemyBaseHealth != null)
-            {
-                enemyBaseHealth.GetHurt(unit._strength);
-            }
-            else if (playerBaseHealth != null)
-            {
-                playerBaseHealth.GetHurt(unit._strength);
-            }
-        }
-
 
     }
+
 }
