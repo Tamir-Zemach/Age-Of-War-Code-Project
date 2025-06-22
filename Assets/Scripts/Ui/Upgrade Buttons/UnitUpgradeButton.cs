@@ -41,7 +41,7 @@ public class UnitUpgradeButton : MonoBehaviour
         }
     }
 
-    private void ApplyUpgrade(Unit unit)
+    private void ApplyUpgrade(UnitData unit)
     {
         switch (statType)
         {

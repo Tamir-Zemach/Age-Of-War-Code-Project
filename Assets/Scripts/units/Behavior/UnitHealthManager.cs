@@ -6,7 +6,7 @@ using UnityEngine;
 public class UnitHealthManager : MonoBehaviour
 {
     public event Action OnHealthChanged;
-    private Unit Unit;
+    private UnitData Unit;
     private UnitBaseBehaviour UnitBaseBehaviour;
     private int _currentHealth;
     private void Start()
@@ -18,7 +18,6 @@ public class UnitHealthManager : MonoBehaviour
 
     public void GetHurt(int damage)
         {
-        print($"{gameObject.name} is getting hurt");
             _currentHealth -= damage;
             OnHealthChanged?.Invoke();
             if (_currentHealth <= 0)

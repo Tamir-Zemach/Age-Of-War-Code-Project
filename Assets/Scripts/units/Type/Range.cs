@@ -4,7 +4,7 @@ using UnityEngine;
 public class Range : MonoBehaviour
 {
     private UnitBaseBehaviour UnitBaseBehaviour;
-    private Unit unit;
+    private UnitData unit;
     [SerializeField] private GameObject _bulletPrefab;
     private GameObject _bulletInctance;
     [SerializeField] private Transform _bulletSpawnPoint;

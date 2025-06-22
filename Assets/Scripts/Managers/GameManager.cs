@@ -9,13 +9,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private TurretData _friendlyturretData;
-    public static Dictionary<UnitType, Unit> ModifiedUnitData { get; private set; }
+    public static Dictionary<UnitType, UnitData> ModifiedFriendlyUnitData { get; private set; }
     public static GameManager Instance;
 
     [SerializeField] private int _startingMoney;
     [SerializeField] private int _startingHealth;
     [SerializeField] private int _level1EnemyBaseHealth;
     public int Level1EnemyBaseHealth { get; private set; }
+    public int CurrentAge { get; private set; } = 1;
+
+    public void AdvanceAge()
+    {
+        CurrentAge++;
+    }
 
     private void Awake()
     {
@@ -48,17 +54,17 @@ public class GameManager : MonoBehaviour
 
     private void CreateScriptableObjInstance()
     {
-        ModifiedUnitData = new Dictionary<UnitType, Unit>();
+        ModifiedFriendlyUnitData = new Dictionary<UnitType, UnitData>();
         InstantiateFriendlyUnits();
         InstantiateFriendlyTurretData();
     }
     private void InstantiateFriendlyUnits()
     {
-        Unit[] allUnits = Resources.LoadAll<Unit>("");
+        UnitData[] allUnits = Resources.LoadAll<UnitData>("");
         foreach (var unit in allUnits)
         {
             if (unit.isFriendly)
-                ModifiedUnitData[unit.unitType] = Instantiate(unit);
+                ModifiedFriendlyUnitData[unit.unitType] = Instantiate(unit);
         }
     }
     private void InstantiateFriendlyTurretData()
@@ -72,9 +78,9 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("No friendly turret data found in Resources.");
     }
 
-    public Unit GetInstantiatedUnit(UnitType type)
+    public UnitData GetInstantiatedUnit(UnitType type)
     {
-        if (ModifiedUnitData != null && ModifiedUnitData.TryGetValue(type, out var unit))
+        if (ModifiedFriendlyUnitData != null && ModifiedFriendlyUnitData.TryGetValue(type, out var unit))
         {
             return unit;
         }
@@ -84,13 +90,13 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
-    public List<Unit> GetAllInstantiatedUnits()
+    public List<UnitData> GetAllInstantiatedFriendlyUnits()
     {
-        var allUnits = new List<Unit>();
+        var allUnits = new List<UnitData>();
 
-        if (ModifiedUnitData != null)
+        if (ModifiedFriendlyUnitData != null)
         {
-            foreach (var kvp in ModifiedUnitData)
+            foreach (var kvp in ModifiedFriendlyUnitData)
             {
                 if (kvp.Value != null)
                 {

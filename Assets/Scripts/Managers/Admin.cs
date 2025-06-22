@@ -14,7 +14,7 @@ public class Admin : MonoBehaviour
     public int _gameSpeed = 1 ;
 
 
-    public Unit[] unitToDisplayParameters;
+    public UnitData[] unitToDisplayParameters;
     public bool _displayFrienlyUnitParametersInConsole;
     public bool _displayEnemyUnitParametersInConsole;
     public bool _displayHealthInConsole;
@@ -71,9 +71,9 @@ public class Admin : MonoBehaviour
 
     public void DisplayFriendlyUnitParametersFromGameManager()
     {
-        foreach (var kvp in GameManager.ModifiedUnitData)
+        foreach (var kvp in GameManager.ModifiedFriendlyUnitData)
         {
-            Unit un = kvp.Value;
+            UnitData un = kvp.Value;
             Debug.Log($"{un.name} " +
                       $"Unit Cost: {un._cost}," +
                       $"Health: {un._health} " +
@@ -87,7 +87,7 @@ public class Admin : MonoBehaviour
     {
         foreach (var kvp in EnemySpawner._enemyUnitData)
         {
-            Unit un = kvp.Value;
+            UnitData un = kvp.Value;
             Debug.Log($"{un.name} " +
                       $"Unit Money Gain: {un._moneyWhenKilled}" +
                       $"Health: {un._health} " +

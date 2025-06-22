@@ -2,7 +2,7 @@ using Assets.Scripts.Enems;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Unit", order = 1)]
-public class Unit : ScriptableObject
+public class UnitData : ScriptableObject
 {
     [Tooltip("Is The Unit Friendly or an Enemy")]
     public bool isFriendly;
@@ -11,7 +11,10 @@ public class Unit : ScriptableObject
     public UnitType unitType;
 
     [Tooltip("The prefab to instansiate when deplyed")]
-    public GameObject _characterPrefab;
+    public GameObject _unitPrefab;
+
+    public Sprite _spriteForUi;
+
     [Tooltip("How much money needed to deploy the Unit")]
     public int _cost;
     [Tooltip("How much time passed between the moment the button is pressed and the character is deployed")]

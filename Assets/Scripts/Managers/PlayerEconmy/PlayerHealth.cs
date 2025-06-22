@@ -42,6 +42,7 @@ namespace Assets.Scripts.Managers
         public int IncreaseMaxHealth(int amount)
         {
             _maxHealth += ValidateAmount(Math.Max(0, amount), "adding");
+            OnHealthChanged?.Invoke();
             return _maxHealth;
         }
 

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFriendly: 1
   unitType: 2
-  _characterPrefab: {fileID: 6578747469787437173, guid: 807f2b6c2ed9f8146be47706d839b5e1, type: 3}
+  _unitPrefab: {fileID: 6578747469787437173, guid: 807f2b6c2ed9f8146be47706d839b5e1, type: 3}
+  _spriteForUi: {fileID: 21300000, guid: 8b5896f8fa3f06c43814aef1b3927100, type: 3}
   _cost: 30
   _deployDelayTime: 2
   _moneyWhenKilled: 0

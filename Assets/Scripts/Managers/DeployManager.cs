@@ -11,7 +11,7 @@ public class DeployManager : MonoBehaviour
 
     [SerializeField] private Transform _unitSpawnPoint;
 
-    public Queue<Unit> _unitQueue = new Queue<Unit>();
+    public Queue<UnitData> _unitQueue = new Queue<UnitData>();
     private bool isDeploying = false;
 
     [Tooltip("The spawn area where the friendly unit will not spawn if another one is already present.")]
@@ -22,7 +22,7 @@ public class DeployManager : MonoBehaviour
     private SpawnArea SpawnArea;
 
     private float timer;
-    private Unit nextCharacter;
+    private UnitData nextCharacter;
     GameObject unitReference;
     private void Awake()
     {
@@ -45,20 +45,20 @@ public class DeployManager : MonoBehaviour
 
     public void DeployAttackerUnit()
     {
-        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Attacker);
+        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Attacker);
         UnitButtonPressed(unit);
     }
     public void DeployRangerUnit()
     {
-        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Ranger);
+        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Ranger);
         UnitButtonPressed(unit);
     }
     public void DeployTankUnit()
     {
-        Unit unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Tank);
+        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Tank);
         UnitButtonPressed(unit);
     }
-    private void UnitButtonPressed(Unit unit)
+    private void UnitButtonPressed(UnitData unit)
     {
         if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
         {
@@ -97,7 +97,7 @@ public class DeployManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= nextCharacter._deployDelayTime && !SpawnArea._hasUnitInside)
         {
-            unitReference = Instantiate(nextCharacter._characterPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
+            unitReference = Instantiate(nextCharacter._unitPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
 
             if (unitReference.TryGetComponent(out UnitBaseBehaviour behaviour))
             {

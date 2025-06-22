@@ -20,8 +20,8 @@ public class PlayerUpgradeButton : MonoBehaviour
     [Tooltip("Incremental increase in stat upgrade cost after each upgrade")]
     [SerializeField] private int _statCostInc;
 
-    private List<Unit> _allFriendlyUnits;
-    private List<Unit> _allEnemyUnits;
+    private List<UnitData> _allFriendlyUnits;
+    private List<UnitData> _allEnemyUnits;
 
     public void UpgradeStat()
     {
@@ -43,7 +43,7 @@ public class PlayerUpgradeButton : MonoBehaviour
                 break;
 
             case UpgradeType.UnitsCosts:
-                _allFriendlyUnits = GameManager.Instance.GetAllInstantiatedUnits();
+                _allFriendlyUnits = GameManager.Instance.GetAllInstantiatedFriendlyUnits();
                 DecreaseCostToAllFrienlyUnits();
                 break;
 
@@ -60,14 +60,14 @@ public class PlayerUpgradeButton : MonoBehaviour
 
     private void DecreaseCostToAllFrienlyUnits()
     {
-        foreach (Unit unit in _allFriendlyUnits)
+        foreach (UnitData unit in _allFriendlyUnits)
         {
             unit._cost -= _statBonus;
         }
     }
     private void IncreaseMoneyGainToAllEnemyUnits()
     {
-        foreach (Unit unit in _allEnemyUnits)
+        foreach (UnitData unit in _allEnemyUnits)
         {
             unit._moneyWhenKilled += _statBonus;
         }

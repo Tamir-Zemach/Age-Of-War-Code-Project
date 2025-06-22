@@ -6,10 +6,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance;
-    public static Dictionary<UnitType, Unit> _enemyUnitData = new Dictionary<UnitType, Unit>();
+    public static Dictionary<UnitType, UnitData> _enemyUnitData = new Dictionary<UnitType, UnitData>();
 
     [Tooltip("Enemy Unit ScriptableObjects")]
-    [SerializeField] private Unit[] _enemyUnitAssets;
+    [SerializeField] private UnitData[] _enemyUnitAssets;
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
     [SerializeField, TagSelector] private string _enemyBaseTag;
@@ -66,10 +66,10 @@ public class EnemySpawner : MonoBehaviour
         if (_enemyUnitAssets.Length == 0) return;
 
         int randomIndex = Random.Range(0, _enemyUnitAssets.Length);
-        Unit unitData = _enemyUnitAssets[randomIndex];
+        UnitData unitData = _enemyUnitAssets[randomIndex];
 
         GameObject enemyReference = Instantiate(
-            unitData._characterPrefab,
+            unitData._unitPrefab,
             _enemySpawnPoint.position,
             _enemySpawnPoint.rotation
         );
@@ -108,9 +108,9 @@ public class EnemySpawner : MonoBehaviour
         _maxSpawnTime = maxSpawnTime;
     }
 
-    public List<Unit> GetAllInstantiatedUnits()
+    public List<UnitData> GetAllInstantiatedUnits()
     {
-        var allUnits = new List<Unit>();
+        var allUnits = new List<UnitData>();
 
         if (_enemyUnitData != null)
         {

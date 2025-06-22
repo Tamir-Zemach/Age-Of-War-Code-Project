@@ -7,7 +7,7 @@
     public class Attacker : MonoBehaviour
     {
         private UnitBaseBehaviour UnitBaseBehaviour;
-        private Unit unit;
+        private UnitData unit;
 
         private void Awake()
         {

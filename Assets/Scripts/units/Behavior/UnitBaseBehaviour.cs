@@ -16,9 +16,9 @@ public class UnitBaseBehaviour : MonoBehaviour
     private bool _isAttacking = false;
     private Coroutine _currentCoroutine;
 
-    public Unit Unit { get; private set; }
+    public UnitData Unit { get; private set; }
 
-    public void Initialize(Unit unitData)
+    public void Initialize(UnitData unitData)
     {
         Unit = unitData;
         _agent = GetComponent<NavMeshAgent>();
@@ -113,6 +113,7 @@ public class UnitBaseBehaviour : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (Unit == null) return;
         Gizmos.color = Unit.boxColor;
 
         Vector3 origin = transform.position;
