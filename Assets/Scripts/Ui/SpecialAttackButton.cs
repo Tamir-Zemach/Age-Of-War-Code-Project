@@ -32,7 +32,7 @@ public class SpecialAttackButton : MonoBehaviour
 
     private bool MeteorRainAlreadyExists()
     {
-        return FindObjectOfType<MeteorRain>() != null;
+        return FindAnyObjectByType<MeteorRain>() != null;
     }
 
 }

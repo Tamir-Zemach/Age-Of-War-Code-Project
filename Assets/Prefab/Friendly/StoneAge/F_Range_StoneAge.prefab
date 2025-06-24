@@ -354,6 +354,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6554028792510264411, guid: e1a4c5e74090610429e0d48f15f19b37, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5578972099193588471}
+    - targetCorrespondingSourceObject: {fileID: 6554028792510264411, guid: e1a4c5e74090610429e0d48f15f19b37, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9098022942624567823}
   m_SourcePrefab: {fileID: 100100000, guid: e1a4c5e74090610429e0d48f15f19b37, type: 3}
 --- !u!1 &3500331594777499881 stripped
 GameObject:
@@ -370,6 +373,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff205b7416faf39419749dd48791b2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideControllerTemplate: {fileID: 22100000, guid: 44b71b8f8741f0247acdb9cbad44e2a5, type: 2}
+  customAttackClip: {fileID: 7400000, guid: 198de59933df42043a289228b1f2c356, type: 2}
+  customWalkClip: {fileID: 7400000, guid: 994dd7c4448a20948ac9f3fdc6def89c, type: 2}
+  customDyingClip: {fileID: 7400000, guid: 2dc7dbea1e7eb994890c9812cd4a38b3, type: 2}
+--- !u!114 &9098022942624567823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3500331594777499881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced01ca367277d04db0ed4dd97ab0927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8470089367522510762 stripped

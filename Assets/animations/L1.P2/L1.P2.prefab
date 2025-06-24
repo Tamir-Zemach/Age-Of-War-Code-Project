@@ -733,6 +733,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2300484106602261272}
   - component: {fileID: 4561234268040940216}
+  - component: {fileID: 4510694285011957723}
+  - component: {fileID: 352524547660822709}
+  - component: {fileID: 428537073930326658}
   m_Layer: 0
   m_Name: L1.P2
   m_TagString: Untagged
@@ -773,7 +776,7 @@ Animator:
   m_GameObject: {fileID: 6554028792510264411}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 49533c8805a94e9498a4c444fe7d69c6, type: 2}
+  m_Controller: {fileID: 22100000, guid: 44b71b8f8741f0247acdb9cbad44e2a5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -785,6 +788,46 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4510694285011957723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554028792510264411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680a31e0b27197140972702c9e0610ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &352524547660822709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554028792510264411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced01ca367277d04db0ed4dd97ab0927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &428537073930326658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554028792510264411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff205b7416faf39419749dd48791b2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideControllerTemplate: {fileID: 22100000, guid: 44b71b8f8741f0247acdb9cbad44e2a5, type: 2}
+  customAttackClip: {fileID: 7400000, guid: 198de59933df42043a289228b1f2c356, type: 2}
+  customWalkClip: {fileID: 7400000, guid: 994dd7c4448a20948ac9f3fdc6def89c, type: 2}
+  customDyingClip: {fileID: 7400000, guid: 2dc7dbea1e7eb994890c9812cd4a38b3, type: 2}
 --- !u!1 &6941578467995880216
 GameObject:
   m_ObjectHideFlags: 0

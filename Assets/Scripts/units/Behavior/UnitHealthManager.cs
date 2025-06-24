@@ -22,7 +22,6 @@ public class UnitHealthManager : MonoBehaviour, IDamageable
 
     public void GetHurt(int damage)
     {
-        print($"{gameObject.name} is getting hurt");
         _currentHealth -= damage;
         OnHealthChanged?.Invoke();
         if (_currentHealth <= 0 && !isDying)
