@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.units.Behavior;
+using UnityEngine.Events;
 public class EnemyBaseHealthManger : MonoBehaviour, IDamageable
 {
+    public UnityEvent _onEnemyDefeat;
+
     public event Action OnEnemyHealthChanged;
     private int _currentHealth;
     private int _maxHealth;
@@ -22,8 +25,7 @@ public class EnemyBaseHealthManger : MonoBehaviour, IDamageable
         OnEnemyHealthChanged?.Invoke();
         if (_currentHealth <= 0)
         {
-            Debug.Log("next level");
-            Time.timeScale = 0;
+            _onEnemyDefeat?.Invoke();
         }
     }
 }

@@ -1,10 +1,11 @@
-using Assets.Scripts;
+﻿using Assets.Scripts;
 using Assets.Scripts.Managers;
 using UnityEngine;
 
 public class Admin : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
+    public static Admin Instance;
+
     EnemySpawner EnemySpawner;
 
     public int _moneyToAdd;
@@ -13,15 +14,30 @@ public class Admin : MonoBehaviour
 
     public int _gameSpeed = 1 ;
 
-
-    public UnitData[] unitToDisplayParameters;
     public bool _displayFrienlyUnitParametersInConsole;
     public bool _displayEnemyUnitParametersInConsole;
     public bool _displayHealthInConsole;
 
-    public bool _easyMode;
+    //[SerializeField] GameManager gameManager;
+    //public bool _easyMode;
+
     [SerializeField] private float _easyModeMinSpawnTime;
     [SerializeField] private float _easyModeMaxSpawnTime;
+    private void Awake()
+    {
+        InstantiateOneAdmin();
+    }
+    private void InstantiateOneAdmin()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // ← This keeps the GameManager alive between scenes
+    }
     private void AdminFunctions()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -41,10 +57,10 @@ public class Admin : MonoBehaviour
         {
             GameSpeedControl();
         }
-        if (_easyMode)
-        {
-            EasyMode();
-        }
+        //if (_easyMode)
+        //{
+        //    EasyMode();
+        //}
         if (_displayFrienlyUnitParametersInConsole)
         {
             DisplayFriendlyUnitParametersFromGameManager();
@@ -63,11 +79,11 @@ public class Admin : MonoBehaviour
     {
         Time.timeScale = _gameSpeed;
     }
-    private void EasyMode()
-    {
-        EnemySpawner = gameManager.GetComponent<EnemySpawner>();
-        EnemySpawner.EasyMode(_easyModeMinSpawnTime, _easyModeMaxSpawnTime);
-    }
+    //private void EasyMode()
+    //{
+    //    EnemySpawner = gameManager.GetComponent<EnemySpawner>();
+    //    EnemySpawner.EasyMode(_easyModeMinSpawnTime, _easyModeMaxSpawnTime);
+    //}
 
     public void DisplayFriendlyUnitParametersFromGameManager()
     {
@@ -85,7 +101,7 @@ public class Admin : MonoBehaviour
     }
     public void DisplayEnemyUnitParametersFromGameManager()
     {
-        foreach (var kvp in EnemySpawner._enemyUnitData)
+        foreach (var kvp in GameManager.ModifiedEnemyUnitData)
         {
             UnitData un = kvp.Value;
             Debug.Log($"{un.name} " +

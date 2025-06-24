@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
-  m_Name: Enemy unit 2
+  m_Name: E_Attacker_StoneAge
   m_EditorClassIdentifier: 
   isFriendly: 0
-  unitType: 1
-  _unitPrefab: {fileID: 7476198131129608348, guid: 401aa4e1fa2368146b7f64d28bc29846, type: 3}
+  unitType: 0
+  _unitPrefab: {fileID: 7476198131129608348, guid: 24c6171552fef6c4ca2e6b752b3e7dee, type: 3}
   _spriteForUi: {fileID: 0}
   _cost: 0
   _deployDelayTime: 0
-  _moneyWhenKilled: 20
+  _moneyWhenKilled: 10
   _oppositeBaseTag: Player Base
   _friendlyUnitTag: Enemy Character
   _oppositeUnitTag: Friendly Character
   _enemyCharacterMask:
     serializedVersion: 2
     m_Bits: 264
-  _range: 6
+  _range: 2
   _speed: 2
-  _health: 70
-  _strength: 8
+  _health: 100
+  _strength: 10
   _initialAttackDelay: 1
   boxSize: {x: 0.5, y: 0.5, z: 0.5}
-  boxColor: {r: 1, g: 0.35636762, b: 0, a: 1}
+  boxColor: {r: 1, g: 0, b: 0.010103226, a: 1}
   _rayLengthForFriendlyUnit: 2

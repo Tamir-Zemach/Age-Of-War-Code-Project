@@ -6,10 +6,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance;
-    public static Dictionary<UnitType, UnitData> _enemyUnitData = new Dictionary<UnitType, UnitData>();
-
-    [Tooltip("Enemy Unit ScriptableObjects")]
-    [SerializeField] private UnitData[] _enemyUnitAssets;
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
     [SerializeField, TagSelector] private string _enemyBaseTag;
@@ -35,15 +31,8 @@ public class EnemySpawner : MonoBehaviour
         Instance = this;
         GetEnemyBase();
         _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
-        InitializeEnemyUnitData();
     }
-    private void InitializeEnemyUnitData()
-    {
-        foreach (var unit in _enemyUnitAssets)
-        {
-            _enemyUnitData[unit.unitType] = Instantiate(unit);
-        }
-    }
+
     private void Update()
     {
         SpawnPrefabsWithRandomTime();
@@ -62,26 +51,26 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnRandomEnemyPrefab()
     {
-        // Don't proceed if there are no enemy unit assets assigned
-        if (_enemyUnitAssets.Length == 0) return;
+        if (GameManager.ModifiedEnemyUnitData.Count == 0) return;
 
-        int randomIndex = Random.Range(0, _enemyUnitAssets.Length);
-        UnitData unitData = _enemyUnitAssets[randomIndex];
+        var enemyUnits = new List<UnitData>(GameManager.ModifiedEnemyUnitData.Values);
+        UnitData randomEnemyData = enemyUnits[Random.Range(0, enemyUnits.Count)];
 
         GameObject enemyReference = Instantiate(
-            unitData._unitPrefab,
+            randomEnemyData._unitPrefab,
             _enemySpawnPoint.position,
             _enemySpawnPoint.rotation
         );
 
-        // Retrieve the UnitBaseBehaviour component attached to the prefab
         UnitBaseBehaviour behaviour = enemyReference.GetComponent<UnitBaseBehaviour>();
 
-        // If the component exists, inject the initialized Unit instance into its logic
         if (behaviour != null)
         {
-            // Look up the pre-instantiated enemy unit data from the dictionary and assign it
-            behaviour.Initialize(_enemyUnitData[unitData.unitType]);
+            behaviour.Initialize(randomEnemyData);
+        }
+        else
+        {
+            Debug.LogWarning("UnitBaseBehaviour not found on spawned enemy prefab.");
         }
     }
 
@@ -112,9 +101,9 @@ public class EnemySpawner : MonoBehaviour
     {
         var allUnits = new List<UnitData>();
 
-        if (_enemyUnitData != null)
+        if (GameManager.ModifiedEnemyUnitData != null)
         {
-            foreach (var kvp in _enemyUnitData)
+            foreach (var kvp in GameManager.ModifiedEnemyUnitData)
             {
                 if (kvp.Value != null)
                 {

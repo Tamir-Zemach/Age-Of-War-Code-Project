@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts;
 using Assets.Scripts.Enems;
@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     private TurretData _friendlyturretData;
     public static Dictionary<UnitType, UnitData> ModifiedFriendlyUnitData { get; private set; }
+    public static Dictionary<UnitType, UnitData> ModifiedEnemyUnitData { get; private set; }
+
     public static GameManager Instance;
 
     [SerializeField] private int _startingMoney;
@@ -25,10 +27,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        InstantiateOneGameManager();
         StartGame();
         CreateScriptableObjInstance();
     }
+
+
 
     private void Update()
     {
@@ -43,7 +47,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
         Time.timeScale = 0;
     }
+    private void InstantiateOneGameManager()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // ← This keeps the GameManager alive between scenes
+    }
     private void StartGame()
     {
         PlayerCurrency.Instance.AddMoney(_startingMoney);
@@ -55,7 +69,9 @@ public class GameManager : MonoBehaviour
     private void CreateScriptableObjInstance()
     {
         ModifiedFriendlyUnitData = new Dictionary<UnitType, UnitData>();
+        ModifiedEnemyUnitData = new Dictionary<UnitType, UnitData>();
         InstantiateFriendlyUnits();
+        InstantiateEnemyUnits();
         InstantiateFriendlyTurretData();
     }
     private void InstantiateFriendlyUnits()
@@ -65,6 +81,15 @@ public class GameManager : MonoBehaviour
         {
             if (unit.isFriendly)
                 ModifiedFriendlyUnitData[unit.unitType] = Instantiate(unit);
+        }
+    }
+    private void InstantiateEnemyUnits()
+    {
+        UnitData[] allUnits = Resources.LoadAll<UnitData>("");
+        foreach (var unit in allUnits)
+        {
+            if (!unit.isFriendly)
+                ModifiedEnemyUnitData[unit.unitType] = Instantiate(unit);
         }
     }
     private void InstantiateFriendlyTurretData()
@@ -97,6 +122,31 @@ public class GameManager : MonoBehaviour
         if (ModifiedFriendlyUnitData != null)
         {
             foreach (var kvp in ModifiedFriendlyUnitData)
+            {
+                if (kvp.Value != null)
+                {
+                    allUnits.Add(kvp.Value);
+                }
+                else
+                {
+                    Debug.LogWarning($"Unit of type {kvp.Key} is null in ModifiedUnitData.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("ModifiedUnitData is null.");
+        }
+
+        return allUnits;
+    }
+    public List<UnitData> GetAllInstantiatedEnemyUnits()
+    {
+        var allUnits = new List<UnitData>();
+
+        if (ModifiedEnemyUnitData != null)
+        {
+            foreach (var kvp in ModifiedEnemyUnitData)
             {
                 if (kvp.Value != null)
                 {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,13 +19,15 @@ public class MouseRayCaster : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Instance = this;
 
+        Instance = this;
         if (rayCamera == null)
         {
             rayCamera = Camera.main;
         }
     }
+
+
 
     private void Update()
     {

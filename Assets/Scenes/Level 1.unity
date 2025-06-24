@@ -1353,6 +1353,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1144d3d621909914ba2b1b0c4b74e6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onEnemyDefeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2017559594}
+        m_TargetAssemblyTypeName: UiFunctions, Assembly-CSharp
+        m_MethodName: LoadNextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &703558293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,65 +2109,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &958624889
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 958624891}
-  - component: {fileID: 958624890}
-  m_Layer: 0
-  m_Name: Admin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &958624890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958624889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a6b3b806cc56674fa682c9c91dadb57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 2017559588}
-  _moneyToAdd: 30
-  _moneyToSubstract: 15
-  _healthToAdd: 50
-  _gameSpeed: 1
-  unitToDisplayParameters:
-  - {fileID: 11400000, guid: f971429433c8a7143a03dfd101c9c187, type: 2}
-  - {fileID: 11400000, guid: 4d267ca1cd7cebd45815559c69cb9b4e, type: 2}
-  - {fileID: 11400000, guid: abeffcf5f1974a54faae254aa2480ddd, type: 2}
-  _displayFrienlyUnitParametersInConsole: 0
-  _displayEnemyUnitParametersInConsole: 0
-  _displayHealthInConsole: 0
-  _easyMode: 0
-  _easyModeMinSpawnTime: 7
-  _easyModeMaxSpawnTime: 30
---- !u!4 &958624891
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958624889}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.94709, y: 3.17104, z: -1.01658}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &983352317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3920,12 +3876,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2017559587}
-  - component: {fileID: 2017559588}
   - component: {fileID: 2017559589}
   - component: {fileID: 2017559590}
   - component: {fileID: 2017559591}
   - component: {fileID: 2017559592}
-  - component: {fileID: 2017559593}
+  - component: {fileID: 2017559594}
+  - component: {fileID: 2017559595}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3948,21 +3904,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2017559588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017559586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dba4b97335fd634fa3d8e9701590295, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startingMoney: 500
-  _startingHealth: 200
-  _level1EnemyBaseHealth: 200
 --- !u!114 &2017559589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3991,10 +3932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39d19d73a5e1f543913022de164e681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyUnitAssets:
-  - {fileID: 11400000, guid: 081300da1de91f5428872d26f9f5bed1, type: 2}
-  - {fileID: 11400000, guid: 6ced9c7e0ee912247b25224ed18ef72e, type: 2}
-  - {fileID: 11400000, guid: 60a8768f3ffec1f439a7f131a97b2f28, type: 2}
   _enemyBaseTag: Enemy Base
   _enemySpawnPoint: {fileID: 707129541}
   _minSpawnTime: 3
@@ -4031,7 +3968,20 @@ MonoBehaviour:
   moveSpeed: 1
   edgeThreshold: 50
   pathLength: 1
---- !u!114 &2017559593
+--- !u!114 &2017559594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017559586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe90afc3ca408c42bc420723eb2f517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nextLevel: 2
+--- !u!114 &2017559595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4850,6 +4800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'AttackSpeed Tank Upgrade  '
       objectReference: {fileID: 0}
+    - target: {fileID: 6467951505635788790, guid: a42b266bc8cca1d479944e797834dcd6, type: 3}
+      propertyPath: _attackDelayReductionPercent
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4970,6 +4924,10 @@ PrefabInstance:
     - target: {fileID: 2706151973309879449, guid: 674334833eb79ce43b5ec72e4d28285d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441784438612346776, guid: 674334833eb79ce43b5ec72e4d28285d, type: 3}
+      propertyPath: _attackDelayReductionPercent
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5409,6 +5367,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 864382673}
     m_Modifications:
+    - target: {fileID: 3884640521835901371, guid: daf92b608b2819b4f8ba352cde2926de, type: 3}
+      propertyPath: _attackDelayReductionPercent
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5261046357848138426, guid: daf92b608b2819b4f8ba352cde2926de, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6268,7 +6230,6 @@ SceneRoots:
   - {fileID: 2094208684}
   - {fileID: 1649561377}
   - {fileID: 2017559587}
-  - {fileID: 958624891}
   - {fileID: 1789923127}
   - {fileID: 692834263}
   - {fileID: 1966795138}
