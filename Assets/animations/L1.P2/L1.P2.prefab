@@ -825,9 +825,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overrideControllerTemplate: {fileID: 22100000, guid: 44b71b8f8741f0247acdb9cbad44e2a5, type: 2}
-  customAttackClip: {fileID: 7400000, guid: 198de59933df42043a289228b1f2c356, type: 2}
+  customIdleClip: {fileID: 7400000, guid: 734f62a720d31654fba4753e94cdb7e1, type: 2}
   customWalkClip: {fileID: 7400000, guid: 994dd7c4448a20948ac9f3fdc6def89c, type: 2}
-  customDyingClip: {fileID: 7400000, guid: 2dc7dbea1e7eb994890c9812cd4a38b3, type: 2}
+  customAttackClip: {fileID: 7400000, guid: 198de59933df42043a289228b1f2c356, type: 2}
+  customDeathClip: {fileID: 7400000, guid: 2dc7dbea1e7eb994890c9812cd4a38b3, type: 2}
 --- !u!1 &6941578467995880216
 GameObject:
   m_ObjectHideFlags: 0

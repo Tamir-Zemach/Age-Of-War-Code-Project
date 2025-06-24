@@ -1,7 +1,9 @@
 ﻿
 using System.Collections.Generic;
+using System.ComponentModel;
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Billboard))]
 [RequireComponent(typeof(UnitAnimationActions))]
@@ -10,23 +12,28 @@ public class UnitAnimationController : MonoBehaviour
 {
     private UnitBaseBehaviour UnitBaseBehaviour;
     private UnitHealthManager UnitHealthManager;
+    private NavMeshAgent _agent;
 
     private Animator _animator;
 
 
     [SerializeField] private AnimatorOverrideController overrideControllerTemplate;
 
-    private static AnimationClip _cachedAttack;
+    private static AnimationClip _cachedIdle;
     private static AnimationClip _cachedWalk;
+    private static AnimationClip _cachedAttack;
     private static AnimationClip _cachedDying;
 
-    private AnimationClip _attackClipPlaceHolder;
+    private AnimationClip _idleClipPlaceHolder;
     private AnimationClip _walkClipPlaceHolder;
+    private AnimationClip _attackClipPlaceHolder;
     private AnimationClip _deathClipPlaceHolder;
 
     // These are the ones unique per unit
-    [SerializeField] private AnimationClip customAttackClip;
+
+    [SerializeField] private AnimationClip customIdleClip;
     [SerializeField] private AnimationClip customWalkClip;
+    [SerializeField] private AnimationClip customAttackClip;
     [SerializeField] private AnimationClip customDeathClip;
 
 
@@ -49,6 +56,7 @@ public class UnitAnimationController : MonoBehaviour
     {
         UnitBaseBehaviour = GetComponentInParent<UnitBaseBehaviour>();
         UnitHealthManager = GetComponentInParent<UnitHealthManager>();
+        _agent = GetComponentInParent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
     /// <summary>
@@ -107,6 +115,11 @@ public class UnitAnimationController : MonoBehaviour
                 // Replace the default 'Walk' clip with this unit’s unique walk animation
                 overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(_deathClipPlaceHolder, customDeathClip);
             }
+            else if (overrides[i].Key == _idleClipPlaceHolder)
+            {
+                // Replace the default 'idle' clip with this unit’s unique walk animation
+                overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(_idleClipPlaceHolder, customIdleClip);
+            }
         }
         // Apply the updated overrides to the controller
         newOverride.ApplyOverrides(overrides);
@@ -121,6 +134,7 @@ public class UnitAnimationController : MonoBehaviour
     private void Animations()
     {
         _animator.SetBool("isAttacking", UnitBaseBehaviour.IsAttacking);
+        _animator.SetBool("isIdle", IdleState());
         
     }
 
@@ -129,25 +143,39 @@ public class UnitAnimationController : MonoBehaviour
         _animator.SetTrigger("isDying");
     }
 
+    private bool IdleState()
+    {
+        return !UnitBaseBehaviour.IsAttacking && _agent.isStopped;
+    }
+
     private void GetAllAnimationsPlaceHolders()
     {
-        if (_cachedAttack == null)
-            _cachedAttack = Resources.Load<AnimationClip>("animations/Attack_PlaceHolder");
+        if (_cachedIdle == null)
+               _cachedIdle = Resources.Load<AnimationClip>("animations/Idle_PlaceHolder");
 
         if (_cachedWalk == null)
             _cachedWalk = Resources.Load<AnimationClip>("animations/Walk_PlaceHolder");
 
+        if (_cachedAttack == null)
+            _cachedAttack = Resources.Load<AnimationClip>("animations/Attack_PlaceHolder");
+
         if (_cachedDying == null)
             _cachedDying = Resources.Load<AnimationClip>("animations/Death_PlaceHolder");
 
-        _attackClipPlaceHolder = _cachedAttack;
+        _idleClipPlaceHolder = _cachedIdle;
         _walkClipPlaceHolder = _cachedWalk;
+        _attackClipPlaceHolder = _cachedAttack;
         _deathClipPlaceHolder = _cachedDying;
+
+        if (_idleClipPlaceHolder == null)
+            Debug.LogWarning("Missing 'idle_PlaceHolder' animation in Resources.");
+
+        if (_walkClipPlaceHolder == null)
+            Debug.LogWarning("Missing 'Walk_PlaceHolder' animation in Resources.");
 
         if (_attackClipPlaceHolder == null)
             Debug.LogWarning("Missing 'Attack_PlaceHolder' animation in Resources.");
-        if (_walkClipPlaceHolder == null)
-            Debug.LogWarning("Missing 'Walk_PlaceHolder' animation in Resources.");
+
         if (_deathClipPlaceHolder == null)
             Debug.LogWarning("Missing 'Death_PlaceHolder' animation in Resources.");
     }

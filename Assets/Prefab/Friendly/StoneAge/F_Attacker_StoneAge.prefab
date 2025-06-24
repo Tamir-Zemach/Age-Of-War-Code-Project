@@ -407,9 +407,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3333854791188610842, guid: 50ad2b241e511064782ce2530a6bba69, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2253291209308996618}
-    - targetCorrespondingSourceObject: {fileID: 3333854791188610842, guid: 50ad2b241e511064782ce2530a6bba69, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1333935668344122215}
     - targetCorrespondingSourceObject: {fileID: 3333854791188610842, guid: 50ad2b241e511064782ce2530a6bba69, type: 3}
       insertIndex: -1
@@ -420,22 +417,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3333854791188610842, guid: 50ad2b241e511064782ce2530a6bba69, type: 3}
   m_PrefabInstance: {fileID: 642872455648094896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2253291209308996618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787669153325929898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff205b7416faf39419749dd48791b2e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overrideControllerTemplate: {fileID: 22100000, guid: 44b71b8f8741f0247acdb9cbad44e2a5, type: 2}
-  customAttackClip: {fileID: 7400000, guid: f701718a8c570814e82fa55e92f1cfc2, type: 2}
-  customWalkClip: {fileID: 7400000, guid: ea7e4889db9f0b449a9f05f03ee4e398, type: 2}
-  customDyingClip: {fileID: 7400000, guid: 04ba1f219ccd23f408ad171b6c7212c2, type: 2}
 --- !u!114 &1333935668344122215
 MonoBehaviour:
   m_ObjectHideFlags: 0
