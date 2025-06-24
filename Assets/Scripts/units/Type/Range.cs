@@ -26,7 +26,6 @@ public class Range : MonoBehaviour
 
     public void FireProjectile(GameObject target)
     {
-        print($"{gameObject.name} is shooting");
         if (target == null) return;
 
         var instance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
@@ -42,7 +41,6 @@ public class Range : MonoBehaviour
 
     private void Attack(GameObject target)
     {
-        print($"{gameObject.name} is shooting without animator");
         var instance = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         var bulletScript = instance.GetComponent<RangeBullet>();
 
