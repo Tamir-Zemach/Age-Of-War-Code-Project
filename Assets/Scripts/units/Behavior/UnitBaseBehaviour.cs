@@ -68,7 +68,7 @@ public class UnitBaseBehaviour : MonoBehaviour
         {
             GameObject obj = hitInfo.transform.gameObject;
 
-            if (obj.CompareTag(Unit._oppositeUnitTag) && obj.CompareTag(Unit._oppositeBaseTag))
+            if (obj.CompareTag(Unit._oppositeUnitTag) || obj.CompareTag(Unit._oppositeBaseTag))
             {
                 HandleEnemyDetection(obj, false);
             }
@@ -125,7 +125,6 @@ public class UnitBaseBehaviour : MonoBehaviour
         {
             OnAttack?.Invoke(target);
         }
-        // No longer calling OnAttack here
         _isAttacking = false;
     }
 
