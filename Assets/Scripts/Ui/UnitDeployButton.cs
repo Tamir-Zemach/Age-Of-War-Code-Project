@@ -1,64 +1,40 @@
-
+using Assets.Scripts;
 using Assets.Scripts.Enems;
-using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UnitDeployButton : MonoBehaviour
 {
-
-    [Tooltip("Text to dipsplay the queue index, needs to be child of this GameObject")]
-    [SerializeField] private TextMeshProUGUI _queueCountText;
-    private UnitData[] _queueArray;
-    private UnitData _assignedUnit; 
     [SerializeField] private UnitType _unitType;
+
+    private UnitData unit;
+
     public UnitType UnitType => _unitType;
 
-    private void Awake()
-    {
-        _queueCountText = GetComponentInChildren<TextMeshProUGUI>();
-        DeployManager.OnQueueChanged += UpdateQueueIndex;
-    }
+
     private void Start()
     {
-        SetAssignedUnit(GameManager.Instance.GetInstantiatedUnit(_unitType));
-    }
-    private void OnDestroy()
-    {
-        DeployManager.OnQueueChanged -= UpdateQueueIndex;
-    }
-    public void SetAssignedUnit(UnitData unit)
-    {
-        _assignedUnit = unit;
-        UpdateQueueIndex(); 
-    }
+        unit = GameManager.Instance.GetInstantiatedUnit(_unitType);
 
-    public void UpdateQueueIndex()
+        Sprite finalSprite = UpgradeStateManager.Instance.GetUnitSprite(_unitType) ?? unit._spriteForUi;
+        GetComponent<Image>().sprite = finalSprite;
+    }
+    public void DeployUnit()
     {
-        if (NullChecksForSafety())
+        if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
         {
-            return;
+            PlayerCurrency.Instance.SubtractMoney(unit._cost);
+
+            if (GameManager.Instance != null && DeployManager.Instance != null)
+            {
+                DeployManager.Instance.AddUnitToDeploymentQueue(unit);
+            }
+            else
+            {
+                Debug.LogWarning("DeployUnit called before GameManager or DeployManager were initialized.");
+            }
         }
 
-        // Filter queue to only include characters matching _assignedCharacter
-        _queueArray = DeployManager.Instance._unitQueue.Where(c => c == _assignedUnit).ToArray();
 
-        _queueCountText.text = _queueArray.Length > 0 ? $"+ {_queueArray.Length}" : "";
     }
-
-    private bool NullChecksForSafety()
-    {
-        if (_assignedUnit == null || DeployManager.Instance == null || DeployManager.Instance._unitQueue == null)
-        {
-            _queueCountText.text = "Error: Queue not initialized";
-            return true;
-        }
-        else { return false; }
-    }
-
-
 }
-
-
-

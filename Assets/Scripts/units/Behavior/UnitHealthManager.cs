@@ -1,7 +1,7 @@
 using System;
 using Assets.Scripts;
 using UnityEngine;
-using Assets.Scripts.units.Behavior;
+using Assets.Scripts.InterFaces;
 
 [RequireComponent(typeof(UnitBaseBehaviour))]
 public class UnitHealthManager : MonoBehaviour, IDamageable
@@ -22,7 +22,6 @@ public class UnitHealthManager : MonoBehaviour, IDamageable
 
     public void GetHurt(int damage)
     {
-        print($"{gameObject.name} is getting hit ");
         _currentHealth -= damage;
         OnHealthChanged?.Invoke();
         if (_currentHealth <= 0 && !isDying)

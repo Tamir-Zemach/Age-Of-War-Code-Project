@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Assets.Scripts.units.Behavior;
+using Assets.Scripts.InterFaces;
 using UnityEngine.Events;
 public class EnemyBaseHealthManger : MonoBehaviour, IDamageable
 {

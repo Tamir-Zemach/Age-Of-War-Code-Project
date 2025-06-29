@@ -3,9 +3,8 @@ using Assets.Scripts.Enems;
 using UnityEngine;
 
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
 {
-    public static EnemySpawner Instance;
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
     [SerializeField, TagSelector] private string _enemyBaseTag;
@@ -26,9 +25,9 @@ public class EnemySpawner : MonoBehaviour
     private float _timer;
     private float _randomSpawnTimer;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         GetEnemyBase();
         _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
     }
@@ -95,32 +94,6 @@ public class EnemySpawner : MonoBehaviour
     {
         _minSpawnTime = minSpawnTime;
         _maxSpawnTime = maxSpawnTime;
-    }
-
-    public List<UnitData> GetAllInstantiatedUnits()
-    {
-        var allUnits = new List<UnitData>();
-
-        if (GameManager.ModifiedEnemyUnitData != null)
-        {
-            foreach (var kvp in GameManager.ModifiedEnemyUnitData)
-            {
-                if (kvp.Value != null)
-                {
-                    allUnits.Add(kvp.Value);
-                }
-                else
-                {
-                    Debug.LogWarning($"Unit of type {kvp.Key} is null in _enemyUnitData.");
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("_enemyUnitData is null.");
-        }
-
-        return allUnits;
     }
 
 

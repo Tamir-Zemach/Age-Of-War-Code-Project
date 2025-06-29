@@ -27,7 +27,10 @@ public class UnitUpgradeButton : MonoBehaviour
     [SerializeField] private int _statCostInc;
 
 
-
+    private void Start()
+    {
+        _statCost = UpgradeStateManager.Instance.GetStatUpgradeCost(unitType, _statCost);
+    }
 
     public void UpgradeStat()
     {
@@ -38,6 +41,7 @@ public class UnitUpgradeButton : MonoBehaviour
             PlayerCurrency.Instance.SubtractMoney(_statCost);
             ApplyUpgrade(unit);
             _statCost += _statCostInc;
+            UpgradeStateManager.Instance.SetStatUpgradeCost(unitType, _statCost);
         }
     }
 

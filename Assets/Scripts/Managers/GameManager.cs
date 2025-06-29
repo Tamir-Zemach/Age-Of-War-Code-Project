@@ -1,35 +1,44 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts;
+﻿using Assets.Scripts;
+using Assets.Scripts.Data;
 using Assets.Scripts.Enems;
 using Assets.Scripts.Managers;
 using Assets.Scripts.turrets;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+
+
+
+//TODO: Arrage the whole scripts to be more readable!!!!! 
+
+
+
+
+public class GameManager : PersistentMonoBehaviour<GameManager> 
 {
     private TurretData _friendlyturretData;
+
+    private SpecialAttackData _friendlySpecialAttackData;
+
     public static Dictionary<UnitType, UnitData> ModifiedFriendlyUnitData { get; private set; }
     public static Dictionary<UnitType, UnitData> ModifiedEnemyUnitData { get; private set; }
 
-    public static GameManager Instance;
-
+    
     [SerializeField] private int _startingMoney;
     [SerializeField] private int _startingHealth;
     [SerializeField] private int _level1EnemyBaseHealth;
     public int Level1EnemyBaseHealth { get; private set; }
-    public int CurrentAge { get; private set; } = 1;
 
-    public void AdvanceAge()
+    protected override void Awake()
     {
-        CurrentAge++;
-    }
-
-    private void Awake()
-    {
-        InstantiateOneGameManager();
+        base.Awake(); // ensures the singleton logic runs
         StartGame();
         CreateScriptableObjInstance();
+    }
+    private void Start()
+    {
+        InstantiateFriendlySpecialAttackData();
     }
 
 
@@ -47,17 +56,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
         Time.timeScale = 0;
     }
-    private void InstantiateOneGameManager()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // ← This keeps the GameManager alive between scenes
-    }
     private void StartGame()
     {
         PlayerCurrency.Instance.AddMoney(_startingMoney);
@@ -101,6 +100,17 @@ public class GameManager : MonoBehaviour
             _friendlyturretData = Instantiate(match);
         else
             Debug.LogWarning("No friendly turret data found in Resources.");
+    }
+
+    private void InstantiateFriendlySpecialAttackData()
+    {
+        SpecialAttackData[] allSpecials = Resources.LoadAll<SpecialAttackData>("");
+        var match = allSpecials.FirstOrDefault(s => s.specialAttackType == UpgradeStateManager.Instance.CurrentSpecialAttack);
+
+        if (match != null)
+            _friendlySpecialAttackData = Instantiate(match);
+        else
+            Debug.LogWarning("No matching SpecialAttackData found for current attack.");
     }
 
     public UnitData GetInstantiatedUnit(UnitType type)
@@ -177,6 +187,21 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
+
+    public SpecialAttackData GetSpecialAttackData()
+    {
+        if (_friendlySpecialAttackData != null)
+        {
+            return _friendlySpecialAttackData;
+        }
+        else
+        {
+            Debug.LogWarning("No SpecialAttackData found.");
+            return null;
+        }
+    }
+
+
 }
 
 

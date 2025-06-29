@@ -23,6 +23,11 @@ public class PlayerUpgradeButton : MonoBehaviour
     private List<UnitData> _allFriendlyUnits;
     private List<UnitData> _allEnemyUnits;
 
+    private void Start()
+    {
+        _statUpgradeCost = UpgradeStateManager.Instance.GetPlayerStatCost(_statUpgradeCost);
+    }
+
     public void UpgradeStat()
     {
 
@@ -31,6 +36,7 @@ public class PlayerUpgradeButton : MonoBehaviour
             PlayerCurrency.Instance.SubtractMoney(_statUpgradeCost);
             ApplyUpgrade();
             _statUpgradeCost += _statCostInc;
+            UpgradeStateManager.Instance.SetPlayerStatUpgradeCost(_statUpgradeCost);
         }
     }
 
@@ -48,7 +54,7 @@ public class PlayerUpgradeButton : MonoBehaviour
                 break;
 
             case UpgradeType.EnemyMoneyIncrease:
-                _allEnemyUnits = EnemySpawner.Instance.GetAllInstantiatedUnits();
+                _allEnemyUnits = GameManager.Instance.GetAllInstantiatedEnemyUnits();
                 IncreaseMoneyGainToAllEnemyUnits();
                 break;
             default:

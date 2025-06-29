@@ -2,9 +2,8 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
 
-public class Admin : MonoBehaviour
+public class Admin : PersistentMonoBehaviour<Admin>
 {
-    public static Admin Instance;
 
     EnemySpawner EnemySpawner;
 
@@ -23,21 +22,8 @@ public class Admin : MonoBehaviour
 
     [SerializeField] private float _easyModeMinSpawnTime;
     [SerializeField] private float _easyModeMaxSpawnTime;
-    private void Awake()
-    {
-        InstantiateOneAdmin();
-    }
-    private void InstantiateOneAdmin()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // ← This keeps the GameManager alive between scenes
-    }
+
     private void AdminFunctions()
     {
         if (Input.GetKeyDown(KeyCode.Z))

@@ -1,7 +1,10 @@
-﻿namespace Assets.Scripts
+﻿
+using Assets.Scripts.InterFaces;
+using UnityEngine;
+
+namespace Assets.Scripts
 {
-    using Assets.Scripts.units.Behavior;
-    using UnityEngine;
+
 
     [RequireComponent(typeof(UnitBaseBehaviour))]
 

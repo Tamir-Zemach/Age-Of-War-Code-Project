@@ -1,5 +1,7 @@
 using UnityEngine;
-using Assets.Scripts.units.Behavior;
+using Assets.Scripts.InterFaces;
+
+
 [RequireComponent(typeof(Rigidbody))]
 
 public class RangeBullet : MonoBehaviour

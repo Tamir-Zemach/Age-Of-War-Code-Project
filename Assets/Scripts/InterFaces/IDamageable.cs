@@ -1,6 +1,6 @@
 ﻿
 
-namespace Assets.Scripts.units.Behavior
+namespace Assets.Scripts.InterFaces
 {
     public interface IDamageable
     {

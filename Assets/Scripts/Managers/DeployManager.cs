@@ -1,90 +1,80 @@
-using Assets.Scripts;
-using Assets.Scripts.Enems;
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeployManager : MonoBehaviour
+public class DeployManager : PersistentMonoBehaviour<DeployManager> 
 {
     public static event Action OnQueueChanged;
-    public static DeployManager Instance;
 
-    [SerializeField] private Transform _unitSpawnPoint;
-
-    public Queue<UnitData> _unitQueue = new Queue<UnitData>();
+    public readonly Queue<UnitData> _unitQueue = new Queue<UnitData>();
     private bool isDeploying = false;
+
+    [Tooltip("The position a where Friendly units will be spawned in the world.")]
+    [SerializeField] private Transform _unitSpawnPoint;
 
     [Tooltip("The spawn area where the friendly unit will not spawn if another one is already present.")]
     [SerializeField, TagSelector] private string _spawnArea;
 
     [Tooltip("The player base Tag:")]
     [SerializeField, TagSelector] private string _baseTag;
+
     private SpawnArea SpawnArea;
+    private UnitData nextCharacter;
+    private GameObject unitReference;
 
     private float timer;
-    private UnitData nextCharacter;
-    GameObject unitReference;
-    private void Awake()
+
+    protected override void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-        {
-            Debug.LogError("Multiple DeployManager instances detected!");
-            Destroy(gameObject);
-        }
-        SpawnArea = GameObject.FindGameObjectWithTag(_baseTag).GetComponentInChildren<SpawnArea>();
+       base.Awake();
+        SpawnArea = GameObject.FindGameObjectWithTag(_spawnArea).GetComponent<SpawnArea>();
 
     }
 
     private void Update()
     {
-      if (nextCharacter != null)
-          DeployWithDelay();
+        if (nextCharacter != null)
+            HandleDelayedDeployment();
     }
 
-    public void DeployAttackerUnit()
+
+
+    /// <summary>
+    /// Adds the specified unit to the deployment queue.
+    /// If no deployment is currently in progress, starts deploying immediately.
+    /// </summary>
+    /// <param name="unit">The UnitData to queue for deployment.</param>
+    public void AddUnitToDeploymentQueue(UnitData unit)
     {
-        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Attacker);
-        UnitButtonPressed(unit);
-    }
-    public void DeployRangerUnit()
-    {
-        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Ranger);
-        UnitButtonPressed(unit);
-    }
-    public void DeployTankUnit()
-    {
-        UnitData unit = GameManager.Instance.GetInstantiatedUnit(UnitType.Tank);
-        UnitButtonPressed(unit);
-    }
-    private void UnitButtonPressed(UnitData unit)
-    {
-        if (PlayerCurrency.Instance.HasEnoughMoney(unit._cost))
+        _unitQueue.Enqueue(unit);
+
+        //Event invoke for Ui purpses 
+        OnQueueChanged?.Invoke();
+
+        // If no deployment is currently happening, start the queue process
+        if (!isDeploying)
         {
-            PlayerCurrency.Instance.SubtractMoney(unit._cost);
-
-            _unitQueue.Enqueue(unit);
-            OnQueueChanged?.Invoke();
-
-            // If no deployment is currently happening, start the queue process
-            if (!isDeploying)
-            {
-                DeployNextCharacter();
-            }
+            ProcessNextUnitInQueue();
         }
     }
 
-    private void DeployNextCharacter()
+    /// <summary>
+    /// Retrieves the next unit from the queue and marks deployment as in progress.
+    /// If the queue is empty, resets deployment state.
+    /// </summary>
+
+    private void ProcessNextUnitInQueue()
     {
         if (_unitQueue.Count > 0)
         {
-            //remove button from queue
+            //remove unit from queue
             nextCharacter = _unitQueue.Dequeue();
-            OnQueueChanged?.Invoke();
-            //deploy logic
-            isDeploying = true;
 
+            //Event invoke for Ui purpses 
+            OnQueueChanged?.Invoke();
+
+            isDeploying = true;
         }
         else
         {
@@ -92,7 +82,16 @@ public class DeployManager : MonoBehaviour
             isDeploying = false;
         }
     }
-    private void DeployWithDelay()
+
+
+
+    /// <summary>
+    /// Handles unit instantiation after a delay.
+    /// Waits for sufficient time and an available spawn area before deploying.
+    /// Resets timer and triggers the next deployment if available.
+    /// </summary>
+
+    private void HandleDelayedDeployment()
     {
         timer += Time.deltaTime;
         if (timer >= nextCharacter._deployDelayTime && !SpawnArea._hasUnitInside)
@@ -106,8 +105,13 @@ public class DeployManager : MonoBehaviour
 
             timer = 0;
             isDeploying = false;
-            DeployNextCharacter();
+            ProcessNextUnitInQueue();
         }
     }
+    
 
 }
+
+
+
+

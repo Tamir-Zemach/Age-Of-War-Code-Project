@@ -97,12 +97,20 @@ PrefabInstance:
       value: Ranger Deploy Button  Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6974771833412993262, guid: 91d9d2698333030469e116f713ac7675, type: 3}
+      propertyPath: unitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6974771833412993262, guid: 91d9d2698333030469e116f713ac7675, type: 3}
+      propertyPath: _unitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7007148196912447120, guid: 91d9d2698333030469e116f713ac7675, type: 3}
       propertyPath: _unitType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8529186710521724706, guid: 91d9d2698333030469e116f713ac7675, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DeployRangerUnit
+      value: DeployUnit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

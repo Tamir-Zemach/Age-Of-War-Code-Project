@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts.units
 {
     [CreateAssetMenu(fileName = "LevelUpData", menuName = "LevelUpData", order = 3)]
-    public class LevelUpData : ScriptableObject
+    public class UnitLevelUpData : ScriptableObject
     {
         [Tooltip("What age this upgrade belongs to")]
         public AgeStageType ageStage;
@@ -20,7 +20,8 @@ namespace Assets.Scripts.units
         [Tooltip("The prefab to instansiate when deplyed")]
         public GameObject _unitPrefab;
 
-        public Sprite _spriteForUi;
+        public Sprite _unitSprite;
+
 
         [Header("Enemy Unit Properties")]
         [Tooltip("How much money the player gains when this Unit is Destroyed")]

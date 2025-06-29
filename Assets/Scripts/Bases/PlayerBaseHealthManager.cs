@@ -1,6 +1,6 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
-using Assets.Scripts.units.Behavior;
+using Assets.Scripts.InterFaces;
 public class PlayerBaseHealthManager : MonoBehaviour, IDamageable
 {
 

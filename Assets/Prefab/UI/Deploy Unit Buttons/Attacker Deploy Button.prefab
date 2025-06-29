@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1128451362367272301}
   - component: {fileID: 8529186710521724706}
   - component: {fileID: 6974771833412993262}
+  - component: {fileID: 7007148196912447120}
   m_Layer: 5
   m_Name: Attacker Deploy Button
   m_TagString: Untagged
@@ -122,9 +123,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DeployManager, Assembly-CSharp
-        m_MethodName: DeployAttackerUnit
+      - m_Target: {fileID: 6974771833412993262}
+        m_TargetAssemblyTypeName: UnitDeployButton, Assembly-CSharp
+        m_MethodName: DeployUnit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -144,6 +145,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32e8c6af7cca4a34da638193e2d54234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 0
+--- !u!114 &7007148196912447120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211420547073608469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030877d0ba54b4341bfdb2d50bf981b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _queueCountText: {fileID: 4677578618835289243}
