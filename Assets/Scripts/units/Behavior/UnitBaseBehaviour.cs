@@ -13,33 +13,34 @@ public class UnitBaseBehaviour : MonoBehaviour
     public event Action OnInitialized;
 
     private NavMeshAgent _agent;
-    private UnitHealthManager HealthManager;
+    private UnitHealthManager _healthManager;
     private GameObject _enemyBase;
+    private GameObject _currentTarget;
+    private Animator _animator;
     private Coroutine _currentCoroutine;
     private Collider _col;
 
     private bool _isAttacking = false;
-    public bool IsAttacking => _isAttacking;
-
     private bool _isDying;
 
-    private GameObject _currentTarget;
-
-    private Animator Animator;
 
     public UnitData Unit { get; private set; }
+
+    public bool IsAttacking => _isAttacking;
+
+    public GameObject GetAttackTarget() => _currentTarget;
 
     public void Initialize(UnitData unitData)
     {
         Unit = unitData;
         _agent = GetComponent<NavMeshAgent>();
-        HealthManager = GetComponent<UnitHealthManager>();
-        HealthManager.OnDying += Dying;
+        _healthManager = GetComponent<UnitHealthManager>();
+        _healthManager.OnDying += Dying;
         _enemyBase = GameObject.FindGameObjectWithTag(Unit._oppositeBaseTag);
         _agent.destination = _enemyBase.transform.position;
         _agent.speed = Unit._speed;
         _col = GetComponent<Collider>();
-        Animator = GetComponentInChildren<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         OnInitialized?.Invoke();
     }
 
@@ -57,17 +58,19 @@ public class UnitBaseBehaviour : MonoBehaviour
     {
         _agent.isStopped = false; // Default state
 
-        if (Physics.BoxCast(transform.position, Unit.boxSize, transform.forward, out var hitInfo, Quaternion.identity, Unit._range, Unit._enemyCharacterMask))
+        if (Physics.BoxCast(transform.position,
+                                Unit.boxSize,
+                                transform.forward,
+                                out var hitInfo,
+                                Quaternion.identity,
+                                Unit._range,
+                                Unit._enemyCharacterMask))
         {
             GameObject obj = hitInfo.transform.gameObject;
 
-            if (obj.CompareTag(Unit._oppositeUnitTag))
+            if (obj.CompareTag(Unit._oppositeUnitTag) && obj.CompareTag(Unit._oppositeBaseTag))
             {
                 HandleEnemyDetection(obj, false);
-            }
-            if (obj.CompareTag(Unit._oppositeBaseTag))
-            {
-                HandleEnemyDetection(obj, true);
             }
         }
 
@@ -85,7 +88,11 @@ public class UnitBaseBehaviour : MonoBehaviour
 
     private void CheckForFriendlyUnit()
     {
-        if (Physics.BoxCast(transform.position, Unit.boxSize, transform.forward, out var hitInfo, Quaternion.identity, Unit._rayLengthForFriendlyUnit))
+        if (Physics.BoxCast(transform.position,
+                            Unit.boxSize, transform.forward,
+                            out var hitInfo,
+                            Quaternion.identity,
+                            Unit._rayLengthForFriendlyUnit))
         {
             GameObject obj = hitInfo.transform.gameObject;
             if (obj.CompareTag(Unit._friendlyUnitTag))
@@ -111,12 +118,10 @@ public class UnitBaseBehaviour : MonoBehaviour
         _currentCoroutine = StartCoroutine(AttackAction(Unit._initialAttackDelay, target));
     }
 
-    public GameObject GetAttackTarget() => _currentTarget;
-
     IEnumerator AttackAction(float initialAttackDelay, GameObject target)
     {
         yield return new WaitForSeconds(initialAttackDelay);
-        if (Animator == null)
+        if (_animator == null)
         {
             OnAttack?.Invoke(target);
         }
