@@ -13,7 +13,7 @@ public class TurretDebugger : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (_turretData == null)
-            _turretData = GameManager.Instance.GetTurretData();
+            _turretData = GameDataRepository.Instance.GetFriendlyTurret();
         if (TurretBaseBehavior == null)
             TurretBaseBehavior = gameObject.GetComponent<TurretBaseBehavior>();
 

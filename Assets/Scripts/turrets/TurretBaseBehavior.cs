@@ -37,7 +37,7 @@ public class TurretBaseBehavior : MonoBehaviour
     }
     private void GetData()
     {
-        _turretData = GameManager.Instance.GetTurretData();
+        _turretData = GameDataRepository.Instance.GetFriendlyTurret();
 
         GameObject baseObject = GameObject.FindGameObjectWithTag(_turretData.FriendlyBase);
         if (baseObject != null)

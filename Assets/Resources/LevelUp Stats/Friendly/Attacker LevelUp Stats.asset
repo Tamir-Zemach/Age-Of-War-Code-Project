@@ -22,4 +22,4 @@ MonoBehaviour:
   _speed: 1
   _health: 100
   _strength: 10
-  _initialAttackDelay: 10
+  _initialAttackDelay: 0.2

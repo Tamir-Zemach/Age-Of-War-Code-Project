@@ -49,11 +49,11 @@ public class Admin : PersistentMonoBehaviour<Admin>
         //}
         if (_displayFrienlyUnitParametersInConsole)
         {
-            DisplayFriendlyUnitParametersFromGameManager();
+            DisplayFriendlyUnitParameters();
         }
         if (_displayEnemyUnitParametersInConsole)
         {
-            DisplayEnemyUnitParametersFromGameManager();
+            DisplayEnemyUnitParameters();
         }
         if (_displayHealthInConsole)
         {
@@ -71,32 +71,30 @@ public class Admin : PersistentMonoBehaviour<Admin>
     //    EnemySpawner.EasyMode(_easyModeMinSpawnTime, _easyModeMaxSpawnTime);
     //}
 
-    public void DisplayFriendlyUnitParametersFromGameManager()
+    public void DisplayFriendlyUnitParameters()
     {
-        foreach (var kvp in GameManager.ModifiedFriendlyUnitData)
+        foreach (var unit in GameDataRepository.Instance.GetAllFriendlyUnits())
         {
-            UnitData un = kvp.Value;
-            Debug.Log($"{un.name} " +
-                      $"Unit Cost: {un._cost}," +
-                      $"Health: {un._health} " +
-                      $"Speed: {un._speed}, " +
-                      $"Strength: {un._strength}, " +
-                      $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
-                      $"Range: {un._range}");
+            Debug.Log($"{unit.name} " +
+                      $"Unit Cost: {unit._cost}, " +
+                      $"Health: {unit._health}, " +
+                      $"Speed: {unit._speed}, " +
+                      $"Strength: {unit._strength}, " +
+                      $"Attack Speed (Initial Attack Delay): {unit._initialAttackDelay}, " +
+                      $"Range: {unit._range}");
         }
     }
-    public void DisplayEnemyUnitParametersFromGameManager()
+    public void DisplayEnemyUnitParameters()
     {
-        foreach (var kvp in GameManager.ModifiedEnemyUnitData)
+        foreach (var unit in GameDataRepository.Instance.GetAllEnemyUnits())
         {
-            UnitData un = kvp.Value;
-            Debug.Log($"{un.name} " +
-                      $"Unit Money Gain: {un._moneyWhenKilled}" +
-                      $"Health: {un._health} " +
-                      $"speed: {un._speed}, " +
-                      $"Strength: {un._strength}, " +
-                      $"Attack Speed (Initial Attack Delay): {un._initialAttackDelay}, " +
-                      $"Range: {un._range}");
+            Debug.Log($"{unit.name} " +
+                      $"Reward: {unit._moneyWhenKilled}, " +
+                      $"Health: {unit._health}, " +
+                      $"Speed: {unit._speed}, " +
+                      $"Strength: {unit._strength}, " +
+                      $"Attack Speed (Initial Attack Delay): {unit._initialAttackDelay}, " +
+                      $"Range: {unit._range}");
         }
     }
 

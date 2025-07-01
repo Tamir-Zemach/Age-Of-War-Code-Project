@@ -2,7 +2,6 @@ using Assets.Scripts.Enems;
 using Assets.Scripts;
 using UnityEngine;
 using Assets.Scripts.Managers;
-using System.Collections.Generic;
 
 public class PlayerUpgradeButton : MonoBehaviour
 {
@@ -19,9 +18,6 @@ public class PlayerUpgradeButton : MonoBehaviour
 
     [Tooltip("Incremental increase in stat upgrade cost after each upgrade")]
     [SerializeField] private int _statCostInc;
-
-    private List<UnitData> _allFriendlyUnits;
-    private List<UnitData> _allEnemyUnits;
 
     private void Start()
     {
@@ -40,6 +36,9 @@ public class PlayerUpgradeButton : MonoBehaviour
         }
     }
 
+
+
+
     private void ApplyUpgrade()
     {
         switch (upgradeType)
@@ -49,12 +48,10 @@ public class PlayerUpgradeButton : MonoBehaviour
                 break;
 
             case UpgradeType.UnitsCosts:
-                _allFriendlyUnits = GameManager.Instance.GetAllInstantiatedFriendlyUnits();
                 DecreaseCostToAllFrienlyUnits();
                 break;
 
             case UpgradeType.EnemyMoneyIncrease:
-                _allEnemyUnits = GameManager.Instance.GetAllInstantiatedEnemyUnits();
                 IncreaseMoneyGainToAllEnemyUnits();
                 break;
             default:
@@ -66,14 +63,15 @@ public class PlayerUpgradeButton : MonoBehaviour
 
     private void DecreaseCostToAllFrienlyUnits()
     {
-        foreach (UnitData unit in _allFriendlyUnits)
+        foreach (UnitData unit in GameDataRepository.Instance.GetAllFriendlyUnits())
         {
             unit._cost -= _statBonus;
         }
+
     }
     private void IncreaseMoneyGainToAllEnemyUnits()
     {
-        foreach (UnitData unit in _allEnemyUnits)
+        foreach (UnitData unit in GameDataRepository.Instance.GetAllEnemyUnits())
         {
             unit._moneyWhenKilled += _statBonus;
         }

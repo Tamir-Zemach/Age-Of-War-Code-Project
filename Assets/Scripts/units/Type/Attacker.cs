@@ -41,8 +41,7 @@ namespace Assets.Scripts
         private void GiveDamage(GameObject target)
         {
             (target.GetComponent<UnitHealthManager>() as IDamageable
-             ?? target.GetComponent<EnemyBaseHealthManger>() as IDamageable
-             ?? target.GetComponent<PlayerBaseHealthManager>() as IDamageable)
+             ?? target.GetComponent<BaseHealth>() as IDamageable)
             ?.GetHurt(unit._strength);
         }
 

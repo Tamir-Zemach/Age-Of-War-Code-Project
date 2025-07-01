@@ -16,8 +16,8 @@ public class TurretBullet : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _turretData = GameManager.Instance.GetTurretData();
-        
+        _turretData = GameDataRepository.Instance.GetFriendlyTurret();
+
     }
     private void Start()
     {

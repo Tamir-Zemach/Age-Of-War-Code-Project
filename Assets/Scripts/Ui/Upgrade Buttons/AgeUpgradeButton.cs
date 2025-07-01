@@ -20,7 +20,7 @@ public class AgeUpgradeButton : MonoBehaviour
 
     private void Start()
     {
-        _friendlyUnitData = GameManager.Instance.GetAllInstantiatedFriendlyUnits();
+        _friendlyUnitData = GameDataRepository.Instance.GetAllFriendlyUnits();
         _unitLevelUpData = Resources.LoadAll<UnitLevelUpData>("").ToList(); 
         _turretAndSpecialAttackData = Resources.LoadAll<TurretAndSpecialAttackLevelUpData>("").ToList();
         GetAllunitDeployButtons();

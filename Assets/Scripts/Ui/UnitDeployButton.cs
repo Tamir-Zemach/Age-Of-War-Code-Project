@@ -14,7 +14,7 @@ public class UnitDeployButton : MonoBehaviour
 
     private void Start()
     {
-        unit = GameManager.Instance.GetInstantiatedUnit(_unitType);
+        unit = GameDataRepository.Instance.GetFriendlyUnit(_unitType);
 
         Sprite finalSprite = UpgradeStateManager.Instance.GetUnitSprite(_unitType) ?? unit._spriteForUi;
         GetComponent<Image>().sprite = finalSprite;

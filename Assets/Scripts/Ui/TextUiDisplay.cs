@@ -11,21 +11,14 @@ public class TextUiDisplay : MonoBehaviour
     [SerializeField] private GameObject _currentEnemyBase;
     [SerializeField] private TextMeshProUGUI _enemyhealthText;
 
-    private EnemyBaseHealthManger _enemyHealthManger;
-
     private void Awake()
     {
-        _enemyHealthManger = _currentEnemyBase.GetComponent<EnemyBaseHealthManger>();
         UpdateMoneyUI();
         UpdateHealthUI();
+        UpdateEnemyHealthUI();
         PlayerCurrency.OnMoneyChanged += UpdateMoneyUI;
         PlayerHealth.OnHealthChanged += UpdateHealthUI;
-    }
-
-    private void Start()
-    {
-        UpdateEnemyHealthUI();
-        _enemyHealthManger.OnEnemyHealthChanged += UpdateEnemyHealthUI;
+        EnemyHealth.OnEnemyHealthChanged += UpdateEnemyHealthUI;
     }
 
 
@@ -53,7 +46,7 @@ public class TextUiDisplay : MonoBehaviour
         {
             return;
         }
-        _enemyhealthText.text = $"Enemy Current health: {_enemyHealthManger.CurrentHealth}, Enemy Max Health: {_enemyHealthManger.MaxHealth}";
+        _enemyhealthText.text = $"Enemy Current health: {EnemyHealth.Instance.CurrentHealth}, Enemy Max Health: {EnemyHealth.Instance.MaxHealth}";
     }
 
 

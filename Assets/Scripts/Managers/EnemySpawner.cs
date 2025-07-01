@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using Assets.Scripts.Enems;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
 {
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
-    [SerializeField, TagSelector] private string _enemyBaseTag;
-
-    [Tooltip("The spawn point where enemies will appear.")]
-    [SerializeField] private Transform _enemySpawnPoint;
+    [SerializeField, TagSelector] private string _spawnAreaTag;
 
     [Tooltip("Minimum time interval before an enemy can spawn (can be a decimal value).")]
     [SerializeField] private float _minSpawnTime;
@@ -22,13 +20,52 @@ public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
     [SerializeField] private int _maxEnemies;
 
     private SpawnArea _enemySpawnArea;
+    private Transform _enemySpawnPoint;
     private float _timer;
     private float _randomSpawnTimer;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Initialize();
+    }
+
+
+    public void Initialize()
+    {
+        GameObject areaGO = GameObject.FindGameObjectWithTag(_spawnAreaTag);
+        if (areaGO == null)
+        {
+            Debug.LogWarning($"[DeployManager] No GameObject with tag '{_spawnAreaTag}' found in scene.");
+            return;
+        }
+
+        _enemySpawnArea = areaGO.GetComponent<SpawnArea>();
+        if (_enemySpawnArea == null)
+        {
+            Debug.LogWarning($"[DeployManager] GameObject tagged '{_enemySpawnArea}' is missing SpawnArea component.");
+            return;
+        }
+
+        _enemySpawnPoint = _enemySpawnArea.GetComponentInParent<Transform>();
+        if (_enemySpawnPoint == null)
+        {
+            Debug.LogWarning("[DeployManager] Failed to locate parent transform for spawn point.");
+        }
+    }
 
     protected override void Awake()
     {
         base.Awake();
-        GetEnemyBase();
         _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
     }
 
@@ -50,9 +87,10 @@ public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
 
     private void SpawnRandomEnemyPrefab()
     {
-        if (GameManager.ModifiedEnemyUnitData.Count == 0) return;
+        var enemyUnits = GameDataRepository.Instance.GetAllEnemyUnits();
 
-        var enemyUnits = new List<UnitData>(GameManager.ModifiedEnemyUnitData.Values);
+        if (enemyUnits == null || enemyUnits.Count == 0) return;
+
         UnitData randomEnemyData = enemyUnits[Random.Range(0, enemyUnits.Count)];
 
         GameObject enemyReference = Instantiate(
@@ -76,18 +114,6 @@ public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
     private bool CanDeploy()
     {
         return _timer >= _randomSpawnTimer && _enemySpawnArea != null && !_enemySpawnArea._hasUnitInside && EnemyCounter.EnemyCount < _maxEnemies;
-    }
-    private SpawnArea GetEnemyBase()
-    {
-        GameObject enemyBase = GameObject.FindGameObjectWithTag(_enemyBaseTag);
-        if (enemyBase != null)
-        {
-            _enemySpawnArea = enemyBase.GetComponentInChildren<SpawnArea>();
-            return _enemySpawnArea;
-        }
-
-        Debug.LogError("Enemy base not found! Check the tag assignment.");
-        return null; 
     }
 
     public void EasyMode(float minSpawnTime, float maxSpawnTime)

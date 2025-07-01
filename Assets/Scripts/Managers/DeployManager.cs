@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class DeployManager : PersistentMonoBehaviour<DeployManager> 
+
+
+public class DeployManager : PersistentMonoBehaviour<DeployManager>
 {
     public static event Action OnQueueChanged;
 
     public readonly Queue<UnitData> _unitQueue = new Queue<UnitData>();
     private bool isDeploying = false;
 
-    [Tooltip("The position a where Friendly units will be spawned in the world.")]
-    [SerializeField] private Transform _unitSpawnPoint;
 
     [Tooltip("The spawn area where the friendly unit will not spawn if another one is already present.")]
     [SerializeField, TagSelector] private string _spawnArea;
@@ -20,16 +21,59 @@ public class DeployManager : PersistentMonoBehaviour<DeployManager>
     [SerializeField, TagSelector] private string _baseTag;
 
     private SpawnArea SpawnArea;
+    private Transform _unitSpawnPoint;
     private UnitData nextCharacter;
     private GameObject unitReference;
 
     private float timer;
 
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        nextCharacter = null;
+        isDeploying = false;
+        timer = 0;
+        _unitQueue.Clear(); 
+        Initialize();
+    }
+
     protected override void Awake()
     {
-       base.Awake();
-        SpawnArea = GameObject.FindGameObjectWithTag(_spawnArea).GetComponent<SpawnArea>();
+        base.Awake();
+        Initialize();
+    }
 
+    public void Initialize()
+    {
+        GameObject areaGO = GameObject.FindGameObjectWithTag(_spawnArea);
+        if (areaGO == null)
+        {
+            Debug.LogWarning($"[DeployManager] No GameObject with tag '{_spawnArea}' found in scene.");
+            return;
+        }
+
+        SpawnArea = areaGO.GetComponent<SpawnArea>();
+        if (SpawnArea == null)
+        {
+            Debug.LogWarning($"[DeployManager] GameObject tagged '{_spawnArea}' is missing SpawnArea component.");
+            return;
+        }
+
+        _unitSpawnPoint = SpawnArea.GetComponentInParent<Transform>();
+        if (_unitSpawnPoint == null)
+        {
+            Debug.LogWarning("[DeployManager] Failed to locate parent transform for spawn point.");
+        }
     }
 
     private void Update()
@@ -108,7 +152,7 @@ public class DeployManager : PersistentMonoBehaviour<DeployManager>
             ProcessNextUnitInQueue();
         }
     }
-    
+
 
 }
 

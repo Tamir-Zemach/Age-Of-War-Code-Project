@@ -1,7 +1,7 @@
 using Assets.Scripts;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enems;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpecialAttackButton : MonoBehaviour
 {
@@ -12,13 +12,11 @@ public class SpecialAttackButton : MonoBehaviour
 
 
 
-
-
     private void Start()
     {
-        var sprite = UpgradeStateManager.Instance.GetSpecialAttackSprite(); // if you store it
+        var sprite = UpgradeStateManager.Instance.GetSpecialAttackSprite(_specialAttackType); 
         if (sprite != null)
-            GetComponent<UnityEngine.UI.Image>().sprite = sprite;
+            GetComponent<Image>().sprite = sprite;
     }
     public void PerformSpecialAttack()
     {

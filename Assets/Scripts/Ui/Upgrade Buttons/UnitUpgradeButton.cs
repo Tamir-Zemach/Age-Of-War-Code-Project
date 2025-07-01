@@ -34,7 +34,7 @@ public class UnitUpgradeButton : MonoBehaviour
 
     public void UpgradeStat()
     {
-        var unit = GameManager.Instance.GetInstantiatedUnit(unitType);
+        var unit = GameDataRepository.Instance.GetFriendlyUnit(unitType);
 
         if (PlayerCurrency.Instance.HasEnoughMoney(_statCost))
         {

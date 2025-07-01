@@ -70,13 +70,13 @@ public class UnitBaseBehaviour : MonoBehaviour
 
             if (obj.CompareTag(Unit._oppositeUnitTag) || obj.CompareTag(Unit._oppositeBaseTag))
             {
-                HandleEnemyDetection(obj, false);
+                HandleEnemyDetection(obj);
             }
         }
 
         ResetAttackStateIfNeeded();
     }
-    private void HandleEnemyDetection(GameObject target, bool isBase)
+    private void HandleEnemyDetection(GameObject target)
     {
         _agent.isStopped = true;
         if (!_isAttacking)
