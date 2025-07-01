@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.units;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.units;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,17 @@ public class AgeUpgrade : PersistentMonoBehaviour<AgeUpgrade>
     public int CurrentPlayerAge { get; private set; } = 1;
     public int CurrentEnemyAge { get; private set; } = 1;
 
-    private List<TurretAndSpecialAttackLevelUpData> _turretAndSpecialAttackData;
+    private List<SpecialAttackLevelUpData> _specialAttackLevelUpData;
+    private List<TurretLevelUpData> _turretLevelUpData;
+
     private UnitDeployButton[] _unitDeployButtons;
     private Image[] _deployButtonImages;
+
     private Image _specialAttckButtonImage;
     private Image _turretButtonImage;
+
+    private GameObject _turretPrefab;
+    private GameObject _specialAttackPrefab;
 
     #endregion
 
@@ -113,26 +120,50 @@ public class AgeUpgrade : PersistentMonoBehaviour<AgeUpgrade>
     /// Applies turret and special attack upgrades tied to the current player age.
     /// Updates their visual representation in the UI.
     /// </summary>
-    public void ApplyTurretAndSpecialAttackUpgrade()
+    public void ApplySpecialAttackUpgrade()
     {
         //TODO: Clean The Code, Add for enemy logic, seperate upgrade and UI update logic
-        _turretAndSpecialAttackData = GameDataRepository.Instance.GetturretAndSpecialAttackLevelUpData();
+        _specialAttackLevelUpData = GameDataRepository.Instance.GetSpecialAttackLevelUpData();
 
-        foreach (var data in _turretAndSpecialAttackData)
+        foreach (var data in _specialAttackLevelUpData)
         {
             if ((int)data.ageStage == CurrentPlayerAge)
             {
                 UpgradeStateManager.Instance.UpgradeSpecialAttack(data.specialAttackType);
-                UpgradeStateManager.Instance.SetSpecialAttackSprite(data.specialAttackType, data._SpecialAttackSprite);
-                UpgradeStateManager.Instance.SetTurretSprite(data._TurretSprite);
+                UpgradeStateManager.Instance.SetSpecialAttackSprite(data.specialAttackType, data.SpecialAttackSprite);
+                UpgradeStateManager.Instance.SetSpecialAttackPrefab(data.specialAttackType, data.SpecialAttackPrefab);
 
-                if (_specialAttckButtonImage != null && data._SpecialAttackSprite != null)
+                if (_specialAttckButtonImage != null && 
+                    data.SpecialAttackSprite != null && 
+                    data.SpecialAttackPrefab != null)
                 {
-                    _specialAttckButtonImage.sprite = data._SpecialAttackSprite;
+                    _specialAttckButtonImage.sprite = data.SpecialAttackSprite;
+                    _specialAttackPrefab = data.SpecialAttackPrefab;
                 }
-                if (_turretButtonImage != null && data._TurretSprite != null)
+
+                break;
+            }
+        }
+    }
+
+    public void ApplyTurretUpgrade()
+    {
+        _turretLevelUpData = GameDataRepository.Instance.GetTurretLevelUpData();
+
+        foreach (var data in _turretLevelUpData)
+        {
+            if ((int)data.ageStage == CurrentPlayerAge)
+            {
+                UpgradeStateManager.Instance.UpgradeTurret(data.TurretType);
+                UpgradeStateManager.Instance.SetSTurretSprite(data.TurretType, data.TurretSprite);
+                UpgradeStateManager.Instance.SetTurretPrefab(data.TurretType, data.TurretPrefab);
+
+                if (_turretButtonImage != null &&
+                    data.TurretSprite != null &&
+                    data.TurretPrefab != null)
                 {
-                    _turretButtonImage.sprite = data._TurretSprite;
+                    _turretButtonImage.sprite = data.TurretSprite;
+                    _turretPrefab = data.TurretPrefab;
                 }
 
                 break;

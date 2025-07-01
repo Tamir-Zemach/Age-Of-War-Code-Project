@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Enems;
 using System;
 
+//TODO: implement the UpgradeStateManager logics
+
 namespace Assets.Scripts.Ui.TurretButton
 {
     public partial class TurretButton

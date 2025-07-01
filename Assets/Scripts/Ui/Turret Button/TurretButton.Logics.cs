@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Assets.Scripts.Ui.TurretButton
 {
 
-    //TODO: Fixe highlight when add slot
 
     public partial class TurretButton 
     {

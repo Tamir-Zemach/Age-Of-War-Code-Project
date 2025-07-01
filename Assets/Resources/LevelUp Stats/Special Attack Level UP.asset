@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8a2a412e1a41c144904f9888634c036, type: 3}
-  m_Name: FIrst Special and turret Upgrade
+  m_Name: Special Attack Level UP
   m_EditorClassIdentifier: 
   ageStage: 2
-  specialAttackType: 0
-  _SpecialAttackSprite: {fileID: 868675619812981983, guid: 97894ee56a6c2194baadf894b4627705, type: 3}
-  _TurretSprite: {fileID: 1775810217742568051, guid: ff727ef133050384997422ff6c073c74, type: 3}
+  specialAttackType: 1
+  SpecialAttackSprite: {fileID: 8860576921030331929, guid: ff727ef133050384997422ff6c073c74, type: 3}
+  SpecialAttackPrefab: {fileID: 577148494940015122, guid: df1a3220a309a3644a545e9fc7d1d992, type: 3}

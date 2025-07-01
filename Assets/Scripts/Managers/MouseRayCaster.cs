@@ -2,9 +2,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseRayCaster : MonoBehaviour
+public class MouseRayCaster : PersistentMonoBehaviour<MouseRayCaster>
 {
-    public static MouseRayCaster Instance { get; private set; }
 
     [SerializeField] private LayerMask raycastLayers;
     [SerializeField] private float raycastDistance = 100f;
@@ -12,15 +11,9 @@ public class MouseRayCaster : MonoBehaviour
     private GameObject currentHover;
     private Camera rayCamera;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
+        base.Awake();
         if (rayCamera == null)
         {
             rayCamera = Camera.main;

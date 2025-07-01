@@ -18,7 +18,8 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     private SpecialAttackData _friendlySpecialAttack;
 
     private List<UnitLevelUpData> _unitLevelUpData;
-    private List<TurretAndSpecialAttackLevelUpData> _turretAndSpecialAttackData;
+    private List<SpecialAttackLevelUpData> _specialAttackLevelUpData;
+    private List<TurretLevelUpData> _turretLevelUpData;
 
     protected override void Awake()
     {
@@ -74,7 +75,8 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     private void LoadLevelUpData()
     {
         _unitLevelUpData = Resources.LoadAll<UnitLevelUpData>("").ToList();
-        _turretAndSpecialAttackData = Resources.LoadAll<TurretAndSpecialAttackLevelUpData>("").ToList();
+        _specialAttackLevelUpData = Resources.LoadAll<SpecialAttackLevelUpData>("").ToList();
+        _turretLevelUpData = Resources.LoadAll<TurretLevelUpData>("").ToList();
     }
 
 
@@ -87,7 +89,8 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     public List<UnitData> GetAllFriendlyUnits() => _friendlyUnits?.Values.ToList();
     public List<UnitData> GetAllEnemyUnits() => _enemyUnits?.Values.ToList();
     public List<UnitLevelUpData> GetUnitLevelUpData() => _unitLevelUpData;
-    public List<TurretAndSpecialAttackLevelUpData> GetturretAndSpecialAttackLevelUpData() => _turretAndSpecialAttackData;
+    public List<SpecialAttackLevelUpData> GetSpecialAttackLevelUpData() => _specialAttackLevelUpData;
+    public List<TurretLevelUpData> GetTurretLevelUpData() => _turretLevelUpData;
 
     public TurretData GetFriendlyTurret() => _friendlyTurret;
     public SpecialAttackData GetSpecialAttack() => _friendlySpecialAttack;

@@ -2,6 +2,7 @@
 using Assets.Scripts.Enems;
 using UnityEngine;
 
+//TODO: Upgrade the code - make it like the TurretData - Same for its buttons 
 
 namespace Assets.Scripts.Data
 {

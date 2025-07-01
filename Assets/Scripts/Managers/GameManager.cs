@@ -76,7 +76,8 @@ public class GameManager : PersistentMonoBehaviour<GameManager>
         _unitLevelUpData = GameDataRepository.Instance.GetUnitLevelUpData();
         AgeUpgrade.Instance.AdvanceAge(isFriendly: true);
         AgeUpgrade.Instance.ApplyUpgradesToUnits(_friendlyUnitData, _unitLevelUpData, AgeUpgrade.Instance.CurrentPlayerAge, isFriendly: true);
-        AgeUpgrade.Instance.ApplyTurretAndSpecialAttackUpgrade();
+        AgeUpgrade.Instance.ApplySpecialAttackUpgrade();
+        AgeUpgrade.Instance.ApplyTurretUpgrade();
     }
 
 

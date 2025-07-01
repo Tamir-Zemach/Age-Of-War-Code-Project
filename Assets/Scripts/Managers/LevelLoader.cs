@@ -6,8 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-//TODO: first level specail implement 
-
 public class LevelLoader : PersistentMonoBehaviour<LevelLoader>
 {
     [SerializeField]
