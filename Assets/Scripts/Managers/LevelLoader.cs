@@ -1,8 +1,12 @@
 
 
+using Assets.Scripts.Managers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
+//TODO: first level specail implement 
 
 public class LevelLoader : PersistentMonoBehaviour<LevelLoader>
 {
@@ -30,7 +34,6 @@ public class LevelLoader : PersistentMonoBehaviour<LevelLoader>
                 scenes[_currentLevelIndex].sceneAsset?.name);
             return;
         }
-
         SceneManager.LoadScene(buildIndex);
     }
 

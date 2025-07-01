@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Managers;
+using Assets.Scripts.units;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : PersistentMonoBehaviour<GameManager>
@@ -10,6 +12,9 @@ public class GameManager : PersistentMonoBehaviour<GameManager>
     [SerializeField] private int _level1EnemyHealth;
     [SerializeField] private int _level2EnemyHealth;
     [SerializeField] private int _level3EnemyHealth;
+
+    private List<UnitData> _friendlyUnitData;
+    private List<UnitLevelUpData> _unitLevelUpData;
 
 
     protected override void Awake()
@@ -36,18 +41,19 @@ public class GameManager : PersistentMonoBehaviour<GameManager>
 
     public void NextLevel()
     {
+        if (LevelLoader.Instance.LevelIndex != 0)
+        {
+            UpgradePlayerAge();
+        }
         LevelLoader.Instance.LoadNextLevel();
-        EnemyHealth.Instance.SetMaxHealth
-            (SetEnemyBaseHealthForCurrentLevel(LevelLoader.Instance.LevelIndex));
-        EnemyHealth.Instance.FullHealth();  
+        ResetEnemyHealth();
     }
 
-
-
-    private void GameOver()
+    public void ResetEnemyHealth()
     {
-        Debug.Log("Game Over");
-        Time.timeScale = 0;
+        EnemyHealth.Instance.SetMaxHealth
+        (SetEnemyBaseHealthForCurrentLevel(LevelLoader.Instance.LevelIndex));
+        EnemyHealth.Instance.FullHealth();
     }
 
 
@@ -64,5 +70,20 @@ public class GameManager : PersistentMonoBehaviour<GameManager>
         }
     }
 
+    private void UpgradePlayerAge()
+    {
+        _friendlyUnitData = GameDataRepository.Instance.GetAllFriendlyUnits();
+        _unitLevelUpData = GameDataRepository.Instance.GetUnitLevelUpData();
+        AgeUpgrade.Instance.AdvanceAge(isFriendly: true);
+        AgeUpgrade.Instance.ApplyUpgradesToUnits(_friendlyUnitData, _unitLevelUpData, AgeUpgrade.Instance.CurrentPlayerAge, isFriendly: true);
+        AgeUpgrade.Instance.ApplyTurretAndSpecialAttackUpgrade();
+    }
+
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over");
+        Time.timeScale = 0;
+    }
 
 }

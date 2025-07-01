@@ -1,9 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enems;
 using Assets.Scripts.turrets;
+using Assets.Scripts.units;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// Central repository for loading, instantiating, and caching runtime gameplay data.
@@ -16,6 +17,9 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     private TurretData _friendlyTurret;
     private SpecialAttackData _friendlySpecialAttack;
 
+    private List<UnitLevelUpData> _unitLevelUpData;
+    private List<TurretAndSpecialAttackLevelUpData> _turretAndSpecialAttackData;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,6 +31,7 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
         LoadUnitData();
         LoadTurretData();
         LoadSpecialAttackData();
+        LoadLevelUpData();
     }
 
     private void LoadUnitData()
@@ -66,6 +71,13 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
             Debug.LogWarning($"No SpecialAttackData found for type {selected}");
     }
 
+    private void LoadLevelUpData()
+    {
+        _unitLevelUpData = Resources.LoadAll<UnitLevelUpData>("").ToList();
+        _turretAndSpecialAttackData = Resources.LoadAll<TurretAndSpecialAttackLevelUpData>("").ToList();
+    }
+
+
     public UnitData GetFriendlyUnit(UnitType type) =>
         _friendlyUnits.TryGetValue(type, out var data) ? data : null;
 
@@ -74,7 +86,10 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
 
     public List<UnitData> GetAllFriendlyUnits() => _friendlyUnits?.Values.ToList();
     public List<UnitData> GetAllEnemyUnits() => _enemyUnits?.Values.ToList();
+    public List<UnitLevelUpData> GetUnitLevelUpData() => _unitLevelUpData;
+    public List<TurretAndSpecialAttackLevelUpData> GetturretAndSpecialAttackLevelUpData() => _turretAndSpecialAttackData;
 
     public TurretData GetFriendlyTurret() => _friendlyTurret;
     public SpecialAttackData GetSpecialAttack() => _friendlySpecialAttack;
+
 }
