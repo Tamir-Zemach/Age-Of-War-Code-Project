@@ -1,13 +1,35 @@
 ﻿
+using Assets.Scripts.Enems;
+using Assets.Scripts.InterFaces;
 using UnityEngine;
 
 namespace Assets.Scripts.turrets
 {
     [CreateAssetMenu(fileName = "Data", menuName = "TurretData", order = 2)]
-    public class TurretData : ScriptableObject
+    public class TurretData : ScriptableObject, IUpgradable<TurretType>
     {
-        [Tooltip("Is The Turret Friendly or an Enemy")]
-        public bool isFriendly;
+        [Tooltip("The Turret Type:")]
+        [SerializeField] private TurretType _turretType;
+
+        [SerializeField] private bool _isFriendly;
+
+
+        private AgeStageType _stageType;
+        public int AgeStage => (int)_stageType;
+
+        public TurretType Type => _turretType;
+
+        public bool IsFriendly => _isFriendly;
+
+        [Tooltip("Turret prefab")]
+        [SerializeField] private GameObject _unitPrefab;
+        public GameObject Prefab => _unitPrefab;
+
+        public void SetPrefab(GameObject prefab)
+        {
+            _unitPrefab = prefab;
+        }
+
 
         [Header("Detection Settings")]
         [Tooltip("Layer that contains opposite units.")]

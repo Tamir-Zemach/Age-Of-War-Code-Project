@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 
 
-public class DeployManager : PersistentMonoBehaviour<DeployManager>
+public class DeployManager : SceneAwareMonoBehaviour<DeployManager>
 {
     public static event Action OnQueueChanged;
 
@@ -27,34 +27,21 @@ public class DeployManager : PersistentMonoBehaviour<DeployManager>
 
     private float timer;
 
-
-    private void OnEnable()
+    protected override void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        base.Awake();
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void ResetQueueState()
     {
         nextCharacter = null;
         isDeploying = false;
         timer = 0;
-        _unitQueue.Clear(); 
-        Initialize();
+        _unitQueue.Clear();
     }
-
-    protected override void Awake()
+    protected override void InitializeOnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        base.Awake();
-        Initialize();
-    }
-
-    public void Initialize()
-    {
+        ResetQueueState();
         GameObject areaGO = GameObject.FindGameObjectWithTag(_spawnArea);
         if (areaGO == null)
         {
@@ -74,6 +61,7 @@ public class DeployManager : PersistentMonoBehaviour<DeployManager>
         {
             Debug.LogWarning("[DeployManager] Failed to locate parent transform for spawn point.");
         }
+
     }
 
     private void Update()
@@ -140,7 +128,7 @@ public class DeployManager : PersistentMonoBehaviour<DeployManager>
         timer += Time.deltaTime;
         if (timer >= nextCharacter._deployDelayTime && !SpawnArea._hasUnitInside)
         {
-            unitReference = Instantiate(nextCharacter._unitPrefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
+            unitReference = Instantiate(nextCharacter.Prefab, _unitSpawnPoint.position, _unitSpawnPoint.rotation);
 
             if (unitReference.TryGetComponent(out UnitBaseBehaviour behaviour))
             {

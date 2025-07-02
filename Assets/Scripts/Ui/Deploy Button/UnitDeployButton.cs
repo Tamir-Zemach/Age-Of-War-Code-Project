@@ -15,6 +15,11 @@ public class UnitDeployButton : MonoBehaviour
     private void Start()
     {
         unit = GameDataRepository.Instance.GetFriendlyUnit(_unitType);
+        if (unit == null)
+        {
+            Debug.LogError($"[UnitDeployButton] No UnitData found for type {_unitType}. Cannot assign sprite.");
+            return;
+        }
 
         Sprite finalSprite = UpgradeStateManager.Instance.GetUnitSprite(_unitType) ?? unit._spriteForUi;
         GetComponent<Image>().sprite = finalSprite;

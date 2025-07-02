@@ -10,7 +10,7 @@ public class SpecialAttackButton : MonoBehaviour
     [SerializeField] private Transform _meteorRainSpawnPos;
     [SerializeField] private int _specialAttackCost;
 
-
+    public SpecialAttackType Type => _specialAttackType;
 
     private void Start()
     {
@@ -30,18 +30,19 @@ public class SpecialAttackButton : MonoBehaviour
     private void ApplySpecialAttack()
     {
         var currentAttack = UpgradeStateManager.Instance.CurrentSpecialAttack;
+        var currentAttackPrfab = UpgradeStateManager.Instance.GetSpecialAttackPrefab();
         switch (currentAttack)
         {
             case SpecialAttackType.MeteorRain:
-                Instantiate(_meteorRainPrefab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
+                Instantiate(currentAttackPrfab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
                 break;
             case SpecialAttackType.SpecialAttack2:
                 //same logic for now
-                Instantiate(_meteorRainPrefab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
+                Instantiate(currentAttackPrfab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
                 break;
             case SpecialAttackType.SpecialAttack3:
                 //same logic for now
-                Instantiate(_meteorRainPrefab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
+                Instantiate(currentAttackPrfab, _meteorRainSpawnPos.position, _meteorRainSpawnPos.rotation);
                 break;
 
             default:

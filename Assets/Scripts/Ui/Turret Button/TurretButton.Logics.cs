@@ -103,12 +103,16 @@ namespace Assets.Scripts.Ui.TurretButton
 
         private void AddTurretToEmptySlotLogic(TurretSpawnPoint slot)
         {
+
             PlayerCurrency.Instance.SubtractMoney(_cost);
             _turretSpawnPos = slot.transform;
             slot.HasTurret = true;
 
-            GameObject turretPrefab = Instantiate(_turretPrefab, _turretSpawnPos.position, _turretSpawnPos.rotation);
-            turretPrefab.transform.parent = slot.transform;
+            var upgradedTurretPrefab = UpgradeStateManager.Instance.GetTurretPrefab();
+
+            GameObject turret = Instantiate(upgradedTurretPrefab, _turretSpawnPos.position, _turretSpawnPos.rotation);
+
+            turret.transform.parent = slot.transform;
 
             // onTurretPlaced?.Invoke();
         }

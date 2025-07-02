@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
+public class EnemySpawner : SceneAwareMonoBehaviour<EnemySpawner>
 {
 
     [Tooltip("Tag used to identify the enemy base in the scene.")]
@@ -24,49 +24,34 @@ public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
     private float _timer;
     private float _randomSpawnTimer;
 
-    private void OnEnable()
+
+
+    protected override void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        base.Awake();
+        _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
     }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Initialize();
-    }
-
-
-    public void Initialize()
+    protected override void InitializeOnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         GameObject areaGO = GameObject.FindGameObjectWithTag(_spawnAreaTag);
         if (areaGO == null)
         {
-            Debug.LogWarning($"[DeployManager] No GameObject with tag '{_spawnAreaTag}' found in scene.");
+            Debug.LogWarning($"[EnemySpawner] No GameObject with tag '{_spawnAreaTag}' found in scene.");
             return;
         }
 
         _enemySpawnArea = areaGO.GetComponent<SpawnArea>();
         if (_enemySpawnArea == null)
         {
-            Debug.LogWarning($"[DeployManager] GameObject tagged '{_enemySpawnArea}' is missing SpawnArea component.");
+            Debug.LogWarning($"[EnemySpawner] GameObject tagged '{_enemySpawnArea}' is missing SpawnArea component.");
             return;
         }
 
         _enemySpawnPoint = _enemySpawnArea.GetComponentInParent<Transform>();
         if (_enemySpawnPoint == null)
         {
-            Debug.LogWarning("[DeployManager] Failed to locate parent transform for spawn point.");
+            Debug.LogWarning("[EnemySpawner] Failed to locate parent transform for spawn point.");
         }
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _randomSpawnTimer = Random.Range(_minSpawnTime, _maxSpawnTime);
     }
 
     private void Update()
@@ -94,7 +79,7 @@ public class EnemySpawner : PersistentMonoBehaviour<EnemySpawner>
         UnitData randomEnemyData = enemyUnits[Random.Range(0, enemyUnits.Count)];
 
         GameObject enemyReference = Instantiate(
-            randomEnemyData._unitPrefab,
+            randomEnemyData.Prefab,
             _enemySpawnPoint.position,
             _enemySpawnPoint.rotation
         );

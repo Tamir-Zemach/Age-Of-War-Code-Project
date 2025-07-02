@@ -1,22 +1,37 @@
 ﻿
 using Assets.Scripts.Enems;
+using Assets.Scripts.InterFaces;
 using UnityEngine;
 
 
 namespace Assets.Scripts.Data
 {
     [CreateAssetMenu(fileName = "SpecialAttackLevelUpData", menuName = "SpecialAttackLevelUpData", order = 5)]
-    public class SpecialAttackLevelUpData : ScriptableObject
+    public class SpecialAttackLevelUpData : ScriptableObject, IUpgradable<SpecialAttackType>
     {
-        [Tooltip("What age this upgrade belongs to")]
-        public AgeStageType ageStage;
+        [Tooltip("The Special attack Type:")]
+        [SerializeField] private SpecialAttackType specialAttackType;
 
-        [Tooltip("The Special attack Type this age should unlock")]
-        public SpecialAttackType specialAttackType;
+        [SerializeField] private bool _isFriendly;
+
+        [Tooltip("What age this upgrade belongs to")]
+        [SerializeField] private AgeStageType _ageStage;
+
+        public SpecialAttackType Type => specialAttackType;
+
+        public bool IsFriendly => _isFriendly;
+
+        public int AgeStage => (int)_ageStage;
 
         public Sprite SpecialAttackSprite;
 
-        public GameObject SpecialAttackPrefab;
+        [SerializeField] private GameObject _unitPrefab;
+        public GameObject Prefab => _unitPrefab;
+
+        public void SetPrefab(GameObject prefab)
+        {
+            _unitPrefab = prefab;
+        }
     }
 }
 

@@ -18,8 +18,8 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     private SpecialAttackData _friendlySpecialAttack;
 
     private List<UnitLevelUpData> _unitLevelUpData;
-    private List<SpecialAttackLevelUpData> _specialAttackLevelUpData;
-    private List<TurretLevelUpData> _turretLevelUpData;
+    private SpecialAttackLevelUpData _specialAttackLevelUpData;
+    private TurretLevelUpData _turretLevelUpData;
 
     protected override void Awake()
     {
@@ -43,20 +43,26 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
         foreach (var unit in Resources.LoadAll<UnitData>(""))
         {
             var clone = Instantiate(unit);
-            if (unit.isFriendly)
-                _friendlyUnits[unit.unitType] = clone;
+            if (unit.IsFriendly)
+                _friendlyUnits[unit.Type] = clone;
             else
-                _enemyUnits[unit.unitType] = clone;
+                _enemyUnits[unit.Type] = clone;
         }
     }
 
     private void LoadTurretData()
     {
-        var turret = Resources.LoadAll<TurretData>("").FirstOrDefault(t => t.isFriendly);
+        var turret = Resources.LoadAll<TurretData>("").FirstOrDefault(t => t.IsFriendly);
         _friendlyTurret = turret != null ? Instantiate(turret) : null;
 
-        if (_friendlyTurret == null)
-            Debug.LogWarning("No friendly turret data found.");
+        if (_friendlyTurret != null && _friendlyTurret.Prefab != null)
+        {
+            UpgradeStateManager.Instance.SetTurretPrefab(_friendlyTurret.Type, _friendlyTurret.Prefab);
+        }
+        else
+        {
+            Debug.LogError($"[GameDataRepository] Could not register prefab for turret type {_friendlyTurret?.Type}. Is the prefab assigned?");
+        }
     }
 
     private void LoadSpecialAttackData()
@@ -64,7 +70,7 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
         var selected = UpgradeStateManager.Instance.CurrentSpecialAttack;
 
         var match = Resources.LoadAll<SpecialAttackData>("")
-            .FirstOrDefault(s => s.specialAttackType == selected);
+            .FirstOrDefault(s => s.Type == selected);
 
         _friendlySpecialAttack = match != null ? Instantiate(match) : null;
 
@@ -75,8 +81,10 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     private void LoadLevelUpData()
     {
         _unitLevelUpData = Resources.LoadAll<UnitLevelUpData>("").ToList();
-        _specialAttackLevelUpData = Resources.LoadAll<SpecialAttackLevelUpData>("").ToList();
-        _turretLevelUpData = Resources.LoadAll<TurretLevelUpData>("").ToList();
+
+        _specialAttackLevelUpData = Resources.LoadAll<SpecialAttackLevelUpData>("").FirstOrDefault();
+
+        _turretLevelUpData = Resources.LoadAll<TurretLevelUpData>("").FirstOrDefault();
     }
 
 
@@ -89,8 +97,8 @@ public class GameDataRepository : PersistentMonoBehaviour<GameDataRepository>
     public List<UnitData> GetAllFriendlyUnits() => _friendlyUnits?.Values.ToList();
     public List<UnitData> GetAllEnemyUnits() => _enemyUnits?.Values.ToList();
     public List<UnitLevelUpData> GetUnitLevelUpData() => _unitLevelUpData;
-    public List<SpecialAttackLevelUpData> GetSpecialAttackLevelUpData() => _specialAttackLevelUpData;
-    public List<TurretLevelUpData> GetTurretLevelUpData() => _turretLevelUpData;
+    public SpecialAttackLevelUpData GetSpecialAttackLevelUpData() => _specialAttackLevelUpData;
+    public TurretLevelUpData GetTurretLevelUpData() => _turretLevelUpData;
 
     public TurretData GetFriendlyTurret() => _friendlyTurret;
     public SpecialAttackData GetSpecialAttack() => _friendlySpecialAttack;

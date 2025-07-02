@@ -10,7 +10,7 @@ public abstract class PersistentMonoBehaviour<T> : MonoBehaviour where T : MonoB
 {
     public static T Instance;
 
-    public virtual void InstantiateOneObject()
+    public void InstantiateOneObject()
     {
         if (Instance != null && Instance != this)
         {

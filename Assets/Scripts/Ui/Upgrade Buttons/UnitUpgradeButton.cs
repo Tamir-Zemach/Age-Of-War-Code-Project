@@ -29,7 +29,7 @@ public class UnitUpgradeButton : MonoBehaviour
 
     private void Start()
     {
-        _statCost = UpgradeStateManager.Instance.GetStatUpgradeCost(unitType, _statCost);
+        _statCost = UpgradeStateManager.Instance.GetStatUpgradeCost(unitType, statType, _statCost);
     }
 
     public void UpgradeStat()
@@ -41,7 +41,7 @@ public class UnitUpgradeButton : MonoBehaviour
             PlayerCurrency.Instance.SubtractMoney(_statCost);
             ApplyUpgrade(unit);
             _statCost += _statCostInc;
-            UpgradeStateManager.Instance.SetStatUpgradeCost(unitType, _statCost);
+            UpgradeStateManager.Instance.SetStatUpgradeCost(unitType, statType, _statCost);
         }
     }
 

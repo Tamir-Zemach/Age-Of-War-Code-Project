@@ -16,7 +16,7 @@ public class IndexForGettingHit : MonoBehaviour
         HealthManager = GetComponent<UnitHealthManager>();
         if (HealthManager != null)
         {
-            HealthManager.OnHealthChanged += GettingHurtFlash;
+            HealthManager.OnHealthChanged += GettingHurtFlash; 
         }
 
         meshRenderers = GetComponentsInChildren<MeshRenderer>() ?? new MeshRenderer[0];

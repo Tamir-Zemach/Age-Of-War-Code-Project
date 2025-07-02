@@ -23,7 +23,9 @@ public class UnitHealthManager : MonoBehaviour, IDamageable
     public void GetHurt(int damage)
     {
         _currentHealth -= damage;
+
         OnHealthChanged?.Invoke();
+
         if (_currentHealth <= 0 && !isDying)
         {
             isDying = true;

@@ -1,17 +1,32 @@
 using Assets.Scripts.Enems;
+using Assets.Scripts.InterFaces;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Unit", order = 1)]
-public class UnitData : ScriptableObject
+public class UnitData : ScriptableObject, IUpgradable<UnitType>
 {
-    [Tooltip("Is The Unit Friendly or an Enemy")]
-    public bool isFriendly;
-
     [Tooltip("The Unit Type:")]
-    public UnitType unitType;
+    [SerializeField] private UnitType _unitType;
+
+    [Tooltip("Is The Unit Friendly or an Enemy")]
+    [SerializeField] private bool _isFriendly;
+
+
+
+    private AgeStageType _stageType;
+    public int AgeStage => (int)_stageType;
+    public UnitType Type => _unitType;
+    public bool IsFriendly => _isFriendly;
 
     [Tooltip("The prefab to instansiate when deplyed")]
-    public GameObject _unitPrefab;
+    [SerializeField] private GameObject _unitPrefab;
+    public GameObject Prefab => _unitPrefab;
+
+    public void SetPrefab(GameObject prefab)
+    {
+        _unitPrefab = prefab;
+    }
+
 
     public Sprite _spriteForUi;
 

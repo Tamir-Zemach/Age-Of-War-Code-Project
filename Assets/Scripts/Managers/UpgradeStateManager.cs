@@ -6,7 +6,10 @@ using Assets.Scripts.Enems;
 /// <summary>
 /// Manages upgrade-related data and behavior for units, turrets, and special attacks.
 /// Handles UI sprites, prefabs, upgrade costs, and the player's current special attack selection.
-/// </summary>
+///</summary>
+/// <remarks> 
+/// To Debug: Tools => Upgrade State Manager Debugger in runtime. 
+/// </remarks>
 
 public class UpgradeStateManager : PersistentMonoBehaviour<UpgradeStateManager>
 {
@@ -18,8 +21,8 @@ public class UpgradeStateManager : PersistentMonoBehaviour<UpgradeStateManager>
     private Dictionary<TurretType, Sprite> _turretSprites = new();
 
     // -- COST UPGRADES --
-    private Dictionary<UnitType, int> _unitStatUpgradeCost = new();
-    private int _playerStatUpgradeCost;
+    private Dictionary<(UnitType, StatType), int> _unitStatUpgradeCost = new();
+    private Dictionary<UpgradeType, int> _playerStatUpgradeCost = new();
 
     // -- PREFAB UPGRADES --
     private Dictionary<UnitType, GameObject> _unitPrefabs = new();
@@ -28,7 +31,7 @@ public class UpgradeStateManager : PersistentMonoBehaviour<UpgradeStateManager>
 
     // -- TYPES INITIELIZE --
     public SpecialAttackType CurrentSpecialAttack { get; private set; } = SpecialAttackType.MeteorRain;
-    public TurretType CurrentTrret { get; private set; } = TurretType.StoneAgeTurret;
+    public TurretType CurrentTurret { get; private set; } = TurretType.StoneAgeTurret;
 
     #endregion
 
@@ -41,11 +44,11 @@ public class UpgradeStateManager : PersistentMonoBehaviour<UpgradeStateManager>
 
     // -- TYPE --
     public void UpgradeSpecialAttack(SpecialAttackType type) => CurrentSpecialAttack = type;
-    public void UpgradeTurret(TurretType type) => CurrentTrret = type;
+    public void UpgradeTurret(TurretType type) => CurrentTurret = type;
 
     // -- COST --
-    public void SetStatUpgradeCost(UnitType type, int cost) => _unitStatUpgradeCost[type] = cost;
-    public void SetPlayerStatUpgradeCost(int cost) => _playerStatUpgradeCost = cost;
+    public void SetStatUpgradeCost(UnitType unitType,StatType statType, int cost) => _unitStatUpgradeCost[(unitType, statType)] = cost;
+    public void SetPlayerStatUpgradeCost(UpgradeType type ,int cost) => _playerStatUpgradeCost[type] = cost;
 
     // -- PREFABS --
     public void SetUnitPrefab(UnitType type, GameObject prefab) => _unitPrefabs[type] = prefab;
@@ -64,16 +67,30 @@ public class UpgradeStateManager : PersistentMonoBehaviour<UpgradeStateManager>
     public Sprite GetTurretSprite(TurretType type) => _turretSprites.TryGetValue(type, out var sprite) ? sprite : null;
 
     /// <summary> Gets upgrade cost for a unit type or returns the default if missing. </summary>
-    public int GetStatUpgradeCost(UnitType type, int defaultCost) =>
-        _unitStatUpgradeCost.TryGetValue(type, out var cost) ? cost : defaultCost;
+    public int GetStatUpgradeCost(UnitType unitType,StatType statType, int defaultCost) 
+    {
+        return _unitStatUpgradeCost.TryGetValue((unitType, statType), out var cost) ? cost : defaultCost;
+    }
+       
 
     /// <summary> Gets player stat upgrade cost or returns the default if not set. </summary>
-    public int GetPlayerStatCost(int defaultCost) =>
-        _playerStatUpgradeCost > 0 ? _playerStatUpgradeCost : defaultCost;
+    public int GetPlayerStatCost(UpgradeType type, int defaultCost)
+    {
+        return _playerStatUpgradeCost.TryGetValue(type, out var cost) ? cost : defaultCost;
+    }
+       
 
     public GameObject GetUnitPrefab(UnitType type) => _unitPrefabs.TryGetValue(type, out var prefab) ? prefab : null;
-    public GameObject GetTurretPrefab(TurretType type) => _turretPrefabs.TryGetValue(type, out var prefab) ? prefab : null;
-    public GameObject GetSpecialAttackPrefab(SpecialAttackType type) => _specialAttackPrefabs.TryGetValue(type, out var prefab) ? prefab : null;
+    public GameObject GetTurretPrefab() => _turretPrefabs.TryGetValue(CurrentTurret, out var prefab) ? prefab : null;
+    public GameObject GetSpecialAttackPrefab() => _specialAttackPrefabs.TryGetValue(CurrentSpecialAttack, out var prefab) ? prefab : null;
+
+    
+    // -- DEBUG GETTERS -- 
+    public Dictionary<(UnitType, StatType), int> GetAllUnitStatUpgradeCosts() => _unitStatUpgradeCost;
+    public Dictionary<UpgradeType, int> GetAllPlayerUpgradeCosts() => _playerStatUpgradeCost;
+    public Dictionary<UnitType, GameObject> GetAllUnitPrefabs() => _unitPrefabs;
+    public Dictionary<SpecialAttackType, GameObject> GetAllSpecialAttackPrefabs() => _specialAttackPrefabs;
+    public Dictionary<TurretType, GameObject> GetAllTurretPrefabs() => _turretPrefabs;
 
     #endregion
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec32066ff55a8e84a8f8b11ff40d3feb, type: 3}
   m_Name: E_Tank_StoneAge
   m_EditorClassIdentifier: 
-  isFriendly: 0
-  unitType: 2
+  _unitType: 2
+  _isFriendly: 0
   _unitPrefab: {fileID: 7476198131129608348, guid: 99516be2335f6b1478910acda10230c8, type: 3}
   _spriteForUi: {fileID: 0}
   _cost: 0

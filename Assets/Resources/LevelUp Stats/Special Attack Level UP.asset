@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a2a412e1a41c144904f9888634c036, type: 3}
   m_Name: Special Attack Level UP
   m_EditorClassIdentifier: 
-  ageStage: 2
-  specialAttackType: 1
+  specialAttackType: 0
+  _isFriendly: 1
+  _ageStage: 2
   SpecialAttackSprite: {fileID: 8860576921030331929, guid: ff727ef133050384997422ff6c073c74, type: 3}
-  SpecialAttackPrefab: {fileID: 577148494940015122, guid: df1a3220a309a3644a545e9fc7d1d992, type: 3}
+  _unitPrefab: {fileID: 577148494940015122, guid: df1a3220a309a3644a545e9fc7d1d992, type: 3}

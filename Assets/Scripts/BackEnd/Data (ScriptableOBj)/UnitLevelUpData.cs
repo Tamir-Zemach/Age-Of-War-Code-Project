@@ -1,24 +1,36 @@
 ﻿
 using Assets.Scripts.Enems;
+using Assets.Scripts.InterFaces;
 using UnityEngine;
 
 
 namespace Assets.Scripts.units
 {
     [CreateAssetMenu(fileName = "LevelUpData", menuName = "LevelUpData", order = 3)]
-    public class UnitLevelUpData : ScriptableObject
+    public class UnitLevelUpData : ScriptableObject, IUpgradable<UnitType>
     {
+        [Tooltip("The unit type:")]
+        [SerializeField] private UnitType _unitType;
+
+        [SerializeField] private bool _isFriendly;
+
         [Tooltip("What age this upgrade belongs to")]
-        public AgeStageType ageStage;
+        [SerializeField] private AgeStageType _ageStage;
 
-        [Tooltip("Is The Unit Friendly or an Enemy")]
-        public bool isFriendly;
+        public UnitType Type => _unitType;
 
-        [Tooltip("The Unit Type:")]
-        public UnitType unitType;
+        public bool IsFriendly => _isFriendly;
+
+        public int AgeStage => (int)_ageStage;
 
         [Tooltip("The prefab to instansiate when deplyed")]
-        public GameObject _unitPrefab;
+        [SerializeField] private GameObject _unitPrefab;
+        public GameObject Prefab => _unitPrefab;
+
+        public void SetPrefab(GameObject prefab)
+        {
+            _unitPrefab = prefab;
+        }
 
         public Sprite _unitSprite;
 

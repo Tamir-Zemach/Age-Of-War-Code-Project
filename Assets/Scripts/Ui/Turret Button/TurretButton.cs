@@ -10,9 +10,6 @@ namespace Assets.Scripts.Ui.TurretButton
         [Tooltip("The type of action this button triggers.")]
         [SerializeField] private TurretButtonType TurretButtonType;
 
-        [Tooltip("Prefab to spawn when deploying a turret.")]
-        [SerializeField] private GameObject _turretPrefab;
-
         [Tooltip("Cost for triggering this action.")]
         [SerializeField] private int _cost;
 
@@ -29,7 +26,7 @@ namespace Assets.Scripts.Ui.TurretButton
 
         private Dictionary<TurretButtonType, Func<TurretSpawnPoint, bool>> _conditions;
 
-    
+        public TurretButtonType Type => TurretButtonType;
 
         private void Awake()
         {
@@ -58,7 +55,7 @@ namespace Assets.Scripts.Ui.TurretButton
         public static class FieldNames
         {
             public const string TurretType = nameof(TurretButtonType);
-            public const string Prefab = nameof(_turretPrefab);
+            //public const string Prefab = nameof(_turretPrefab);
             public const string Cost = nameof(_cost);
             public const string Refund = nameof(_moneyToGiveBack);
             public const string SpawnPointParent = nameof(_turretSpawnPointsParent);
